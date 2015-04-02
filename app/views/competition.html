@@ -1,0 +1,72 @@
+<!-- Competition table and results -->
+<div class="container" id="selected-competition">
+
+    <ul id="groupTabs" class="nav nav-tabs">
+        <li ng-repeat="group in competition.groups" ng-class="{'active': $index == 0}">
+            <a show-tab="" href="#group{{$index + 1}}" data-toggle="tab"><i class="fa fa-table"></i> {{$index + 1}}</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div ng-repeat="group in competition.groups" class="tab-pane" ng-class="{'active': $index == 0}" id="group{{$index + 1}}">
+            <table ng-show="group.table.length > 0" class="table league-table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Team</th>
+                        <th class="text-right">Pld</th>
+                        <th class="text-right">W</th>
+                        <th class="text-right">D</th>
+                        <th class="text-right">L</th>
+                        <th class="text-right">F</th>
+                        <th class="text-right">A</th>
+                        <th class="text-right points">Pts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="entry in group.table">
+                        <td class="text-left">{{entry.name}}</td>
+                        <td class="text-right">{{entry.played}}</td>
+                        <td class="text-right">{{entry.won}}</td>
+                        <td class="text-right">{{entry.drawn}}</td>
+                        <td class="text-right">{{entry.lost}}</td>
+                        <td class="text-right">{{entry.goalsFor}}</td>
+                        <td class="text-right">{{entry.goalsAgainst}}</td>
+                        <td class="text-right points">{{entry.points}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table ng-show="group.table.length > 0" class="table table-condensed results">
+                <thead><th colspan="5"></th></thead>
+                <tbody>
+                    <tr ng-repeat="result in group.results">
+                        <td class="text-left text-muted">{{result.tag}}</td>
+                        <td class="text-right">{{result.homeTeam}}</td>
+                        <td class="text-center points">{{result.homeScore}}</td>
+                        <td class="text-center points">{{result.awayScore}}</td>
+                        <td class="text-left">{{result.awayTeam}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p ng-show="group.table.length == 0" class="lead">
+                Results and league tables will appear here as soon as any results for this competition become available.
+            </p>
+        </div>
+    </div>
+
+    <div id="kosection" ng-show="competition.results.length > 0">
+        <h2 class="text-center"><i class="fa fa-trophy"></i> KO Section</h2>
+        <table class="table table-condensed" id=koresults>
+            <thead><th colspan="5"></th></thead>
+            <tbody>
+                <tr ng-repeat="result in competition.results">
+                    <td class="text-left text-muted">{{result.tag}}</td>
+                    <td class="text-right">{{result.homeTeam}}</td>
+                    <td class="text-center points">{{result.homeScore}}</td>
+                    <td class="text-center points">{{result.awayScore}}</td>
+                    <td class="text-left">{{result.awayTeam}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

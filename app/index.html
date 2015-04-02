@@ -1,0 +1,99 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title ng-cloak="">Tournament App</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tournament results and league tables">
+    <meta name="author" content="Darren Davison">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/structure.css">
+    <link rel="stylesheet" href="styles/branding.css">
+    <!-- endbuild -->
+</head>
+<body ng-app="tournamentApp" ng-controller="TournamentController">
+<!--[if lt IE 9]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+<div id="wrap">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/"><img src="../images/badge-icon.png" alt="Home"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul id="navlinks" class="nav navbar-nav">
+                <li><a href="#/news">Announcements</a></li>
+            </ul>
+        </div>
+
+        <div class="videprinterHolder">
+            <span id="videprinter"></span> <i class="fa fa-stop"></i>
+        </div>
+    </nav>
+
+    <section ui-view></section>
+
+</div> <!-- wrap -->
+
+<div id="footer">
+    <div class="container">
+        <p class="text-center">
+            <small>
+                <a href="{{ tournament.siteUrl }} ">{{ tournament.club }}</a> &copy;2013-2015 Darren Davison.
+            </small>
+        </p>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newsalert" tabindex="-1" role="dialog" aria-labelledby="newsalertLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">News</h4>
+                <div class="modal-timestamp text-muted"><small></small></div>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div> <!-- modal -->
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/modules/tournament.js"></script>
+<script src="scripts/modules/admin.js"></script>
+<!-- endbuild -->
+</body>
+</html>

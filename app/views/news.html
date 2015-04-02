@@ -1,0 +1,24 @@
+<!-- list of news items -->
+<div class="container" id="allnews">
+    <div class="form-group">
+        <input type="text" class="form-control" ng-model="searchBy" placeholder="Search announcements..." />
+    </div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default" ng-repeat="item in newsItems|filter: searchBy">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span class="badge">{{item.created}}</span>
+                    <a toggle-news="" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
+                        {{item.title}}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse{{$index}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <samp>{{item.body}}</samp>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

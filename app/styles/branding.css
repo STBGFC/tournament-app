@@ -1,0 +1,66 @@
+/*
+ * custom branding for STBGFC sites
+ */
+
+body {
+    background: url("../images/memorial-park.jpg") top center no-repeat;
+    background-attachment: fixed;
+}
+
+a,
+a:hover {
+    color: #a00;
+}
+a.navbar-brand img {
+    margin-top: -12px;
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:focus {
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+    background-color: #a00;
+}
+.btn-default {
+    background-repeat: repeat-x;
+    background-image: linear-gradient(#d00 0%, #a00 100%);
+}
+.btn-default .caret {
+    border-top-color: white;
+}
+.btn-default:hover {
+    background-position: 0 -15px;
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    background-color: #a00;
+    color: white;
+}
+
+.points {
+    color: white;
+    background-color: #a00;
+    width: 22px;
+    font-weight: bold;
+}
+
+.league-table {
+    background: url("../images/badge.png") no-repeat center 2.5em white;
+}
+.table-condensed {
+    background-color: white;
+}
+
+.videprinterHolder {
+    background-color: #a00;
+    opacity: 0.9;
+    color: white;
+}
+
+#footer {
+    height: 40px;
+    /*background: url("../images/footer-grass.jpg") repeat-x white;*/
+}
+

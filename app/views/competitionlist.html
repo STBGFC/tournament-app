@@ -1,0 +1,16 @@
+<!-- Competition group buttons to select an individual comp to watch -->
+<div class="container" id="main">
+    <p id="tournament-description" class="lead">{{ tournament.description }}</p>
+    <div id="competitions" class="text-center">
+        <div class="btn-group" ng-repeat="comp in competitions | unique: 'type'">
+            <button type="button" class="btn btn-lg btn-default btn-agegroup dropdown-toggle" data-toggle="dropdown">
+                {{ comp.type }}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="comp2 in competitions | filter: {type: comp.type}">
+                    <a href="#/competition/{{comp2.type}}/{{comp2.name}}">{{comp2.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
