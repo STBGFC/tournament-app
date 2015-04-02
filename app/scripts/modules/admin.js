@@ -7,15 +7,15 @@ angular
 
     .controller('AdminCompetitionController', function ($scope) { //}, Competition, $location) {
         $scope.competitions = [
-                    {type: 'U8', name: 'Alhpa'},
-                    {type: 'U8', name: 'Bravo'},
-                    {type: 'U9', name: 'Bravo'},
-                    {type: 'U10', name: 'Adam'},
-                    {type: 'U10', name: 'Bob'},
-                    {type: 'U11', name: 'Amarillo'},
-                    {type: 'U11', name: 'Blue'},
-                    {type: 'U13', name: 'Apple'},
-                    {type: 'U14', name: 'Addict'}
+                    {name: 'U8', section: 'Alhpa'},
+                    {name: 'U8', section: 'Bravo'},
+                    {name: 'U9', section: 'Bravo'},
+                    {name: 'U10', section: 'Adam'},
+                    {name: 'U10', section: 'Bob'},
+                    {name: 'U11', section: 'Amarillo'},
+                    {name: 'U11', section: 'Blue'},
+                    {name: 'U13', section: 'Apple'},
+                    {name: 'U14', section: 'Addict'}
                 ];
 
         /*

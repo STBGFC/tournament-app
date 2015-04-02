@@ -13,21 +13,26 @@ angular
                 templateUrl: 'views/competitionlist.html',
                 controller: 'CompetitionListController'
             })
-            .state('editComp', {
+            .state('competitionView', {
                 url: '/competition/:type/:name',
                 templateUrl: 'views/competition.html',
                 controller: 'CompetitionController'
             })
-            .state('news', {
+            .state('newsList', {
                 url: '/news',
                 templateUrl: 'views/news.html',
                 controller: 'NewsController'
             })
-            .state('adminComp', {
-                url: '/admin/competition',
-                templateUrl: 'views/admin/competitionEntry.html',
+            .state('admin', {
+                url: '/admin',
+                templateUrl: 'views/admin/main.html',
                 controller: 'AdminCompetitionController'
-            });
+            })
+            .state('admin.competition', {
+                url: '',
+                templateUrl: 'views/admin/competition.html'
+            })
+        ;
 
         $urlRouterProvider
             .otherwise('/');

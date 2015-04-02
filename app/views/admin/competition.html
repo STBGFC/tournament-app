@@ -1,0 +1,123 @@
+<h1 ng-cloak>{{ competition.name }} / {{ competition.section }} Results Input</h1>
+
+<div class="panel panel-default" ng-repeat="group in competition.groups">
+    <div class="panel-heading">
+        <i class="fa fa-table"></i> Group {{ $index+1 }}
+    </div>
+    <form name="groupForm{{$index+1}}" ng-submit="addResult()" ng-controller="ResultCtrl" ng-init="groupIndex = $index+1">
+        <input type="hidden" ng-model="groupIndex"/>
+        <table class="table table-condensed results">
+            <tbody>
+            <tr ng-repeat="result in group.results">
+                <td class="text-left text-muted">{{ result.tag }}</td>
+                <td class="text-right">
+                    <div class="dropdown pull-right">
+                        <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500">
+                            {{ result.homeTeam }}
+                        </span>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" ng-click="setTeam(result.homeTeam, true)">Home Team</a></li>
+                            <li><a tabindex="-1" ng-click="setTeam(result.homeTeam, false)">Away Team</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="text-center">{{ result.homeScore }}</td>
+                <td class="text-center">{{ result.awayScore}}</td>
+                <td class="text-left">
+                    <div class="dropdown">
+                        <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500">
+                            {{ result.awayTeam }}
+                        </span>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" ng-click="setTeam(result.awayTeam, true)">Home Team</a></li>
+                            <li><a tabindex="-1" ng-click="setTeam(result.awayTeam, false)">Away Team</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td><a href="#result/delete/{{competition.name}}/{{competition.section}}/{{result.id}}">delete</a></td>
+            </tr>
+            <tr>
+                <td style="width: 8%">
+                    <input name="tag" ng-model="newResult.tag" class="form-control" placeholder="09:00" type="text" required>
+                </td>
+                <td style="width:35%">
+                    <input name="homeTeam" ng-model="newResult.homeTeam" class="form-control text-right" placeholder="Home Team" type="text" required>
+                </td>
+                <td style="width:8%">
+                    <input name="homeGoals" ng-model="newResult.homeGoals" class="form-control text-right" placeholder="Goals" type="number" required>
+                </td>
+                <td style="width:8%">
+                    <input name="awayGoals" ng-model="newResult.awayGoals" class="form-control" placeholder="Goals" type="number" required>
+                </td>
+                <td style="width:35%">
+                    <input name="awayTeam" ng-model="newResult.awayTeam" class="form-control" placeholder="Away Team" type="text" required>
+                </td>
+                <td><button type="submit" class="btn btn-default">Add</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-trophy"></i> KO
+    </div>
+
+    <form name="koForm" ng-submit="addResult()" ng-cloak ng-controller="ResultCtrl">
+        <table class="table table-condensed results">
+            <tbody>
+            <tr ng-repeat="result in competition.results">
+                <td class="text-left text-muted">{{ result.tag }}</td>
+                <td class="text-right">
+                    <div class="dropdown pull-right">
+                        <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500">
+                            {{ result.homeTeam }}
+                        </span>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" ng-click="setTeam(result.homeTeam, true)">Home Team</a></li>
+                            <li><a tabindex="-1" ng-click="setTeam(result.homeTeam, false)">Away Team</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="text-center">{{ result.homeScore }}</td>
+                <td class="text-center">{{ result.awayScore}}</td>
+                <td class="text-left">
+                    <div class="dropdown">
+                        <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500">
+                            {{ result.awayTeam }}
+                        </span>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" ng-click="setTeam(result.awayTeam, true)">Home Team</a></li>
+                            <li><a tabindex="-1" ng-click="setTeam(result.awayTeam, false)">Away Team</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td><a href="#result/delete/{{competition.name}}/{{competition.section}}/{{result.id}}">delete</a></td>
+            </tr>
+            <tr>
+                <td style="width: 8%">
+                    <input name="tag" ng-model="newResult.tag" class="form-control" placeholder="QF1" type="text" required>
+                </td>
+                <td style="width: 35%">
+                    <input name="homeTeam" ng-model="newResult.homeTeam" class="form-control text-right" placeholder="Home Team" type="text" required>
+                </td>
+                <td style="width: 8%">
+                    <input name="homeGoals" ng-model="newResult.homeGoals" class="form-control text-right" placeholder="Goals" type="number" required>
+                    <input name="homePens" ng-model="newResult.homePens" class="form-control text-right" placeholder="Pens" type="number">
+                </td>
+                <td style="width: 8%">
+                    <input name="awayGoals" ng-model="newResult.awayGoals" class="form-control text-center" placeholder="Goals" type="number" required>
+                    <input name="awayPens" ng-model="newResult.awayPens" class="form-control text-center" placeholder="Pens" type="number">
+                </td>
+                <td style="width: 35%">
+                    <input name="awayTeam" ng-model="newResult.awayTeam" class="form-control" placeholder="Away Team" type="text" required>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-default">Add</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group small" id="competitions">
+                <a ui-sref="admin.competition({ name: comp.name })"
+                   ng-class="{active:selected==comp}"
+                   ng-repeat="comp in competitions"
+                   class="list-group-item">
+                    {{comp.type}} {{comp.name}}
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <section ui-view></section>
+        </div>
+
+    </div>
+</div>
