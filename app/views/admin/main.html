@@ -2,17 +2,19 @@
     <div class="row">
         <div class="col-md-2">
             <div class="list-group small" id="competitions">
-                <a ui-sref="admin.competition({ name: comp.name })"
-                   ng-class="{active:selected==comp}"
+                <a ui-sref="admin.competition({ name: comp.name, section: comp.section })"
+                   ui-sref-active="active"
                    ng-repeat="comp in competitions"
                    class="list-group-item">
-                    {{comp.type}} {{comp.name}}
+                    {{comp.name}} {{comp.section}}
                 </a>
             </div>
         </div>
 
         <div class="col-md-10">
-            <section ui-view></section>
+            <section ui-view>
+                <h4>Select a competition on the left to view and update results</h4>
+            </section>
         </div>
 
     </div>

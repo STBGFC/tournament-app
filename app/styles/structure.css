@@ -13,8 +13,8 @@ h1 {
     width: 88px;
     margin: 20px 20px 0 0;
 }
-div.container {
-    /*max-width: 600px;*/
+#selected-competition {
+    max-width: 600px;
 }
 .panel .table {
     margin-bottom: 0;

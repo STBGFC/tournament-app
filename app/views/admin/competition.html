@@ -1,10 +1,11 @@
-<h1 ng-cloak>{{ competition.name }} / {{ competition.section }} Results Input</h1>
+<h4 ng-cloak>{{ competition.name }} / {{ competition.section }} Results Input</h4>
 
 <div class="panel panel-default" ng-repeat="group in competition.groups">
     <div class="panel-heading">
         <i class="fa fa-table"></i> Group {{ $index+1 }}
     </div>
-    <form name="groupForm{{$index+1}}" ng-submit="addResult()" ng-controller="ResultCtrl" ng-init="groupIndex = $index+1">
+
+    <form name="groupForm{{$index+1}}" ng-init="groupIndex = $index+1">
         <input type="hidden" ng-model="groupIndex"/>
         <table class="table table-condensed results">
             <tbody>
@@ -64,7 +65,7 @@
         <i class="fa fa-trophy"></i> KO
     </div>
 
-    <form name="koForm" ng-submit="addResult()" ng-cloak ng-controller="ResultCtrl">
+    <form name="koForm">
         <table class="table table-condensed results">
             <tbody>
             <tr ng-repeat="result in competition.results">

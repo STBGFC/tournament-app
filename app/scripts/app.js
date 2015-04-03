@@ -2,8 +2,7 @@
 
 angular
     .module('tournamentApp', [
-        'tournament.user',
-        'tournament.admin',
+        'tournament',
         'ui.router'
     ])
     .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
@@ -11,7 +10,7 @@ angular
             .state('competitionList', {
                 url: '/',
                 templateUrl: 'views/competitionlist.html',
-                controller: 'CompetitionListController'
+                controller: 'CompetitionController'
             })
             .state('competitionView', {
                 url: '/competition/:type/:name',
@@ -26,11 +25,12 @@ angular
             .state('admin', {
                 url: '/admin',
                 templateUrl: 'views/admin/main.html',
-                controller: 'AdminCompetitionController'
+                controller: 'CompetitionController'
             })
             .state('admin.competition', {
-                url: '',
-                templateUrl: 'views/admin/competition.html'
+                url: '/competition/:name/:section',
+                templateUrl: 'views/admin/competition.html',
+                controller: 'CompetitionController'
             })
         ;
 

@@ -19,7 +19,7 @@ describe('Controller: TournamentController', function () {
 
 });
 
-describe('Controller: CompetitionListController', function () {
+describe('Controller: CompetitionController', function () {
 
     var scope;
 
@@ -28,11 +28,16 @@ describe('Controller: CompetitionListController', function () {
 
     beforeEach(angular.mock.inject(function($rootScope, $controller) {
         scope = $rootScope.$new();
-        $controller('CompetitionListController', {$scope: scope});
+        $controller('CompetitionController', {$scope: scope});
     }));
 
     it('should attach a list of competitions to the scope', function () {
         expect(scope.competitions.length).toBe(9);
+    });
+
+    it('should attach one competition to the scope', function () {
+        expect(scope.competition.section).toBe('A');
+        expect(scope.competition.name).toBe('U9');
     });
 
 });
