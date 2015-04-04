@@ -7,13 +7,13 @@ angular
     ])
     .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('competitionList', {
+            .state('home', {
                 url: '/',
-                templateUrl: 'views/competitionlist.html',
+                templateUrl: 'views/home.html',
                 controller: 'CompetitionController'
             })
             .state('competitionView', {
-                url: '/competition/:type/:name',
+                url: '/competition/:name/:section',
                 templateUrl: 'views/competition.html',
                 controller: 'CompetitionController'
             })
