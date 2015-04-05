@@ -4,10 +4,10 @@
         <input type="text" class="form-control" ng-model="searchBy" placeholder="Search announcements..." />
     </div>
     <div class="panel-group" id="accordion">
-        <div class="panel panel-default" ng-repeat="item in newsItems|filter: searchBy">
+        <div class="panel panel-default" ng-repeat="item in newsItems|filter: searchBy|orderBy: '-created'">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <span class="badge">{{item.created}}</span>
+                    <span class="badge">{{item.created | date:'EEE HH:mm'}}</span>
                     <a toggle-news="" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
                         {{item.title}}
                     </a>

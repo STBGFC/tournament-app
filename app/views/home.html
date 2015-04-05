@@ -6,7 +6,7 @@
             <div id="competitions" class="text-center">
                 <div class="btn-group" ng-repeat="comp in competitions | unique: 'name'">
                     <button type="button" class="btn btn-lg btn-default btn-agegroup dropdown-toggle" data-toggle="dropdown">
-                        {{ comp.name }}<span class="caret"></span>
+                        {{ comp.name }} <span class="small glyphicon glyphicon-triangle-bottom"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-repeat="comp2 in competitions | filter: {name: comp.name}">

@@ -10,7 +10,6 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -33,7 +32,7 @@
             </button>
             <a class="navbar-brand" href="#/"><img src="../images/badge-icon.png" alt="Home"></a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" data-toggle="collapse" data-target=".navbar-collapse.in">
             <ul id="navlinks" class="nav navbar-nav">
                 <li><a ui-sref="newsList">Announcements</a></li>
                 <li><a ui-sref="rules">Tournament Rules</a></li>
@@ -42,7 +41,7 @@
         </div>
 
         <div class="videprinterHolder">
-            <span id="videprinter"></span> <i class="fa fa-stop"></i>
+            <span id="videprinter"></span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
         </div>
     </nav>
 

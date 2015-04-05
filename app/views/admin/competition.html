@@ -2,7 +2,7 @@
 
 <div class="panel panel-default" ng-repeat="group in competition.groups">
     <div class="panel-heading">
-        <i class="fa fa-table"></i> Group {{ $index+1 }}
+        <span class="glyphicon glyphicon-list"></span> Group {{ $index+1 }}
     </div>
 
     <form name="groupForm{{$index+1}}" ng-init="groupIndex = $index+1">
@@ -62,7 +62,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-trophy"></i> KO
+        <span class="glyphicon glyphicon-bell"></span> KO
     </div>
 
     <form name="koForm">

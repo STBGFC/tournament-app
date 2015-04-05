@@ -3,7 +3,7 @@
 
     <ul id="groupTabs" class="nav nav-tabs">
         <li ng-repeat="group in competition.groups" ng-class="{'active': $index == 0}">
-            <a show-tab="" href="#group{{$index + 1}}" data-toggle="tab"><i class="fa fa-table"></i> {{$index + 1}}</a>
+            <a show-tab="" href="#group{{$index + 1}}" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> {{$index + 1}}</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -55,7 +55,7 @@
     </div>
 
     <div id="kosection" ng-show="competition.results.length > 0">
-        <h2 class="text-center"><i class="fa fa-trophy"></i> KO Section</h2>
+        <h2 class="text-center"><span class="glyphicon glyphicon-bell"></span> KO Section</h2>
         <table class="table table-condensed" id=koresults>
             <thead><th colspan="5"></th></thead>
             <tbody>
