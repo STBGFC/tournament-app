@@ -17,12 +17,15 @@ module.exports = function(app,io) {
     });
 
     app.post('/api/news', function (req, res) {
-
         var news = req.body;
-        news.created = new Date();
-        newsList.push(news);
-
-        io.sockets.emit('news', news);
-        res.status(201).end();
+        if (news.title && news.body) {
+            news.created = new Date();
+            newsList.push(news);
+            io.sockets.emit('news', news);
+            res.status(201).end();
+        }
+        else {
+            res.status(400).end();
+        }
     });
 };

@@ -4,18 +4,34 @@ angular
     .module('tournament', [
         'ngResource',
         'ui.utils',
-        'ui.router'
+        'ui.router',
+        'btford.socket-io'
     ])
 
     // ============================================================================================
     // controllers
     // ============================================================================================
 
-    .controller('TournamentController', function (Tournament, $scope) {
+    .controller('TournamentController', function (Tournament, $scope, $log) {
         $scope.tournament = Tournament.get();
+
+        $scope.$on('socket:result', function(event, data) {
+            if (data.result) {
+                var result = data.result;
+                var scoreline = result.homeTeam + ' ' + result.homeGoals;
+                scoreline += (result.homePens ? '(' + result.homePens + ')-(' + result.awayPens + ')' : '-');
+                scoreline += result.awayGoals + ' ' + result.awayTeam;
+                $('#videprinter').teletype({
+                    text: [data.compName + '/' + data.compSection + ' ' + scoreline]
+                });
+            }
+            else {
+                $log.warn('invalid news broadcast message received');
+            }
+        });
     })
 
-    .controller('CompetitionListController', function (Competition, $scope, $state) {
+    .controller('CompetitionListController', function (Competition, $scope) {
         $scope.competitions = Competition.query();
     })
 
@@ -87,10 +103,27 @@ angular
     })
     */
 
-    .controller('NewsController', function (News, $scope) {
+    .controller('NewsListController', function (News, $scope, $log) {
         $scope.newsItems = News.query();
         $scope.searchBy = '';
 
+        // socket broadcasts
+        $scope.$on('socket:news', function(event, data) {
+            if (data.title && data.body && data.created) {
+                $log.debug('news received', data);
+                $scope.announcement = data;
+                $scope.newsItems.push(data);
+
+                // OMG! this is awful.. jQuery from inside a controller. Please help!
+                $('#newsalert').modal({backdrop: false});
+            }
+            else {
+                $log.warn('invalid news broadcast message received');
+            }
+        });
+    })
+
+    .controller('NewsController', function(News, $scope) {
         $scope.createNews = function() {
             var n = new News($scope.news);
             n.$save();
@@ -127,6 +160,13 @@ angular
             */
     })
 
+    .factory('broadcastSocket', function(socketFactory) {
+        var s = socketFactory();
+        s.forward('news');
+        s.forward('result');
+        return s;
+    })
+
     // ============================================================================================
     // directives
     // ============================================================================================
@@ -146,7 +186,7 @@ angular
     })
 
     /*
-     * simulate the popver for bootstrap elements
+     * simulate the accordion for bootstrap elements
      */
     .directive('toggleNews', function () {
         return {
@@ -160,4 +200,5 @@ angular
                     .on('shown.bs.collapse', toggleAccordion);
             }
         };
-    });
+    })
+;

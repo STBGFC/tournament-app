@@ -20,7 +20,7 @@ angular
             .state('newsList', {
                 url: '/news',
                 templateUrl: 'views/news.html',
-                controller: 'NewsController'
+                controller: 'NewsListController'
             })
             .state('admin', {
                 url: '/admin',
@@ -37,7 +37,10 @@ angular
         $urlRouterProvider
             .otherwise('/');
     }])
-    .run(['$rootScope', '$state', '$stateParams', function ($rootScope,   $state,   $stateParams) {
+    .run(['$rootScope', '$state', '$stateParams', '$log', 'broadcastSocket', function ($rootScope, $state, $stateParams, $log, broadcastSocket) {
+        // ensure the factory is init'd as we never use it directly
+        console.log(broadcastSocket);
+
         // Add references to $state and $stateParams to the $rootScope
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
