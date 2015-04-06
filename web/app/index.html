@@ -17,34 +17,34 @@
     <link rel="stylesheet" href="styles/branding.css">
     <!-- endbuild -->
 </head>
-<body ng-app="tournamentApp" ng-controller="TournamentController">
+<body ng-cloak="" ng-app="tournamentApp" ng-controller="TournamentController">
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <div id="wrap">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/"><img src="../images/badge-icon.png" alt="Home"></a>
+            <a class="navbar-brand" href="#/"><img src="images/badge-icon.png" alt="Home"></a>
+            <p class="navbar-text">{{tournament.name}}</p>
         </div>
         <div class="navbar-collapse collapse" data-toggle="collapse" data-target=".navbar-collapse.in">
             <ul id="navlinks" class="nav navbar-nav">
-                <li><a ui-sref="newsList">Announcements</a></li>
-                <li><a ui-sref="rules">Tournament Rules</a></li>
-                <li><a ui-sref="maps">Pitch Maps</a></li>
+                <li ui-sref-active="active"><a ui-sref="newsList">Announcements</a></li>
+                <li ui-sref-active="active"><a ui-sref="rules">Tournament Rules</a></li>
+                <li ui-sref-active="active"><a ui-sref="maps">Pitch Maps</a></li>
             </ul>
         </div>
-
         <div class="videprinterHolder">
-            <span id="videprinter"></span> <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+            <span id="videprinter"></span><span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
         </div>
     </nav>
-
+{{ENV}}
     <section ui-view></section>
 
 </div> <!-- wrap -->
@@ -59,13 +59,13 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal announcement -->
 <div class="modal fade" id="newsalert" tabindex="-1" role="dialog" aria-labelledby="newsalertLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">News</h4>
+                <h4 class="modal-title"></h4>
                 <div class="modal-timestamp text-muted"><small></small></div>
             </div>
             <div class="modal-body"></div>
@@ -89,8 +89,11 @@
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="scripts/app.js"></script>
+<script src="scripts/angularApp.js"></script>
 <script src="scripts/modules/tournament.js"></script>
+<script src="scripts/jQuery.teletypePlugin.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/socketevents.js"></script>
 <!-- endbuild -->
 </body>
 </html>

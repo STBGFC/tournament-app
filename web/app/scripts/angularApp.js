@@ -5,12 +5,12 @@ angular
         'tournament',
         'ui.router'
     ])
-    .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
                 url: '/',
                 templateUrl: 'views/home.html',
-                controller: 'CompetitionController'
+                controller: 'CompetitionListController'
             })
             .state('competitionView', {
                 url: '/competition/:name/:section',
@@ -38,9 +38,8 @@ angular
             .otherwise('/');
     }])
     .run(['$rootScope', '$state', '$stateParams', function ($rootScope,   $state,   $stateParams) {
-            // Add references to $state and $stateParams to the $rootScope
-            $rootScope.$state = $state;
-            $rootScope.$stateParams = $stateParams;
-        }
-    ])
+        // Add references to $state and $stateParams to the $rootScope
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    }])
 ;

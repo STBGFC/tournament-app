@@ -1,0 +1,195 @@
+/*
+ * custom branding for STBGFC sites
+ */
+
+body {
+    /*background: url("../images/memorial-park.jpg") top center no-repeat;
+    background-attachment: fixed;*/
+}
+
+a,
+a:hover {
+    color: #a00;
+}
+a.navbar-brand img {
+    margin-top: -13px;
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:focus {
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+    background-color: #a00;
+}
+.btn-default {
+    background-repeat: repeat-x;
+    background-image: linear-gradient(#d00 0%, #a00 100%);
+}
+.btn-default .caret {
+    border-top-color: white;
+}
+.btn-default:hover {
+    background-position: 0 -15px;
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #a00;
+    color: white;
+}
+
+.panel-default > .panel-heading {
+    background-color: #eee;
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    background-color: #a00;
+    border-color: #a00;
+}
+.points {
+    color: white;
+    background-color: #a00;
+    width: 22px;
+    font-weight: bold;
+}
+
+.league-table {
+    background: url("../images/badge.png") no-repeat center 2.5em white;
+}
+.table-condensed {
+    background-color: white;
+}
+
+.videprinterHolder {
+    background-color: blue;
+    opacity: 0.8;
+    color: white;
+}
+
+.form-control:focus {
+    border-color: #888;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(170, 0, 0, .6);
+}
+#footer {
+    height: 40px;
+    background: url("../images/footer-grass.jpg") repeat-x white;
+}
+
+
+
+
+/*
+ * custom gradiated navbar, generated at
+ * http://twitterbootstrap3navbars.w3masters.nl/
+ */
+.navbar-custom {
+    background-color: #111111;
+    border-color: #000000;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#2b2b2b), to(#111111));
+    background-image: -webkit-linear-gradient(top, #2b2b2b, 0%, #111111, 100%);
+    background-image: -moz-linear-gradient(top, #2b2b2b 0%, #111111 100%);
+    background-image: linear-gradient(to bottom, #2b2b2b 0%, #111111 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2b2b2b', endColorstr='#ff111111', GradientType=0);
+}
+.navbar-custom .navbar-brand {
+    color: #999999;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+    color: #808080;
+    background-color: transparent;
+}
+.navbar-custom .navbar-text {
+    color: #999999;
+}
+.navbar-custom .navbar-nav > li:last-child > a {
+    border-right: 1px solid #000000;
+}
+.navbar-custom .navbar-nav > li > a {
+    color: #999999;
+    border-left: 1px solid #000000;
+}
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+}
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color: #000000;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#000000), to(#1a1a1a));
+    background-image: -webkit-linear-gradient(top, #000000, 0%, #1a1a1a, 100%);
+    background-image: -moz-linear-gradient(top, #000000 0%, #1a1a1a 100%);
+    background-image: linear-gradient(to bottom, #000000 0%, #1a1a1a 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff000000', endColorstr='#ff1a1a1a', GradientType=0);
+}
+.navbar-custom .navbar-nav > .disabled > a,
+.navbar-custom .navbar-nav > .disabled > a:hover,
+.navbar-custom .navbar-nav > .disabled > a:focus {
+    color: #cccccc;
+    background-color: transparent;
+}
+.navbar-custom .navbar-toggle .icon-bar {
+    background-color: #cccccc;
+}
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+    border-color: #000000;
+}
+.navbar-custom .navbar-nav > .dropdown > a:hover .caret,
+.navbar-custom .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+.navbar-custom .navbar-nav > .open > a,
+.navbar-custom .navbar-nav > .open > a:hover,
+.navbar-custom .navbar-nav > .open > a:focus {
+    background-color: #000000;
+    color: #ffffff;
+}
+.navbar-custom .navbar-nav > .open > a .caret,
+.navbar-custom .navbar-nav > .open > a:hover .caret,
+.navbar-custom .navbar-nav > .open > a:focus .caret {
+    border-top-color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+.navbar-custom .navbar-nav > .dropdown > a .caret {
+    border-top-color: #999999;
+    border-bottom-color: #999999;
+}
+@media (max-width: 767) {
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+        color: #999999;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #ffffff;
+        background-color: transparent;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #ffffff;
+        background-color: #000000;
+    }
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #cccccc;
+        background-color: transparent;
+    }
+}
+.navbar-custom .navbar-link {
+    color: #999999;
+}
+.navbar-custom .navbar-link:hover {
+    color: #ffffff;
+}
