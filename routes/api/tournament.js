@@ -20,7 +20,7 @@ module.exports = function(app,io) {
     app.get('/api/competition', function(req, res) {
         res.json(
             [
-                {name: 'U8', section: 'Alhpa'},
+                {name: 'U8', section: 'Alpha'},
                 {name: 'U8', section: 'Bravo'},
                 {name: 'U9', section: 'Bravo'},
                 {name: 'U10', section: 'Adam'},

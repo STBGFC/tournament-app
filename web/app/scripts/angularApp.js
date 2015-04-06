@@ -3,7 +3,8 @@
 angular
     .module('tournamentApp', [
         'tournament',
-        'ui.router'
+        'ui.router',
+        'restangular'
     ])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -37,12 +38,16 @@ angular
         $urlRouterProvider
             .otherwise('/');
     }])
-    .run(['$rootScope', '$state', '$stateParams', '$log', 'broadcastSocket', function ($rootScope, $state, $stateParams, $log, broadcastSocket) {
+    .run(function ($rootScope, $state, $stateParams, $log, broadcastSocket, Restangular) {
+
+        // global Restangular config
+        Restangular.setBaseUrl('/api');
+
         // ensure the factory is init'd as we never use it directly
         console.log(broadcastSocket);
 
         // Add references to $state and $stateParams to the $rootScope
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-    }])
+    })
 ;

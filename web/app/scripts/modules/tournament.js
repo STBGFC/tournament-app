@@ -5,16 +5,48 @@ angular
         'ngResource',
         'ui.utils',
         'ui.router',
-        'btford.socket-io'
+        'btford.socket-io',
+        'restangular'
     ])
 
     // ============================================================================================
     // controllers
     // ============================================================================================
 
-    .controller('TournamentController', function (Tournament, $scope, $log) {
-        $scope.tournament = Tournament.get();
+    .controller('TournamentController', function (Restangular, $scope) {
+        Restangular.one('tournament').get().then(function(tournament) {
+            $scope.tournament = tournament;
+        });
+    })
 
+    .controller('CompetitionListController', function (Restangular, $scope) {
+        Restangular.all('competition').getList().then(function(competitions) {
+            $scope.competitions = competitions;
+        });
+    })
+
+    .controller('CompetitionController', function (Restangular, $scope, $state, $stateParams) {
+        Restangular.one('competition', $stateParams.name).one($stateParams.section).get().then(function(competition) {
+            $scope.competition = competition;
+        });
+
+        $scope.createCompetition = function() {
+            var c = Restangular.post($scope.competition);
+            c.$save(function() {
+                // success
+                $state.go(
+                    'admin.competition',
+                    {name: $scope.competition.name, section: $scope.competition.section}
+                );
+
+            }, function(httpResponse) {
+                // fail
+                console.log(httpResponse);
+            });
+        };
+    })
+
+    .controller('ResultController', function($scope, $log) {
         $scope.$on('socket:result', function(event, data) {
             if (data.result) {
                 var result = data.result;
@@ -30,56 +62,40 @@ angular
             }
         });
     })
+/*
+    .controller('ResultAdminController', function($scope, Restangular, $log) {
 
-    .controller('CompetitionListController', function (Competition, $scope) {
-        $scope.competitions = Competition.query();
-    })
+        if ($routeParams.compName !== null) {
+            $scope.currentName = $routeParams.compName;
+        }
 
-    .controller('CompetitionController', function (Competition, $scope, $state, $stateParams) {
-        $scope.competition = Competition.get({name: $stateParams.name, section: $stateParams.section});
+        if ($routeParams.compSection !== null) {
+            $scope.currentSection = $routeParams.compSection;
+        }
 
-        $scope.createCompetition = function() {
-            var c = new Competition($scope.competition);
-            c.$save(function() {
-                // success
-                $state.go(
-                    'admin.competition',
-                    {name: $scope.competition.name, section: $scope.competition.section}
-                );
-
-            }, function(httpResponse) {
-                // fail
-                console.log(httpResponse);
-            });
-        };
-    })
-
-    /*
-    .controller('ResultController', function($scope, Competition) {
-        if ($routeParams.compName != null) $scope.currentName = $routeParams.compName;
-        if ($routeParams.compSection != null) $scope.currentSection = $routeParams.compSection;
         $scope.competition = Competition.get({compName: $scope.currentName, compSection: $scope.currentSection});
+
         $scope.newResult = {homeGoals: 0, awayGoals: 0};
 
-        $scope.addResult = function() {
+        $scope.addResult = function($state) {
             var result = new Result($scope.newResult);
             var params = {};
             params.compSection = $scope.currentSection;
             params.compName = $scope.currentName;
-            if ($scope.groupIndex != 0) {
+            if ($scope.groupIndex !== 0) {
                params.groupOrResultId = $scope.groupIndex;
             }
 
             result.$save(
                 params,
-                function(data, headers) {
+                function() {
                     // success
-                    $route.reload();
-
+                    $state.reload();
                 }, function(httpResponse) {
                     // fail
-                    alert(httpResponse.status);
-                });
+                    $log.error(httpResponse.status);
+                }
+            );
         };
 
         $scope.setTeam = function(teamName, isHome) {
@@ -91,20 +107,22 @@ angular
             }
         };
 
-        $scope.deleteResult = function($scope, Result) {
+        $scope.deleteResult = function($scope, Result, $state, $stateParams) {
             Result.remove({
-                compName:   $routeParams.compName,
-                compSection:$routeParams.compSection,
-                groupOrResultId:   $routeParams.resultId
-            }, function() {
-                $location.path('competition/' + $routeParams.compName + '/' + $routeParams.compSection);
+                compName: $stateParams.compName,
+                compSection: $stateParams.compSection,
+                groupOrResultId: $stateParams.resultId
+            }, function () {
+                $state.go('admin.competition');
             });
-
+        };
     })
-    */
+*/
+    .controller('NewsListController', function (Restangular, $scope, $log) {
+        Restangular.all('news').getList().then(function(news) {
+            $scope.newsItems = news;
+        });
 
-    .controller('NewsListController', function (News, $scope, $log) {
-        $scope.newsItems = News.query();
         $scope.searchBy = '';
 
         // socket broadcasts
@@ -123,9 +141,9 @@ angular
         });
     })
 
-    .controller('NewsController', function(News, $scope) {
+    .controller('NewsController', function(Restangular, $scope) {
         $scope.createNews = function() {
-            var n = new News($scope.news);
+            var n = Restangular.post($scope.news);
             n.$save();
             $scope.news = {};
         };
@@ -134,31 +152,6 @@ angular
     // ============================================================================================
     // services
     // ============================================================================================
-
-    .factory('Tournament', function($resource) {
-        return $resource('/api/tournament');
-    })
-
-    .factory('Competition', function($resource) {
-        return $resource('/api/competition/:name/:section', {
-            name:'@name',
-            section:'@section'
-        });
-    })
-
-    .factory('News', function($resource) {
-        return $resource('/api/news');
-    })
-
-    .factory('Result', function(/*$resource*/) {
-        /*
-        return $resource('api/result/:compName/:compSection/:groupOrResultId', {
-               compName:'@compName',
-               compSection:'@compSection',
-               groupId:'@groupOrResultId'
-            });
-            */
-    })
 
     .factory('broadcastSocket', function(socketFactory) {
         var s = socketFactory();
