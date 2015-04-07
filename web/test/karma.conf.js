@@ -30,6 +30,7 @@ module.exports = function(config) {
       'bower_components/lodash/lodash.js',
       'bower_components/restangular/dist/restangular.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular-socket.io-mock/angular-socket.io-mock.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
@@ -38,6 +39,7 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
+      'bower_components/angular-socket.io-mock.js'
     ],
 
     // web server port

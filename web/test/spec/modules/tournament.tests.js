@@ -4,32 +4,34 @@ describe ('Tournament Tests', function() {
 
     beforeEach(module('tournamentApp'));
     beforeEach(module('ui.unique'));
+    beforeEach(module('btford.socket-io'));
 
     describe('Controller: TournamentController', function () {
 
-        /*
-        var scope;
+        var scope, $httpBackend;
 
         var tournamentData = {
             name: 'Karma Tournament',
             description: 'Welcome to our Karma Tournament',
             current: true,
-            club: 'STBGFC',
-            siteUrl: 'https://www.stbgfc.co.uk'
+            club: 'Jasmine',
+            siteUrl: 'http://www.example.com'
         };
 
         beforeEach(
-            inject(function($rootScope, $controller) {
+            inject(function($rootScope, $controller, _$httpBackend_) {
+                $httpBackend = _$httpBackend_;
+                $httpBackend.when('GET', '/api/tournament').respond(tournamentData);
+
                 scope = $rootScope.$new();
                 $controller('TournamentController', {$scope: scope});
             })
         );
 
         it('should attach the tournament to the scope', function () {
-            expect(scope.tournament.name).toBe('Karma Tournament');
+            expect(scope.tournament.name).toBe('Karma Tournamen4t');
             expect(scope.tournament.description).toBe('Welcome to our Karma Tournament');
         });
-        */
 
     });
 
