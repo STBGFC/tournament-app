@@ -52,8 +52,8 @@ angular
     })
 
     .controller('CompetitionAdminController', function (Restangular, $scope, $state, $stateParams, $log) {
-        Restangular.one('competition', $stateParams.name).one($stateParams.section).get().then(function(competition) {
-            $scope.competition = competition;
+        Restangular.all('competition').getList().then(function(competitions) {
+            $scope.competitions = competitions;
         });
 
         $scope.createCompetition = function() {
