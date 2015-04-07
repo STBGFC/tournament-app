@@ -25,7 +25,33 @@ angular
         });
     })
 
-    .controller('CompetitionController', function (Restangular, $scope, $state, $stateParams) {
+    .controller('CompetitionController', function (Restangular, $scope, $state, $stateParams, $log) {
+        Restangular.one('competition', $stateParams.name).one($stateParams.section).get().then(function (competition) {
+            $scope.competition = competition;
+        });
+
+        $scope.$on('socket:result', function(event, data) {
+            if (data.result) {
+                var result = data.result;
+                var scoreline = result.homeTeam + ' ' + result.homeGoals;
+                scoreline += (result.homePens ? '(' + result.homePens + ')-(' + result.awayPens + ')' : '-');
+                scoreline += result.awayGoals + ' ' + result.awayTeam;
+                $('#videprinter').teletype({
+                    text: [data.compName + '/' + data.compSection + ' ' + scoreline]
+                });
+
+                // reload state if current
+                if (data.compName === $stateParams.name && data.compSection === $stateParams.section) {
+                    $state.reload();
+                }
+            }
+            else {
+                $log.warn('invalid result broadcast message received');
+            }
+        });
+    })
+
+    .controller('CompetitionAdminController', function (Restangular, $scope, $state, $stateParams, $log) {
         Restangular.one('competition', $stateParams.name).one($stateParams.section).get().then(function(competition) {
             $scope.competition = competition;
         });
@@ -41,26 +67,13 @@ angular
 
             }, function(httpResponse) {
                 // fail
-                console.log(httpResponse);
+                $log.error(httpResponse);
             });
         };
     })
 
     .controller('ResultController', function($scope, $log) {
-        $scope.$on('socket:result', function(event, data) {
-            if (data.result) {
-                var result = data.result;
-                var scoreline = result.homeTeam + ' ' + result.homeGoals;
-                scoreline += (result.homePens ? '(' + result.homePens + ')-(' + result.awayPens + ')' : '-');
-                scoreline += result.awayGoals + ' ' + result.awayTeam;
-                $('#videprinter').teletype({
-                    text: [data.compName + '/' + data.compSection + ' ' + scoreline]
-                });
-            }
-            else {
-                $log.warn('invalid news broadcast message received');
-            }
-        });
+        $log.debug($scope); //remove this
     })
 /*
     .controller('ResultAdminController', function($scope, Restangular, $log) {

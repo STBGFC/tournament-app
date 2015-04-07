@@ -26,12 +26,12 @@ angular
             .state('admin', {
                 url: '/admin',
                 templateUrl: 'views/admin/main.html',
-                controller: 'CompetitionController'
+                controller: 'CompetitionAdminController'
             })
             .state('admin.competition', {
                 url: '/competition/:name/:section',
                 templateUrl: 'views/admin/competition.html',
-                controller: 'CompetitionController'
+                controller: 'CompetitionAdminController'
             })
         ;
 
