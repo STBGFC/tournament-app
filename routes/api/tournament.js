@@ -32,22 +32,28 @@ module.exports = function(app,io) {
             var competition = competitions[c];
             if (competition.name === cname && competition.section === csection) {
                 cb(competition);
+                return true;
             }
         }
+        return false;
     };
 
     app.post('/api/competition', function(req, res, next) {
-        var err;
-
-        withCompetition(req.body.name, req.body.section, function() {
-            err = new Error('Duplicate competition');
+        var done = withCompetition(req.body.name, req.body.section, function() {
+            var err = new Error('Duplicate competition');
             err.status = 409;
             next(err);
         });
 
-        if (!err) {
+        if (!done) {
             var comp = req.body;
-            comp.groups = comp.groups || [{results:[],table:{}}];
+            comp.groups = comp.groups ||
+                [
+                    {
+                        results:[],
+                        table:[]
+                    }
+                ];
             comp.results = comp.results || [];
             competitions.push(comp);
             res.status(201).end();
@@ -55,10 +61,10 @@ module.exports = function(app,io) {
     });
 
     app.get('/api/competition/:name/:section', function(req, res, next) {
-        withCompetition(req.params.name, req.params.section, function(comp) {
-            res.json(comp).end();
+        var done = withCompetition(req.params.name, req.params.section, function(comp) {
+            res.json(comp);
         });
-        next();
+        done || next();
     });
 
     app.get('/api/competition', function(req, res) {
@@ -78,6 +84,10 @@ module.exports = function(app,io) {
         var cname = req.params.name;
         var csection = req.params.section;
         var group = req.params.group;
+
+        // convenience properties taking into account penalties
+        result.homeScore = result.homeGoals + (result.homePens ? '(' + result.homePens + ')' : '');
+        result.awayScore = result.awayGoals + (result.awayPens ? '(' + result.awayPens + ')' : '');
 
         withCompetition(cname, csection, function(comp) {
             if (!group) {

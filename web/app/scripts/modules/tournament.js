@@ -33,11 +33,9 @@ angular
         $scope.$on('socket:result', function(event, data) {
             if (data.result) {
                 var result = data.result;
-                var scoreline = result.homeTeam + ' ' + result.homeGoals;
-                scoreline += (result.homePens ? '(' + result.homePens + ')-(' + result.awayPens + ')' : '-');
-                scoreline += result.awayGoals + ' ' + result.awayTeam;
+                var ticker = result.homeTeam + ' ' + result.scoreline + ' ' + result.awayTeam;
                 $('#videprinter').teletype({
-                    text: [data.compName + '/' + data.compSection + ' ' + scoreline]
+                    text: [data.compName + '/' + data.compSection + ' ' + ticker]
                 });
 
                 // reload state if current

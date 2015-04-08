@@ -35,7 +35,7 @@
                 </tbody>
             </table>
 
-            <table ng-show="group.table.length > 0" class="table table-condensed results">
+            <table ng-show="group.results.length > 0" class="table table-condensed results">
                 <thead><th colspan="5"></th></thead>
                 <tbody>
                     <tr ng-repeat="result in group.results">
@@ -48,7 +48,7 @@
                 </tbody>
             </table>
 
-            <p ng-show="group.table.length == 0" class="lead">
+            <p ng-show="group.results.length == 0" class="lead">
                 Results and league tables will appear here as soon as any results for this competition become available.
             </p>
         </div>

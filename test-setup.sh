@@ -42,7 +42,7 @@ curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"08:50\",
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"09:00\",\"homeTeam\":\"Swindon Town\",\"awayTeam\":\"John O'groats FC\",\"homeGoals\":0,\"awayGoals\":0}"  ${URL}/api/result/U8/A/2
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"08:50\",\"homeTeam\":\"John O'groats FC\",\"awayTeam\":\"Brisbane Blacks\",\"homeGoals\":0,\"awayGoals\":1}"  ${URL}/api/result/U8/A/2
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"09:00\",\"homeTeam\":\"Stoke City\",\"awayTeam\":\"Swindon Town\",\"homeGoals\":3,\"awayGoals\":0}"  ${URL}/api/result/U8/A/2
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"SF1\",\"homeTeam\":\"Sheff. Wed.\",\"awayTeam\":\"Stoke City\",\"homeGoals\":3,\"awayGoals\":1}"  ${URL}/api/result/U8/A
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"SF1\",\"homeTeam\":\"Sheff. Wed.\",\"awayTeam\":\"Stoke City\",\"homeGoals\":1,\"awayGoals\":1,\"homePens\":3,\"awayPens\":2}"  ${URL}/api/result/U8/A
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"SF2\",\"homeTeam\":\"LA Tigers\",\"awayTeam\":\"Swindon Town\",\"homeGoals\":3,\"awayGoals\":0}"  ${URL}/api/result/U8/A
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"Final\",\"homeTeam\":\"LA Tigers\",\"awayTeam\":\"Sheff. Wed.\",\"homeGoals\":2,\"awayGoals\":3}"  ${URL}/api/result/U8/A
 
