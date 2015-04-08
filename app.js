@@ -40,10 +40,10 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
     var e = (app.get('env') === 'development') ? err : {};
     res.status(err.status || 500)
-    .send({
-        message: err.message,
-        error: e
-    });
+        .send({
+            message: err.message,
+            error: e
+        });
 });
 
 module.exports = app;
