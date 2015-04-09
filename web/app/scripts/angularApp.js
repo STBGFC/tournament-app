@@ -33,6 +33,16 @@ angular
                 templateUrl: 'views/admin/competition.html',
                 controller: 'CompetitionController'
             })
+            .state('admin.news', {
+                url: '/news',
+                templateUrl: 'views/admin/news.html',
+                controller: 'NewsAdminController'
+            })
+            .state('admin.newcompetition', {
+                url: '/news',
+                templateUrl: 'views/admin/newcompetition.html',
+                controller: 'CompetitionAdminController'
+            })
         ;
 
         $urlRouterProvider

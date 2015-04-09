@@ -75,19 +75,18 @@ module.exports = function(app,io) {
     /* -----------------------------------------------------------------------
      * result
      * ---------------------------------------------------------------------*/
-    app.put('/api/result', function(req, res) {
-        res.status(201).end();
-    });
-
     var resultPost = function (req, res) {
         var result = req.body;
         var cname = req.params.name;
         var csection = req.params.section;
         var group = req.params.group;
 
-        // convenience properties taking into account penalties
-        result.homeScore = result.homeGoals + (result.homePens ? '(' + result.homePens + ')' : '');
-        result.awayScore = result.awayGoals + (result.awayPens ? '(' + result.awayPens + ')' : '');
+        if (result.played) {
+            // convenience properties taking into account penalties
+            result.homeScore = result.homeGoals + (result.homePens ? '(' + result.homePens + ')' : '');
+            result.awayScore = result.awayGoals + (result.awayPens ? '(' + result.awayPens + ')' : '');
+            io.sockets.emit('result', {result: result, compName: cname, compSection: csection, group: group});
+        }
 
         withCompetition(cname, csection, function(comp) {
             if (!group) {
@@ -102,7 +101,6 @@ module.exports = function(app,io) {
             }
         });
 
-        io.sockets.emit('result', {result: result, compName: cname, compSection: csection});
         res.status(201).end();
     };
 

@@ -33,9 +33,13 @@ angular
         $scope.$on('socket:result', function(event, data) {
             if (data.result) {
                 var result = data.result;
-                var ticker = result.homeTeam + ' ' + result.scoreline + ' ' + result.awayTeam;
+
                 $('#videprinter').teletype({
-                    text: [data.compName + '/' + data.compSection + ' ' + ticker]
+                    text: [
+                        data.compName + '/' + data.compSection + ' ' + (data.group ? '/' + data.group : '') +
+                        result.homeTeam + ' ' + result.homeScore + '-' +
+                        result.awayScore + ' ' + result.awayTeam
+                    ]
                 });
 
                 // reload state if current
@@ -55,58 +59,43 @@ angular
         });
 
         $scope.createCompetition = function() {
-            var c = Restangular.post($scope.competition);
-            c.$save(function() {
-                // success
-                $state.go(
-                    'admin.competition',
-                    {name: $scope.competition.name, section: $scope.competition.section}
-                );
-
-            }, function(httpResponse) {
-                // fail
-                $log.error(httpResponse);
-            });
+            $log.info('Creating new competition: ' + JSON.stringify($scope.competition));
+            //Restangular.post($scope.competition);
         };
     })
 
     .controller('ResultController', function($scope, $log) {
         $log.debug($scope); //remove this
     })
-/*
-    .controller('ResultAdminController', function($scope, Restangular, $log) {
 
-        if ($routeParams.compName !== null) {
-            $scope.currentName = $routeParams.compName;
-        }
+    .controller('ResultAdminController', function($scope, Restangular, $state, $log) {
+        $scope.newResult = {played: false};
 
-        if ($routeParams.compSection !== null) {
-            $scope.currentSection = $routeParams.compSection;
-        }
-
-        $scope.competition = Competition.get({compName: $scope.currentName, compSection: $scope.currentSection});
-
-        $scope.newResult = {homeGoals: 0, awayGoals: 0};
-
-        $scope.addResult = function($state) {
-            var result = new Result($scope.newResult);
+        $scope.addResult = function() {
+            var res = $scope.newResult;
             var params = {};
             params.compSection = $scope.currentSection;
             params.compName = $scope.currentName;
+
+            res.played = (res.homeGoals >= 0);
+            $log.info('Adding new result: ' + JSON.stringify(res));
+
+            //Restangular.post(res, params);
             if ($scope.groupIndex !== 0) {
                params.groupOrResultId = $scope.groupIndex;
             }
+        };
 
-            result.$save(
-                params,
-                function() {
-                    // success
-                    $state.reload();
-                }, function(httpResponse) {
-                    // fail
-                    $log.error(httpResponse.status);
-                }
-            );
+        $scope.updateResult = function(result) {
+            $log.info('Updating result: ' + JSON.stringify(result));
+            //Restangular.put(result);
+            $state.reload();
+        };
+
+        $scope.deleteResult = function(result) {
+            $log.info('Deleting result: ' + JSON.stringify(result));
+            //Restangular.delete(result);
+            $state.reload();
         };
 
         $scope.setTeam = function(teamName, isHome) {
@@ -117,18 +106,8 @@ angular
                 $scope.newResult.awayTeam = teamName;
             }
         };
-
-        $scope.deleteResult = function($scope, Result, $state, $stateParams) {
-            Result.remove({
-                compName: $stateParams.compName,
-                compSection: $stateParams.compSection,
-                groupOrResultId: $stateParams.resultId
-            }, function () {
-                $state.go('admin.competition');
-            });
-        };
     })
-*/
+
     .controller('NewsListController', function (Restangular, $scope, $log) {
         Restangular.all('news').getList().then(function(news) {
             $scope.newsItems = news;
@@ -152,10 +131,10 @@ angular
         });
     })
 
-    .controller('NewsController', function(Restangular, $scope) {
+    .controller('NewsAdminController', function(Restangular, $scope, $log) {
         $scope.createNews = function() {
-            var n = Restangular.post($scope.news);
-            n.$save();
+            $log.info('Creating new announcement: ' + JSON.stringify($scope.news));
+            //Restangular.post($scope.news);
             $scope.news = {};
         };
     })
