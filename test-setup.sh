@@ -14,22 +14,22 @@ ACCEPT="Accept: application/json"
 URL=$1
 
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X PUT -d "{\"name\":\"Test Tournament\",\"description\":\"Test Tournament is our annual, post-season tournament for the benefit of old developers with nothing more to look forward to in life.  Please give generously.\", \"club\":\"STBGFC\",\"siteUrl\":\"https://www.stbgfc.co.uk\"}" ${URL}/api/tournament
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U8\", \"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U8\", \"section\":\"B\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U9\", \"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U9\", \"section\":\"B\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U10\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U10\",\"section\":\"B\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U11\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U11\",\"section\":\"B\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U12\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U13\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U14\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U15\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U15\",\"section\":\"Champions\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U15\",\"section\":\"Europa\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U16\",\"section\":\"A\"}" ${URL}/api/competition
-curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U18\",\"section\":\"A\"}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U8\", \"section\":\"A\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U8\", \"section\":\"B\", \"numGroups\":3}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U9\", \"section\":\"A\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U9\", \"section\":\"B\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U10\",\"section\":\"A\", \"numGroups\":3}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U10\",\"section\":\"B\", \"numGroups\":3}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U11\",\"section\":\"A\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U11\",\"section\":\"B\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U12\",\"section\":\"A\", \"numGroups\":4}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U13\",\"section\":\"A\", \"numGroups\":3}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U14\",\"section\":\"A\", \"numGroups\":3}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U15\",\"section\":\"A\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U15\",\"section\":\"Champions\", \"numGroups\":0}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U15\",\"section\":\"Europa\", \"numGroups\":0}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U16\",\"section\":\"A\", \"numGroups\":2}" ${URL}/api/competition
+curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"name\":\"U18\",\"section\":\"A\", \"numGroups\":2}" ${URL}/api/competition
 
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"08:30\",\"homeTeam\":\"Sheff. Wed.\",\"awayTeam\":\"LA Tigers\",\"homeGoals\":0,\"awayGoals\":2, \"played\":true}"  ${URL}/api/result/U8/A/1
 curl -i -H"$AUTH" -H"$CONTENT_TYPE" -H "$ACCEPT" -X POST -d "{\"tag\":\"08:40\",\"homeTeam\":\"London Eagles\",\"awayTeam\":\"Sydney Arrows\",\"homeGoals\":2,\"awayGoals\":2, \"played\":true}"  ${URL}/api/result/U8/A/1

@@ -49,10 +49,7 @@ angular
             .otherwise('/');
     }])
 
-    .run(function ($rootScope, $state, $stateParams, $log, broadcastSocket, Restangular) {
-
-        // global Restangular config
-        Restangular.setBaseUrl('/api');
+    .run(function ($rootScope, $state, $stateParams, $log, broadcastSocket) {
 
         // ensure the factory is init'd as we never use it directly
         console.log(broadcastSocket);

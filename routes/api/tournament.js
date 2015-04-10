@@ -29,7 +29,8 @@ module.exports = function(app,io) {
      * competition
      * ---------------------------------------------------------------------*/
     var withCompetition = function(cname, csection, cb) {
-        for (var competition in competitions) {
+        for (var c in competitions) {
+            var competition = competitions[c];
             if (competition.name === cname && competition.section === csection) {
                 cb(competition);
                 return true;
