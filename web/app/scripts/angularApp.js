@@ -3,8 +3,7 @@
 angular
     .module('tournamentApp', [
         'tournament',
-        'ui.router',
-        'restangular'
+        'ui.router'
     ])
 
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {

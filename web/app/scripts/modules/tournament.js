@@ -70,7 +70,6 @@ angular
             if (localScope.groupIndex !== 0) {
                params.groupOrResultId = localScope.groupIndex;
             }
-            $log.debug("Params: " + JSON.stringify(params));
             return params;
         };
 
