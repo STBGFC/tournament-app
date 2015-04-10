@@ -8,6 +8,7 @@ module.exports = function(app,io) {
     // TODO: replace with actual storage :)
     var tournament = {};
     var competitions = [];
+    var newsList = [];
 
 
 
@@ -47,13 +48,15 @@ module.exports = function(app,io) {
 
         if (!done) {
             var comp = req.body;
-            comp.groups = comp.groups ||
-                [
+            comp.groups = [];
+            for (var c = 0; c < comp.numGroups; c++) {
+                comp.groups.push(
                     {
-                        results:[],
-                        table:[]
+                        results: [],
+                        table: []
                     }
-                ];
+                );
+            }
             comp.results = comp.results || [];
             competitions.push(comp);
             res.status(201).end();
@@ -104,8 +107,45 @@ module.exports = function(app,io) {
         res.status(201).end();
     };
 
+    var resultDelete = function(req, res) {
+        var result = req.body;
+        var cname = req.params.name;
+        var csection = req.params.section;
+        var group = req.params.group;
+
+        // backend delete by id..
+
+        res.status(200).end();
+
+    };
+
     app.post('/api/result/:name/:section/:group', resultPost);
 
     app.post('/api/result/:name/:section', resultPost);
+
+    app.delete('/api/result/:name/:section/:group', resultDelete);
+
+    app.delete('/api/result/:name/:section', resultDelete);
+
+
+    /* -----------------------------------------------------------------------
+     * news
+     * ---------------------------------------------------------------------*/
+    app.get('/api/news', function (req, res) {
+        res.json(newsList);
+    });
+
+    app.post('/api/news', function (req, res) {
+        var news = req.body;
+        if (news.title && news.body) {
+            news.created = new Date();
+            newsList.push(news);
+            io.sockets.emit('news', news);
+            res.status(201).end();
+        }
+        else {
+            res.status(400).end();
+        }
+    });
 
 };

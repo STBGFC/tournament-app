@@ -6,6 +6,7 @@ angular
         'ui.router',
         'restangular'
     ])
+
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
@@ -39,7 +40,7 @@ angular
                 controller: 'NewsAdminController'
             })
             .state('admin.newcompetition', {
-                url: '/news',
+                url: '/createcompetition',
                 templateUrl: 'views/admin/newcompetition.html',
                 controller: 'CompetitionAdminController'
             })
@@ -48,6 +49,7 @@ angular
         $urlRouterProvider
             .otherwise('/');
     }])
+
     .run(function ($rootScope, $state, $stateParams, $log, broadcastSocket, Restangular) {
 
         // global Restangular config

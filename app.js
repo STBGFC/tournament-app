@@ -26,7 +26,6 @@ else {
  * be grateful to know!
  */
 require('./routes/api/tournament')(app,io);
-require('./routes/api/news')(app,io);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
