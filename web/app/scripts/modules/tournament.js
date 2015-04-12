@@ -12,85 +12,115 @@ angular
     // controllers
     // ============================================================================================
 
-    .controller('TournamentController', function (Tournament, $scope) {
-        $scope.tournament = Tournament.get();
-    })
-
-    .controller('CompetitionListController', function (Competition, $scope) {
-        $scope.competitions = Competition.query();
-    })
-
-    .controller('CompetitionController', function (Competition, $scope, $state, $stateParams, $log) {
-        $scope.competition = Competition.get({
-            compName: $stateParams.name,
-            compSection: $stateParams.section
+    .controller('TournamentController', function (Tournament, $scope, $state, $log) {
+        var tourneys = Tournament.query(function() {
+            $scope.tournament = tourneys[0];
         });
 
-        $scope.$on('socket:result', function(event, data) {
-            if (data.result) {
-                var result = data.result;
-
-                $('#videprinter').teletype({
-                    text: [
-                        data.compName + '/' + data.compSection + (data.group ? '/' + data.group : '') + ': ' +
-                        result.homeTeam + ' ' + result.homeScore + '-' +
-                        result.awayScore + ' ' + result.awayTeam
-                    ]
-                });
-
-                // reload state if current
-                if (data.compName === $stateParams.name && data.compSection === $stateParams.section) {
-                    $state.reload();
-                }
-            }
-            else {
-                $log.warn('invalid result broadcast message received');
-            }
-        });
-    })
-
-    .controller('CompetitionAdminController', function (Competition, $scope, $state, $stateParams, $log) {
-        $scope.competitions = Competition.query();
-
-        $scope.createCompetition = function() {
-            $log.info('Creating new competition: ' + JSON.stringify($scope.competition));
-            var c = new Competition($scope.competition);
-            c.$save(function() {
+        $scope.createCompetition = function(newComp) {
+            $log.info('Creating new competition: ' + JSON.stringify(newComp));
+            $scope.tournament.competitions.push(newComp);
+            $scope.tournament.$update(function() {
                 $state.reload();
             });
         };
     })
 
-    .controller('ResultAdminController', function(Result, $scope, $state, $log) {
+    .controller('ResultsController', function (Result, $scope, $state, $stateParams, $log) {
 
-        var getParams = function(localScope) {
-            var params = {};
-            params.compSection = $state.params.section;
-            params.compName = $state.params.name;
-            if (localScope.groupIndex !== 0) {
-               params.groupOrResultId = localScope.groupIndex;
-            }
-            return params;
+        // build the UI view of the competition
+        $scope.competition = {
+            name: $stateParams.name,
+            section: $stateParams.section
         };
 
-        $scope.newResult = {played: false};
+        // fetch results for the competition and split into groups in the scope
+        var compResults = Result.query({
+            conditions:'{"competition.name":"' + $stateParams.name + '","competition.section":"' + $stateParams.section + '"}'
+        }, function() {
 
-        $scope.addResult = function() {
-            var result = new Result($scope.newResult);
+            var localGroups = [], localKO = [];
 
-            result.played = (result.homeGoals >= 0);
-            $log.info('Adding new result: ' + JSON.stringify(result));
+            // split the results up into their groups
+            for (var i=0; i<compResults.length; i++) {
+                var res = compResults[i];
+                if ('group' in res.competition) {
+                    // ensure groups exist
+                    while (localGroups.length < res.competition.group) {
+                        localGroups.push({results: [], table: []});
+                    }
+                    localGroups[res.competition.group - 1].results.push(res);
+                }
+                else {
+                    localKO.push(res);
+                }
+            }
 
-            result.$save(getParams($scope), function() {
+            $scope.competition.groups = localGroups;
+            $scope.competition.results = localKO;
+        });
+
+        // form backing object for additional results in any section
+        $scope.newResult = {};
+
+        /*
+         * event handler for results broadcast over the websocket
+         */
+        $scope.$on('socket:result', function(event, data) {
+            var result = data;
+            if ('competition' in result && 'homeTeam' in result) {
+
+                $('#videprinter').teletype({
+                    text: [
+                        result.competition.name + '/' + result.competition.section + (result.competition.group ? '/' + result.competition.group : '') + ': ' +
+                        result.homeTeam + ' ' + result.homeScore + '-' +
+                        result.awayScore + ' ' + result.awayTeam
+                    ]
+                });
+
+                // TODO: update the scope, do not reload the state (screen flicker and loss of work in admin screen will ensue)
+                if (result.competition.name === $stateParams.name && result.competition.section === $stateParams.section) {
+                    $state.reload();
+                }
+            }
+            else {
+                $log.warn('invalid result broadcast message received: ' + JSON.stringify(result));
+            }
+        });
+
+        /*
+         * result C-UD and helper methods below
+         */
+        var calculate = function(result) {
+            if ('homeGoals' in result) {
+                result.homeScore = '' + result.homeGoals;
+                result.awayScore = '' + result.awayGoals;
+                if ('homePens' in result) {
+                    result.homeScore += ' (' + result.homePens + ')';
+                    result.awayScore += ' (' + result.awayPens + ')';
+                }
+            }
+            return result;
+        };
+
+        $scope.createResult = function(group) {
+            var result = new Result(calculate($scope.newResult));
+            result.competition = {
+                name: $stateParams.name,
+                section: $stateParams.section
+            };
+            if (group > 0) result.competition.group = group;
+            $log.info('Creating result: ' + JSON.stringify(result));
+            result.$save(function() {
                 // success
                 $state.reload();
             });
         };
 
         $scope.updateResult = function(res) {
-            var result = new Result(res);
+            var result = new Result(calculate(res));
             $log.info('Updating result: ' + JSON.stringify(result));
-            result.$save(getParams($scope), function() {
+            result.$update(function() {
                 // success
                 $state.reload();
             });
@@ -98,8 +128,11 @@ angular
 
         $scope.deleteResult = function(result) {
             $log.info('Deleting result: ' + JSON.stringify(result));
-            Result.delete(result);
-            $state.reload();
+            result.$delete();
+            $state.reload(function() {
+                // success
+                $state.reload();
+            });
         };
 
         $scope.setTeam = function(teamName, isHome) {
@@ -118,8 +151,8 @@ angular
 
         // socket broadcasts
         $scope.$on('socket:news', function(event, data) {
+            $log.debug('news received', data);
             if (data.title && data.body && data.created) {
-                $log.debug('news received', data);
                 $scope.announcement = data;
                 $scope.newsItems.push(data);
 
@@ -153,19 +186,15 @@ angular
     })
 
     .factory('Result', function($resource) {
-        return $resource('api/result/:compName/:compSection/:groupOrResultId', {
-            compName:'@compName',
-            compSection:'@compSection',
-            groupId:'@groupOrResultId'
+        return $resource('api/results/:id', { id: '@_id' }, {
+            update: {method:'PUT'}
         });
     })
 
-    .factory('Competition', function($resource) {
-        return $resource('api/competition/:compName/:compSection');
-    })
-
     .factory('Tournament', function($resource) {
-        return $resource('api/tournament');
+        return $resource('api/tournaments/:id', { id: '@_id' }, {
+            update: {method:'PUT'}
+        });
     })
 
     .factory('News', function($resource) {

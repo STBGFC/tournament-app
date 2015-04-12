@@ -10,13 +10,12 @@ angular
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'views/home.html',
-                controller: 'CompetitionListController'
+                templateUrl: 'views/home.html'
             })
-            .state('competitionView', {
-                url: '/competition/:name/:section',
-                templateUrl: 'views/competition.html',
-                controller: 'CompetitionController'
+            .state('resultsView', {
+                url: '/results/:name/:section',
+                templateUrl: 'views/results.html',
+                controller: 'ResultsController'
             })
             .state('newsList', {
                 url: '/news',
@@ -25,23 +24,21 @@ angular
             })
             .state('admin', {
                 url: '/admin',
-                templateUrl: 'views/admin/main.html',
-                controller: 'CompetitionListController'
+                templateUrl: 'views/admin/main.html'
             })
-            .state('admin.competition', {
-                url: '/competition/:name/:section',
-                templateUrl: 'views/admin/competition.html',
-                controller: 'CompetitionController'
+            .state('admin.results', {
+                url: '/results/:name/:section',
+                templateUrl: 'views/admin/results.html',
+                controller: 'ResultsController'
             })
-            .state('admin.news', {
-                url: '/news',
-                templateUrl: 'views/admin/news.html',
+            .state('admin.createnews', {
+                url: '/createnews',
+                templateUrl: 'views/admin/createnews.html',
                 controller: 'NewsAdminController'
             })
-            .state('admin.newcompetition', {
+            .state('admin.createcompetition', {
                 url: '/createcompetition',
-                templateUrl: 'views/admin/newcompetition.html',
-                controller: 'CompetitionAdminController'
+                templateUrl: 'views/admin/createcompetition.html'
             })
         ;
 
