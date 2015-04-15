@@ -9,12 +9,21 @@ var ResultSchema = new mongoose.Schema({
     tag: { type: String, required: true },
     homeTeam: { type: String, required: true },
     awayTeam: { type: String, required: true },
-    homeScore: String,
-    awayScore: String,
     homeGoals: { type: Number, min: 0 },
     awayGoals: { type: Number, min: 0 },
     homePens: { type: Number, min: 0 },
     awayPens: { type: Number, min: 0 }
+}, {
+    toObject: { virtuals: true }, toJSON: { virtuals: true }
 });
+
+ResultSchema.virtual('homeScore').get(function () {
+    return this.homeGoals + (this.homePens ? '(' + this.homePens + ')' : '');
+});
+
+ResultSchema.virtual('awayScore').get(function () {
+    return (this.awayPens ? '(' + this.awayPens + ')' : '') + this.awayGoals;
+});
+
 
 module.exports = mongoose.model('Result', ResultSchema);

@@ -88,23 +88,8 @@ angular
             }
         });
 
-        /*
-         * result C-UD and helper methods below
-         */
-        var calculate = function(result) {
-            if ('homeGoals' in result) {
-                result.homeScore = '' + result.homeGoals;
-                result.awayScore = '' + result.awayGoals;
-                if ('homePens' in result) {
-                    result.homeScore += ' (' + result.homePens + ')';
-                    result.awayScore += ' (' + result.awayPens + ')';
-                }
-            }
-            return result;
-        };
-
         $scope.createResult = function(group) {
-            var result = new Result(calculate($scope.newResult));
+            var result = new Result($scope.newResult);
             result.competition = {
                 name: $stateParams.name,
                 section: $stateParams.section
@@ -118,7 +103,7 @@ angular
         };
 
         $scope.updateResult = function(res) {
-            var result = new Result(calculate(res));
+            var result = new Result(res);
             $log.info('Updating result: ' + JSON.stringify(result));
             result.$update(function() {
                 // success

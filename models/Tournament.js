@@ -4,7 +4,7 @@ var CompetitionSchema = new mongoose.Schema({
     name: { type: String, required: true },
     section: { type: String, required: true },
     groups: { type: Number, default: 0 }
-});
+}, {id: false});
 
 var TournamentSchema = new mongoose.Schema({
     name: { type: String, required: true },
