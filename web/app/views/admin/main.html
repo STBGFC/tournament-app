@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-md-2">
             <div class="list-group small" id="competitions">
-                <a ui-sref="admin.results({ name: comp.name, section: comp.section })"
+                <a ng-repeat="comp in tournament.competitions"
+                   ui-sref="admin.results({ name: comp.name, section: comp.section })"
                    ui-sref-active="active"
-                   ng-repeat="comp in tournament.competitions"
                    class="list-group-item">
                     {{comp.name}} {{comp.section}}
                 </a>

@@ -12,11 +12,7 @@ angular
     // controllers
     // ============================================================================================
 
-    .controller('TournamentController', function (Tournament, $scope, $state, $log) {
-        var tourneys = Tournament.query(function() {
-            $scope.tournament = tourneys[0];
-        });
-
+    .controller('TournamentController', function ($scope, $state, $log) {
         $scope.createCompetition = function(newComp) {
             $log.info('Creating new competition: ' + JSON.stringify(newComp));
             $scope.tournament.competitions.push(newComp);
@@ -29,36 +25,45 @@ angular
     .controller('ResultsController', function (Result, $scope, $state, $stateParams, $log) {
 
         // build the UI view of the competition
-        $scope.competition = {
+        var competition  = {
             name: $stateParams.name,
-            section: $stateParams.section
+            section: $stateParams.section,
+            results: []
         };
+
+        // awkward.. find the competition on the tournament and populate the UI version based on attributes
+        for (var c = 0; c < $scope.tournament.competitions.length; c++) {
+            var it = $scope.tournament.competitions[c];
+            if (it.name === $stateParams.name && it.section === $stateParams.section) {
+                // populate groups array
+                competition.groups = [];
+                for (var j = 0; j < it.groups; j++) {
+                    competition.groups.push({
+                        results: [],
+                        table: []
+                    });
+                }
+            }
+        }
 
         // fetch results for the competition and split into groups in the scope
         var compResults = Result.query({
             conditions:'{"competition.name":"' + $stateParams.name + '","competition.section":"' + $stateParams.section + '"}'
         }, function() {
-
-            var localGroups = [], localKO = [];
-
             // split the results up into their groups
-            for (var i=0; i<compResults.length; i++) {
+            for (var i=0; i < compResults.length; i++) {
                 var res = compResults[i];
                 if ('group' in res.competition) {
-                    // ensure groups exist
-                    while (localGroups.length < res.competition.group) {
-                        localGroups.push({results: [], table: []});
-                    }
-                    localGroups[res.competition.group - 1].results.push(res);
+                    competition.groups[res.competition.group - 1].results.push(res);
                 }
                 else {
-                    localKO.push(res);
+                    competition.results.push(res);
                 }
             }
-
-            $scope.competition.groups = localGroups;
-            $scope.competition.results = localKO;
         });
+
+        // assign local setup to $scope
+        $scope.competition = competition;
 
         // form backing object for additional results in any section
         $scope.newResult = {};
@@ -79,7 +84,7 @@ angular
                 });
 
                 // TODO: update the scope, do not reload the state (screen flicker and loss of work in admin screen will ensue)
-                if (result.competition.name === $stateParams.name && result.competition.section === $stateParams.section) {
+                if (result.competition.name === competition.name && result.competition.section === competition.section) {
                     $state.reload();
                 }
             }
