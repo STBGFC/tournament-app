@@ -68,13 +68,15 @@ angular
          * return an updated set of entries
          */
         var updateTable = function(newResult, table) {
-            var hg = newResult.homeGoals;
-            var ag = newResult.awayGoals;
-            var ht = findEntryInTable(newResult.homeTeam, table);
-            var at = findEntryInTable(newResult.awayTeam, table);
-            applyRes(ht, hg, ag);
-            applyRes(at, ag, hg);
-            table.sort(leagueComparator);
+            if ('homeGoals' in newResult) {
+                var hg = newResult.homeGoals;
+                var ag = newResult.awayGoals;
+                var ht = findEntryInTable(newResult.homeTeam, table);
+                var at = findEntryInTable(newResult.awayTeam, table);
+                applyRes(ht, hg, ag);
+                applyRes(at, ag, hg);
+                table.sort(leagueComparator);
+            }
         };
 
         var findEntryInTable = function(name, table) {

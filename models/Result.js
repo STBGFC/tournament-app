@@ -18,11 +18,19 @@ var ResultSchema = new mongoose.Schema({
 });
 
 ResultSchema.virtual('homeScore').get(function () {
-    return this.homeGoals + (this.homePens ? '(' + this.homePens + ')' : '');
+    if ('homeGoals' in this && this.homeGoals >= 0) {
+        return this.homeGoals + (this.homePens ? '(' + this.homePens + ')' : '');
+    } else {
+        return '';
+    }
 });
 
 ResultSchema.virtual('awayScore').get(function () {
-    return (this.awayPens ? '(' + this.awayPens + ')' : '') + this.awayGoals;
+    if ('awayGoals' in this && this.awayGoals >= 0) {
+        return (this.awayPens ? '(' + this.awayPens + ')' : '') + this.awayGoals;
+    } else {
+        return '';
+    }
 });
 
 
