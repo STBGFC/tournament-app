@@ -12,7 +12,12 @@ angular
     // controllers
     // ============================================================================================
 
-    .controller('TournamentController', function ($scope, $state, $log) {
+    .controller('TournamentController', function (Tournament, $scope, $state, $log) {
+
+        var tourneys = Tournament.query(function() {
+            $scope.tournament = tourneys[0];
+        });
+
         $scope.createCompetition = function(newComp) {
             $log.info('Creating new competition: ' + JSON.stringify(newComp));
             $scope.tournament.competitions.push(newComp);
@@ -22,7 +27,7 @@ angular
         };
     })
 
-    .controller('ResultsController', function (Result, $scope, $state, $stateParams, $log) {
+    .controller('ResultsController', function (Tournament, Result, $scope, $state, $stateParams, $log) {
 
         // build the UI view of the competition
         var competition  = {
@@ -31,36 +36,40 @@ angular
             results: []
         };
 
-        // awkward.. find the competition on the tournament and populate the UI version based on attributes
-        for (var c = 0; c < $scope.tournament.competitions.length; c++) {
-            var it = $scope.tournament.competitions[c];
-            if (it.name === $stateParams.name && it.section === $stateParams.section) {
-                // populate groups array
-                competition.groups = [];
-                for (var j = 0; j < it.groups; j++) {
-                    competition.groups.push({
-                        results: [],
-                        table: []
-                    });
-                }
-            }
-        }
+        var tourneys = Tournament.query(function() {
+            $scope.tournament = tourneys[0];
 
-        // fetch results for the competition and split into groups in the scope
-        var compResults = Result.query({
-            conditions:'{"competition.name":"' + $stateParams.name + '","competition.section":"' + $stateParams.section + '"}'
-        }, function() {
-            // split the results up into their groups
-            for (var i=0; i < compResults.length; i++) {
-                var res = compResults[i];
-                if ('group' in res.competition) {
-                    competition.groups[res.competition.group - 1].results.push(res);
-                    updateTable(res, competition.groups[res.competition.group - 1].table);
-                }
-                else {
-                    competition.results.push(res);
+            // awkward.. find the competition on the tournament and populate the UI version based on attributes
+            for (var c = 0; c < $scope.tournament.competitions.length; c++) {
+                var it = $scope.tournament.competitions[c];
+                if (it.name === $stateParams.name && it.section === $stateParams.section) {
+                    // populate groups array
+                    competition.groups = [];
+                    for (var j = 0; j < it.groups; j++) {
+                        competition.groups.push({
+                            results: [],
+                            table: []
+                        });
+                    }
                 }
             }
+
+            // fetch results for the competition and split into groups in the scope
+            var compResults = Result.query({
+                conditions:'{"competition.name":"' + $stateParams.name + '","competition.section":"' + $stateParams.section + '"}'
+            }, function() {
+                // split the results up into their groups
+                for (var i=0; i < compResults.length; i++) {
+                    var res = compResults[i];
+                    if ('group' in res.competition) {
+                        competition.groups[res.competition.group - 1].results.push(res);
+                        updateTable(res, competition.groups[res.competition.group - 1].table);
+                    }
+                    else {
+                        competition.results.push(res);
+                    }
+                }
+            });
         });
 
         /*

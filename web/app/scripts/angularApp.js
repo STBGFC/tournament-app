@@ -48,13 +48,8 @@ angular
 
     .run(function (Tournament, $rootScope, $state, $stateParams, $log, broadcastSocket) {
 
-        // add the Tournament at root scope
-        var tourneys = Tournament.query(function() {
-            $rootScope.tournament = tourneys[0];
-        });
-
         // ensure the factory is init'd as we never use it directly
-        console.log(broadcastSocket);
+        $log.info(broadcastSocket);
 
         // Add references to $state and $stateParams to the $rootScope
         $rootScope.$state = $state;
