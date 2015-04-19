@@ -185,27 +185,31 @@ angular
         });
 
         var withResult = function(result, del) {
-            var resultsList = $scope.competition.results;
-            if ('group' in result.competition) {
-                resultsList = $scope.competition.groups[result.competition.group - 1].results;
-            }
 
-            var i = getIndexFor(result, resultsList);
-            if (i !== -1) {
-                if (del) {
-                    resultsList.splice(i, 1);
+            // if the result affects the current scope, update that scope
+            if (result.competition.name === $scope.competition.name && result.competition.section === $scope.competition.section) {
+                var resultsList = $scope.competition.results;
+                if ('group' in result.competition) {
+                    resultsList = $scope.competition.groups[result.competition.group - 1].results;
+                }
+
+                var i = getIndexFor(result, resultsList);
+                if (i !== -1) {
+                    if (del) {
+                        resultsList.splice(i, 1);
+                    }
+                    else {
+                        resultsList[i] = result;
+                    }
                 }
                 else {
-                    resultsList[i] = result;
+                    resultsList.push(result);
                 }
-            }
-            else {
-                resultsList.push(result);
-            }
 
-            if ('group' in result.competition) {
-                $scope.competition.groups[result.competition.group - 1].table = [];
-                updateTable(resultsList, $scope.competition.groups[result.competition.group - 1].table);
+                if ('group' in result.competition) {
+                    $scope.competition.groups[result.competition.group - 1].table = [];
+                    updateTable(resultsList, $scope.competition.groups[result.competition.group - 1].table);
+                }
             }
 
         };
