@@ -9,7 +9,7 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-repeat="comp2 in tournament.competitions | filter: {name: comp.name}">
-                            <a ui-sref="resultsView({ name: comp.name, section: comp.section })">{{comp2.section}}</a>
+                            <a ui-sref="resultsView({ name: comp2.name, section: comp2.section })">{{comp2.section}}</a>
                         </li>
                     </ul>
                 </div>

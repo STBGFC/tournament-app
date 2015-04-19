@@ -35,9 +35,11 @@ module.exports = function(app,io) {
     });
 
     mongoose.model('Result').schema.post('save', function(result) {
-        if ('homeGoals' in result && result.homeGoals >= 0){
-            io.sockets.emit('result', result);
-        }
+        io.sockets.emit('result', result);
+    });
+
+    mongoose.model('Result').schema.post('remove', function(result) {
+        io.sockets.emit('remove', result);
     });
 
     app.use('/api', baucis());

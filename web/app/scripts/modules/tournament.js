@@ -33,6 +33,7 @@ angular
         var competition  = {
             name: $stateParams.name,
             section: $stateParams.section,
+            groups: [],
             results: []
         };
 
@@ -44,7 +45,6 @@ angular
                 var it = $scope.tournament.competitions[c];
                 if (it.name === $stateParams.name && it.section === $stateParams.section) {
                     // populate groups array
-                    competition.groups = [];
                     for (var j = 0; j < it.groups; j++) {
                         competition.groups.push({
                             results: [],
@@ -63,11 +63,16 @@ angular
                     var res = compResults[i];
                     if ('group' in res.competition) {
                         competition.groups[res.competition.group - 1].results.push(res);
-                        updateTable(res, competition.groups[res.competition.group - 1].table);
                     }
                     else {
                         competition.results.push(res);
                     }
+                }
+
+                // update tables
+                for (var j = 0; j < competition.groups.length; j++) {
+                    competition.groups[j].table = [];
+                    updateTable(competition.groups[j].results, competition.groups[j].table);
                 }
             });
         });
@@ -76,21 +81,26 @@ angular
          * given a single result and a current table (which can be the empty array []),
          * return an updated set of entries
          */
-        var updateTable = function(newResult, table) {
-            if ('homeGoals' in newResult) {
-                var hg = newResult.homeGoals;
-                var ag = newResult.awayGoals;
-                var ht = findEntryInTable(newResult.homeTeam, table);
-                var at = findEntryInTable(newResult.awayTeam, table);
-                applyRes(ht, hg, ag);
-                applyRes(at, ag, hg);
-                table.sort(leagueComparator);
+        var updateTable = function(resultsList, table) {
+            for (var i = 0; i < resultsList.length; i++) {
+                var r = resultsList[i];
+                if ('homeGoals' in r) {
+                    var hg = r.homeGoals;
+                    var ag = r.awayGoals;
+                    var ht = findEntryInTable(r.homeTeam, table);
+                    var at = findEntryInTable(r.awayTeam, table);
+                    applyRes(ht, hg, ag);
+                    applyRes(at, ag, hg);
+                }
             }
+            table.sort(leagueComparator);
         };
 
         var findEntryInTable = function(name, table) {
             for (var i = 0; i < table.length; i++) {
-                if (table[i].name === name) return table[i];
+                if (table[i].name === name) {
+                    return table[i];
+                }
             }
 
             var entry = {played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0};
@@ -120,22 +130,22 @@ angular
          */
         var leagueComparator = function(a, b) {
             // points
-            if (a.points > b.points) return -1;
-            if (a.points < b.points) return 1;
+            if (a.points > b.points) { return -1; }
+            if (a.points < b.points) { return 1; }
 
             // GD
             var aGD = a.goalsFor - a.goalsAgainst;
             var bGD = b.goalsFor - b.goalsAgainst;
-            if (aGD > bGD) return -1;
-            if (aGD < bGD) return 1;
+            if (aGD > bGD) { return -1; }
+            if (aGD < bGD) { return 1; }
 
             // scored
-            if (a.goalsFor > b.goalsFor) return -1;
-            if (a.goalsFor < b.goalsFor) return 1;
+            if (a.goalsFor > b.goalsFor) { return -1; }
+            if (a.goalsFor < b.goalsFor) { return 1; }
 
             // wins
-            if (a.won > b.won) return -1;
-            if (a.won < b.won) return 1;
+            if (a.won > b.won) { return -1; }
+            if (a.won < b.won) { return 1; }
 
             // name
             return (a.name < b.name);
@@ -154,24 +164,63 @@ angular
         $scope.$on('socket:result', function(event, data) {
             var result = data;
             if ('competition' in result && 'homeTeam' in result) {
-
-                $('#videprinter').teletype({
-                    text: [
-                        result.competition.name + '/' + result.competition.section + (result.competition.group ? '/' + result.competition.group : '') + ': ' +
-                        result.homeTeam + ' ' + result.homeScore + '-' +
-                        result.awayScore + ' ' + result.awayTeam
-                    ]
-                });
-
-                // TODO: update the scope, do not reload the state (screen flicker and loss of work in admin screen will ensue)
-                if (result.competition.name === competition.name && result.competition.section === competition.section) {
-                    $state.reload();
+                if ('homeGoals' in result && result.homeGoals >= 0) {
+                    $('#videprinter').teletype({
+                        text: [
+                            result.competition.name + '/' + result.competition.section + (result.competition.group ? '/' + result.competition.group : '') + ': ' +
+                            result.homeTeam + ' ' + result.homeScore + '-' +
+                            result.awayScore + ' ' + result.awayTeam
+                        ]
+                    });
                 }
+                withResult(data, false);
             }
             else {
                 $log.warn('invalid result broadcast message received: ' + JSON.stringify(result));
             }
         });
+
+        $scope.$on('socket:remove', function(event, data) {
+            withResult(data, true);
+        });
+
+        var withResult = function(result, del) {
+            var resultsList = $scope.competition.results;
+            if ('group' in result.competition) {
+                resultsList = $scope.competition.groups[result.competition.group - 1].results;
+            }
+
+            var i = getIndexFor(result, resultsList);
+            if (i !== -1) {
+                if (del) {
+                    resultsList.splice(i, 1);
+                }
+                else {
+                    resultsList[i] = result;
+                }
+            }
+            else {
+                resultsList.push(result);
+            }
+
+            if ('group' in result.competition) {
+                $scope.competition.groups[result.competition.group - 1].table = [];
+                updateTable(resultsList, $scope.competition.groups[result.competition.group - 1].table);
+            }
+
+        };
+
+        var getIndexFor = function(res, list) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i]._id === res._id) {
+                    return i;
+                }
+            }
+            return -1;
+        };
+
+
+        // -------------------- A D M I N -----------------------
 
         $scope.createResult = function(group) {
             var result = new Result($scope.newResult);
@@ -179,7 +228,9 @@ angular
                 name: $stateParams.name,
                 section: $stateParams.section
             };
-            if (group > 0) result.competition.group = group;
+            if (group > 0) {
+                result.competition.group = group;
+            }
             $log.info('Creating result: ' + JSON.stringify(result));
             result.$save(function() {
                 // success
@@ -190,16 +241,12 @@ angular
         $scope.updateResult = function(res) {
             var result = new Result(res);
             $log.info('Updating result: ' + JSON.stringify(result));
-            result.$update(function() {
-                // success
-                $state.reload();
-            });
+            result.$update();
         };
 
         $scope.deleteResult = function(result) {
             $log.info('Deleting result: ' + JSON.stringify(result));
-            result.$delete();
-            $state.reload(function() {
+            result.$delete(function() {
                 // success
                 $state.reload();
             });
@@ -252,6 +299,7 @@ angular
         var s = socketFactory();
         s.forward('news');
         s.forward('result');
+        s.forward('remove');
         return s;
     })
 
