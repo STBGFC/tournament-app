@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Feedback</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-6" ng-controller="FeedbackController">
+                    <form  ng-hide="feedbackSubmitted" class="form-horizontal" role="form" ng-submit="createFeedback()" ng-cloak>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="feedback-title" ng-model="feedback.email" placeholder="your@email.address" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="feedback-body" ng-model="feedback.body" rows="6" placeholder="Comments..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
+                    <div ng-show="feedbackSubmitted !== null">
+                        <p>
+                            Thanks so much for your feedback - we read all of them and will do our best to respond to
+                            as many as possible where appropriate.
+                        </p>
+                        <blockquote>
+                            {{feedbackSubmitted}}
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

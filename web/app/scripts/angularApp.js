@@ -22,6 +22,10 @@ angular
                 templateUrl: 'views/news.html',
                 controller: 'NewsListController'
             })
+            .state('feedback', {
+                url: '/feedback',
+                templateUrl: 'views/feedback.html'
+            })
             .state('admin', {
                 url: '/admin',
                 templateUrl: 'views/admin/main.html'
@@ -30,6 +34,11 @@ angular
                 url: '/results/:name/:section',
                 templateUrl: 'views/admin/results.html',
                 controller: 'ResultsController'
+            })
+            .state('admin.feedback', {
+                url: '/feedback',
+                templateUrl: 'views/admin/viewfeedback.html',
+                controller: 'FeedbackAdminController'
             })
             .state('admin.createnews', {
                 url: '/createnews',

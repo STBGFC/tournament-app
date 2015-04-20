@@ -1,7 +1,10 @@
 <!-- list of news items -->
 <div class="container" id="allnews">
     <div class="form-group">
-        <input type="text" class="form-control" ng-model="searchBy" placeholder="Search announcements..." />
+        <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <input type="text" class="form-control" ng-model="searchBy" placeholder="Search announcements..." />
+        </div>
     </div>
     <div class="panel-group" id="accordion">
         <div class="panel panel-default" ng-repeat="item in newsItems|filter: searchBy|orderBy: '-created'">

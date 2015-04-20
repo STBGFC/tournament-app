@@ -5,7 +5,8 @@ angular
         'ngResource',
         'ui.utils',
         'ui.router',
-        'btford.socket-io'
+        'btford.socket-io',
+        'angularLocalStorage'
     ])
 
     // ============================================================================================
@@ -295,6 +296,31 @@ angular
         };
     })
 
+    .controller('FeedbackAdminController', function (Feedback, $scope, $log) {
+        $scope.feedbackItems = Feedback.query();
+        $scope.searchBy = '';
+
+        $scope.deleteFeedback = function(feedbackItem) {
+            $log.info('Deleting feedback: ' + JSON.stringify(feedbackItem));
+            feedbackItem.$delete(function() {
+                $state.reload();
+            });
+        };
+    })
+
+    .controller('FeedbackController', function(Feedback, storage, $scope) {
+        $scope.feedbackSubmitted = storage.get('stbgfc.app.feedback');
+        console.log($scope.feedbackSubmitted);
+        $scope.createFeedback = function() {
+            var f = new Feedback($scope.feedback);
+            f.$save(function() {
+                storage.set('stbgfc.app.feedback', f.body);
+            });
+            $scope.feedback = {};
+            $scope.feedbackSubmitted = f.body;
+        };
+    })
+
     // ============================================================================================
     // services
     // ============================================================================================
@@ -321,6 +347,10 @@ angular
 
     .factory('News', function($resource) {
         return $resource('api/news');
+    })
+
+    .factory('Feedback', function($resource) {
+        return $resource('api/feedbacks/:id', { id: '@_id' }); // default plural :)
     })
 
 

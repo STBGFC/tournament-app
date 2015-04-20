@@ -5,6 +5,7 @@ var mongoUri = process.env.STBGFC_MONGO_URI || 'mongodb://localhost/tournamentAp
 var Tournament = require('../../models/Tournament.js');
 var Result = require('../../models/Result.js');
 var News = require('../../models/News.js');
+var Feedback = require('../../models/Feedback.js');
 
 
 /*
@@ -28,6 +29,7 @@ module.exports = function(app,io) {
     baucis.rest(Tournament).methods('delete', false);
     baucis.rest(Result);
     baucis.rest(News);
+    baucis.rest(Feedback);
 
     // mongoose middleware hook to emit the broadcast event after a successful save
     mongoose.model('News').schema.post('save', function(newsItem) {
