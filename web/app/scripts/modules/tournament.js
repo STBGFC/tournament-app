@@ -237,10 +237,8 @@ angular
                 result.competition.group = group;
             }
             $log.info('Creating result: ' + JSON.stringify(result));
-            result.$save(function() {
-                // success
-                $state.reload();
-            });
+            result.$save();
+            $scope.newResult = {};
         };
 
         $scope.updateResult = function(res) {
@@ -251,10 +249,8 @@ angular
 
         $scope.deleteResult = function(result) {
             $log.info('Deleting result: ' + JSON.stringify(result));
-            result.$delete(function() {
-                // success
-                $state.reload();
-            });
+            result.$delete();
+            $scope.newResult = {};
         };
 
         $scope.setTeam = function(teamName, isHome) {

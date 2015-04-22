@@ -6,7 +6,7 @@
             </div>
             <div class="panel-body">
                 <div ng-controller="FeedbackController">
-                    <form  ng-hide="feedbackSubmitted" class="form-horizontal" role="form" ng-submit="createFeedback()" ng-cloak>
+                    <form class="col-sm-10" ng-hide="feedbackSubmitted" class="form-horizontal" role="form" ng-submit="createFeedback()" ng-cloak>
                         <div class="form-group">
                             <input type="email" class="form-control" id="feedback-title" ng-model="feedback.email" placeholder="your@email.address" required>
                         </div>
