@@ -1,6 +1,20 @@
 <!-- Competition group buttons to select an individual comp to watch -->
 <div class="container" id="main">
     <div class="row">
+
+        <div class="col-md-7">
+            <div class="jumbotron">
+                <h1>{{tournament.name}}</h1>
+                <p>{{tournament.description}}</p>
+            </div>
+            <section>
+                Twitter feed here
+            </section>
+            <section>
+                Instagram feed here
+            </section>
+        </div>
+
         <div class="col-md-5">
             <div id="competitions" class="text-center">
                 <div class="btn-group" ng-repeat="comp in tournament.competitions | unique: 'name'">
@@ -14,10 +28,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-7">
-            <p>{{tournament.description}}</p>
         </div>
     </div>
 </div>
