@@ -10,12 +10,12 @@ app.use(bodyParser.json());
 if (app.get('env') === 'development') {
     console.log('Dev config');
     app.use(logger('dev'));
-    app.use(express.static(path.join(__dirname, '/web/app')));
-    app.use('/bower_components', express.static(path.join(__dirname, '/web/bower_components')));
+    app.use(express.static(path.join(__dirname, '../web/app')));
+    app.use('/bower_components', express.static(path.join(__dirname, '../web/bower_components')));
 }
 else {
     console.log('Production / non-dev config');
-    app.use(express.static(path.join(__dirname, '/web/dist')));
+    app.use(express.static(path.join(__dirname, '../web/dist')));
 }
 
 
@@ -25,7 +25,7 @@ else {
  * I can still use the app.use('/api/tournament', tournament); form, I'd
  * be grateful to know!
  */
-require('./routes/api/tournament')(app,io);
+require('./api/tournament')(app,io);
 
 
 // catch 404 and forward to error handler

@@ -2,10 +2,10 @@ var baucis = require('baucis');
 var mongoose = require('mongoose');
 var mongoUri = process.env.STBGFC_MONGO_URI || 'mongodb://localhost/tournamentApp';
 
-var Tournament = require('../../models/Tournament.js');
-var Result = require('../../models/Result.js');
-var News = require('../../models/News.js');
-var Feedback = require('../../models/Feedback.js');
+var Tournament = require('../models/Tournament.js');
+var Result = require('../models/Result.js');
+var News = require('../models/News.js');
+var Feedback = require('../models/Feedback.js');
 
 
 /*
