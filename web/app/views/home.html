@@ -5,18 +5,11 @@
         <div class="col-md-7">
             <div class="jumbotron">
                 <h1>{{tournament.name}}</h1>
-                <p>{{tournament.description}}</p>
+                <p><small>{{tournament.description}}</small></p>
             </div>
-            <section>
-                Twitter feed here
-            </section>
-            <section>
-                Instagram feed here
-            </section>
-        </div>
 
-        <div class="col-md-5">
-            <div id="competitions" class="text-center">
+            <h3>Select a competition below to view results and fixtures</h3>
+            <div id="competitions" class="panel-body">
                 <div class="btn-group" ng-repeat="comp in tournament.competitions | unique: 'name'">
                     <button type="button" class="btn btn-lg btn-default btn-agegroup dropdown-toggle" data-toggle="dropdown">
                         {{ comp.name }} <span class="small glyphicon glyphicon-triangle-bottom"></span>
@@ -29,5 +22,10 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-5">
+            placeholder.. for what??
+        </div>
+
     </div>
 </div>

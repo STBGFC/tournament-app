@@ -1,26 +1,39 @@
 <!-- list of news items -->
 <div class="container" id="allnews">
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-            <input type="text" class="form-control" ng-model="searchBy" placeholder="Search announcements..." />
-        </div>
-    </div>
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default" ng-repeat="item in newsItems|filter: searchBy|orderBy: '-created'">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <span class="badge">{{item.created | date:'EEE HH:mm'}}</span>
-                    <a toggle-news="" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
-                        {{item.title}}
-                    </a>
-                </h4>
-            </div>
-            <div id="collapse{{$index}}" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <samp>{{item.body}}</samp>
+    <div class="row">
+
+        <div class="col-md-7">
+            <h3>Tournament Announcements</h3>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                    <input type="text" class="form-control" ng-model="searchBy" placeholder="Search announcements..." />
                 </div>
             </div>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default" ng-repeat="item in newsItems|filter: searchBy|orderBy: '-created'">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <span class="badge">{{item.created | date:'EEE HH:mm'}}</span>
+                            <a toggle-news="" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}">
+                                {{item.title}}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse{{$index}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <samp>{{item.body}}</samp>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <h3>Join the conversation! <small>Tweet with <strong>#stbgfc</strong> and tell us about <em>your</em> tournament</small></h3>
+
+            <a class="twitter-timeline" href="https://twitter.com/hashtag/stbgfc" height="500" data-widget-id="591023928757325824" data-chrome="nofooter transparent">#stbgfc Tweets</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
     </div>
 </div>
