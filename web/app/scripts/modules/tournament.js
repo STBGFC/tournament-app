@@ -38,6 +38,11 @@ angular
             results: []
         };
 
+        var numericTagComparator = function(a, b) {
+            var re = /\D/g;
+            return (parseInt(a.tag.replace(re, ''), 10) - parseInt(b.tag.replace(re, ''),10));
+        };
+
         var tourneys = Tournament.query(function() {
             $scope.tournament = tourneys[0];
 
@@ -73,8 +78,11 @@ angular
                 // update tables
                 for (var j = 0; j < competition.groups.length; j++) {
                     competition.groups[j].table = [];
+                    // sort results
+                    competition.groups[j].results.sort(numericTagComparator);
                     updateTable(competition.groups[j].results, competition.groups[j].table);
                 }
+                competition.results.sort(numericTagComparator);
             });
         });
 
@@ -211,6 +219,8 @@ angular
                     $scope.competition.groups[result.competition.group - 1].table = [];
                     updateTable(resultsList, $scope.competition.groups[result.competition.group - 1].table);
                 }
+
+                resultsList.sort(numericTagComparator);
             }
 
         };
@@ -237,7 +247,9 @@ angular
                 result.competition.group = group;
             }
             $log.info('Creating result: ' + JSON.stringify(result));
-            result.$save();
+            result.$save(function() {
+                withResult(result, false);
+            });
             $scope.newResult = {};
         };
 
@@ -249,7 +261,9 @@ angular
 
         $scope.deleteResult = function(result) {
             $log.info('Deleting result: ' + JSON.stringify(result));
-            result.$delete();
+            result.$delete(function() {
+                $state.reload();
+            });
             $scope.newResult = {};
         };
 
