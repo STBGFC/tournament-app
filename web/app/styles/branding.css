@@ -68,6 +68,7 @@ a.navbar-brand img {
     background-color: blue;
     opacity: 0.8;
     color: white;
+    font-size: larger;
 }
 
 .form-control:focus {
