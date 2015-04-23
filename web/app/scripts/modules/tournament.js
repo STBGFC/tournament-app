@@ -278,7 +278,9 @@ angular
     })
 
     .controller('NewsListController', function (News, $scope, $log) {
-        $scope.newsItems = News.query();
+        $scope.newsItems = News.query(function() {
+            $scope.latestNews = $scope.newsItems[$scope.newsItems.length - 1];
+        });
         $scope.searchBy = '';
 
         // socket broadcasts
