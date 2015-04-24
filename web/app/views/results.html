@@ -1,7 +1,7 @@
 <!-- Competition table and results -->
 <div class="container" id="selected-competition">
 
-    <h4>Competition: <span>{{competition.name}}</span> Section: <span>{{competition.section}}</span></h4>
+    <h4 class="text-right"><span class="glyphicon glyphicon-fire"></span> <strong>{{competition.name}}/{{competition.section}}</strong></h4>
 
     <ul id="groupTabs" class="nav nav-tabs">
         <li ng-repeat="group in competition.groups" ng-class="{'active': $index == 0}">

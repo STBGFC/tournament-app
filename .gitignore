@@ -6,4 +6,5 @@ dist
 .sass-cache
 bower_components
 app/scripts/config.js
+*.swp
 
