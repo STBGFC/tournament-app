@@ -1,6 +1,7 @@
 (function () {
     'use strict';
 
+    const JWT_SESSION_KEY = 'stbgfc.security.jwt';
     var loginModal;
 
     angular
@@ -10,7 +11,13 @@
             'mgcrea.ngStrap.modal'
         ])
 
-        .run(function($rootScope, $modal) {
+        .run(function($rootScope, $http, $window, $modal) {
+
+            var savedJwtToken = $window.sessionStorage.getItem(JWT_SESSION_KEY);
+            if (savedJwtToken) {
+                $http.defaults.headers.common.Authorization = 'Bearer ' + savedJwtToken;
+            }
+
             loginModal= $modal({
                 template: 'views/modal-login.html',
                 controller: 'LoginController',
@@ -60,6 +67,7 @@
                     $http.post('/authenticate', {username: user, password: pwd})
                         .success(function(data) {
                             $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
+                            $window.sessionStorage.setItem(JWT_SESSION_KEY, data.token);
                             authService.loginConfirmed('success', function(config){
                                 config.headers.Authorization = 'Bearer ' + data.token;
                                 return config;
@@ -76,7 +84,8 @@
                 },
 
                 logout: function() {
-                    $http.defaults.headers.common.Authorization = '';
+                    $http.defaults.headers.common.Authorization = null;
+                    $window.sessionStorage.setItem(JWT_SESSION_KEY, null);
                     $rootScope.$broadcast('event:auth-loginCleared');
                 }
             };
