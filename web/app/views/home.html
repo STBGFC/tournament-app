@@ -25,13 +25,14 @@
         <div class="col-md-5" ng-controller="NewsListController">
 
             <div class="page-header">
-                <h1>
+                <h2>
                     <span class="glyphicon glyphicon-info-sign"></span>
                     {{latestNews.title}}<br>
                     <small>{{latestNews.created | date:'EEE HH:mm'}}</small>
-                </h1>
+                </h2>
             </div>
             <p>{{latestNews.body}}</p>
+            <a ui-sref="newsList" href="#">See all announcements..</a>
         </div>
 
     </div>
