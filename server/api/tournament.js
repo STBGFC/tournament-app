@@ -44,6 +44,7 @@ module.exports = function(app,io) {
         io.sockets.emit('remove', result);
     });
 
+    // expose routes
     app.use('/api', baucis());
 
 };

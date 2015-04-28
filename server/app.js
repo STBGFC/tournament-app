@@ -2,11 +2,12 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var app = express();
-var io = require('socket.io').listen(app.listen(3000, '0.0.0.0'));
+var io = require('socket.io').listen(app.listen(process.env.NODE_PORT||3000, '0.0.0.0'));
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
+// basic config
 if (app.get('env') === 'development') {
     console.log('Dev config');
     app.use(logger('dev'));
@@ -14,19 +15,16 @@ if (app.get('env') === 'development') {
     app.use('/bower_components', express.static(path.join(__dirname, '../web/bower_components')));
 }
 else {
-    console.log('Production / non-dev config');
+    console.log('Production config');
     app.use(express.static(path.join(__dirname, '../web/dist')));
 }
 
 
+// security
+require('./api/security')(app);
 
-/*
- * include various api modules.  If anyone knows how to do this in a way that
- * I can still use the app.use('/api/tournament', tournament); form, I'd
- * be grateful to know!
- */
+// routes/API
 require('./api/tournament')(app,io);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -34,7 +32,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
 
 // error handler
 app.use(function(err, req, res) {
@@ -47,3 +44,4 @@ app.use(function(err, req, res) {
 });
 
 module.exports = app;
+

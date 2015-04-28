@@ -10,6 +10,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="styles/branding.css">
     <!-- endbuild -->
 </head>
-<body ng-cloak="" ng-app="tournamentApp" ng-controller="TournamentController">
+<body ng-cloak="" ng-app="stbgfc.tournament-app" ng-controller="TournamentController">
 <!--[if lt IE 9]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -46,6 +47,7 @@
     </nav>
 
     <section ui-view></section>
+    <google-plus-signin clientid="836179103811-vfk1r9mums30olhnfgrcu26ta0phji56.apps.googleusercontent.com"></google-plus-signin>
 
 </div> <!-- wrap -->
 
@@ -87,13 +89,17 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/angular-socket-io/socket.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+<script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
 <script src="bower_components/angularLocalStorage/src/angularLocalStorage.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
-
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/angularApp.js"></script>
 <script src="scripts/modules/tournament.js"></script>
+<script src="scripts/modules/security.js"></script>
 <script src="scripts/jQuery.teletypePlugin.js"></script>
 <!-- endbuild -->
 <script src="/socket.io/socket.io.js"></script>

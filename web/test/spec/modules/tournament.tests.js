@@ -2,8 +2,9 @@
 
 describe ('Tournament Tests', function() {
 
-    beforeEach(module('tournamentApp'));
-    beforeEach(module('tournament'));
+    beforeEach(module('stbgfc.tournament-app'));
+    beforeEach(module('stbgfc.tournament'));
+    beforeEach(module('stbgfc.security'));
     beforeEach(module('ui.unique'));
     beforeEach(module('btford.socket-io'));
 
