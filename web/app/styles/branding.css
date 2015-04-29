@@ -80,14 +80,6 @@ a.navbar-brand img {
     background: url("../images/footer-grass.jpg") repeat-x white;
 }
 
-#kosection h4 {
-    background-color: #333;
-    color: whitesmoke;
-    margin-bottom: 0px;
-    padding-top: 5px;
-}
-
-
 /*
  * custom gradiated navbar, generated at
  * http://twitterbootstrap3navbars.w3masters.nl/
