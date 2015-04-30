@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-md-5" ng-controller="NewsListController">
-
+            <section ng-show="latestNews.title">
             <div class="page-header">
                 <h2>
                     <span class="glyphicon glyphicon-info-sign"></span>
@@ -34,6 +34,6 @@
             <p>{{latestNews.body}}</p>
             <a ui-sref="newsList" href="#">See all announcements..</a>
         </div>
-
+        </section>
     </div>
 </div>
