@@ -65,6 +65,12 @@ th.points { background-color: #333; }
 }
 .container .credit { margin: 10px 0; }
 
+p.noresults {
+    background-color: #333;
+    color: whitesmoke;
+    padding: 3px 8px;
+}
+
 span.dropdown-toggle {
     cursor: pointer;
 }
