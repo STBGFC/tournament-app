@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const JWT_SESSION_KEY = 'stbgfc.security.jwt';
+    var JWT_SESSION_KEY = 'stbgfc.security.jwt';
     var loginModal;
 
     angular
@@ -68,7 +68,7 @@
         // ============================================================================================
 
         .factory('LoginService', function($rootScope, $http, $window, authService) {
-            const UID_SESSION_KEY = 'stbgfc.security.uid';
+            var UID_SESSION_KEY = 'stbgfc.security.uid';
 
             return {
                 authenticate: function(username, password) {
