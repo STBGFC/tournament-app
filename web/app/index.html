@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <title ng-cloak="">Tournament App</title>
@@ -40,6 +40,21 @@
                 <li ui-sref-active="active"><a ui-sref="rules">Tournament Rules</a></li>
                 <li ui-sref-active="active"><a ui-sref="feedback">Feedback</a></li>
             </ul>
+
+            <ul ng-controller="LoginController" ng-show="isLoggedIn()" class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#">
+                        Darren <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" ng-click="logout()">Logout</a></li>
+                    </ul>
+                </li>
+                <li><img gravatar-src="'{{isLoggedIn()}}'" gravatar-size="50" secure="true"></li>
+                <li class="divider"></li>
+                <li></li>
+            </ul>
+
         </div>
         <div class="videprinterHolder">
             <span id="videprinter"></span><span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
@@ -88,11 +103,12 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/angular-socket-io/socket.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
-<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
-<script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
 <script src="bower_components/angularLocalStorage/src/angularLocalStorage.js"></script>
+<script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-gravatar/build/angular-gravatar.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!-- build:js({.tmp,app}) scripts/scripts.js -->

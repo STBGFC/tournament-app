@@ -6,7 +6,8 @@
 
     angular
         .module('stbgfc.security', [
-            'angularLocalStorage',
+            'angularLocalStorage',,
+            'ui.router',
             'http-auth-interceptor',
             'mgcrea.ngStrap.modal'
         ])
@@ -18,7 +19,7 @@
                 $http.defaults.headers.common.Authorization = 'Bearer ' + savedJwtToken;
             }
 
-            loginModal= $modal({
+            loginModal = $modal({
                 template: 'views/modal-login.html',
                 controller: 'LoginController',
                 show: false,
@@ -34,10 +35,14 @@
         // controllers
         // ============================================================================================
 
-        .controller('LoginController', function(LoginService, $scope) {
+        .controller('LoginController', function(LoginService, $scope, $state) {
 
             $scope.username = '';
             $scope.password = '';
+
+            $scope.isLoggedIn = function() {
+                return LoginService.isLoggedIn();
+            };
 
             $scope.doLogin = function() {
                 LoginService.authenticate($scope.username, $scope.password);
@@ -53,6 +58,7 @@
                 LoginService.logout();
                 $scope.username = '';
                 $scope.password = '';
+                $state.go('home');
             };
         })
 
@@ -62,12 +68,15 @@
         // ============================================================================================
 
         .factory('LoginService', function($rootScope, $http, $window, authService) {
+            const UID_SESSION_KEY = 'stbgfc.security.uid';
+
             return {
-                authenticate: function(user, pwd) {
-                    $http.post('/authenticate', {username: user, password: pwd})
+                authenticate: function(username, password) {
+                    $http.post('/authenticate', {username: username, password: password})
                         .success(function(data) {
                             $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
                             $window.sessionStorage.setItem(JWT_SESSION_KEY, data.token);
+                            $window.sessionStorage.setItem(UID_SESSION_KEY, username);
                             authService.loginConfirmed('success', function(config){
                                 config.headers.Authorization = 'Bearer ' + data.token;
                                 return config;
@@ -83,9 +92,14 @@
                     authService.loginCancelled();
                 },
 
+                isLoggedIn: function() {
+                    return $window.sessionStorage.getItem(UID_SESSION_KEY) || false;
+                },
+
                 logout: function() {
                     $http.defaults.headers.common.Authorization = null;
-                    $window.sessionStorage.setItem(JWT_SESSION_KEY, null);
+                    delete $window.sessionStorage[JWT_SESSION_KEY];
+                    delete $window.sessionStorage[UID_SESSION_KEY];
                     $rootScope.$broadcast('event:auth-loginCleared');
                 }
             };

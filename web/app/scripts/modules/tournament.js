@@ -8,7 +8,8 @@
             'ui.router',
             'btford.socket-io',
             'angularLocalStorage',
-            'mgcrea.ngStrap.modal'
+            'mgcrea.ngStrap.modal',
+            'ui.gravatar'
         ])
 
         // ============================================================================================

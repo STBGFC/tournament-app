@@ -19,6 +19,14 @@
                     url: '/login',
                     templateUrl: 'views/login.html'
                 })
+
+                // TODO: replace with dynamic pages and markdown content
+                .state('rules', {
+                    url: '/rules',
+                    templateUrl: 'views/rules.html'
+                })
+                // end to do
+
                 .state('resultsView', {
                     url: '/results/:name/:section',
                     templateUrl: 'views/results.html',

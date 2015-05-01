@@ -14,9 +14,12 @@ if (app.get('env') === 'development') {
     app.use(express.static(path.join(__dirname, '../web/app')));
     app.use('/bower_components', express.static(path.join(__dirname, '../web/bower_components')));
 }
+else if (app.get('env') === 'test') {
+    console.log('Test config');
+    app.use(express.static(path.join(__dirname, '../web/dist')));
+}
 else {
     console.log('Production config');
-    app.use(express.static(path.join(__dirname, '../web/dist')));
 }
 
 

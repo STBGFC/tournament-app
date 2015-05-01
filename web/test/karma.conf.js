@@ -27,6 +27,12 @@ module.exports = function(config) {
       'bower_components/angular-ui-utils/ui-utils.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-socket-io/socket.js',
+      'bower_components/angular-cookies/angular-cookies.js',
+      'bower_components/angularLocalStorage/src/angularLocalStorage.js',
+      'bower_components/angular-http-auth/src/http-auth-interceptor.js',
+      'bower_components/angular-strap/dist/angular-strap.js',
+      'bower_components/angular-strap/dist/angular-strap.tpl.js',
+      'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-socket.io-mock/angular-socket.io-mock.js',
       // endbower
