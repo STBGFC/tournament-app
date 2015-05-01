@@ -12,6 +12,9 @@
         <div ng-repeat="group in competition.groups" class="tab-pane" ng-class="{'active': $index == 0}" id="group{{$index + 1}}">
             <div class="row">
                 <div class="col-sm-6">
+                    <p ng-show="group.results.length == 0" class="lead noresults">
+                        Results and league tables will appear here as soon as any results for this competition become available.
+                    </p>
                     <table ng-show="group.table.length > 0" class="table league-table">
                         <thead>
                             <tr>
@@ -56,9 +59,6 @@
                         </tbody>
                     </table>
                     </section>
-                    <p ng-show="group.results.length == 0" class="lead noresults">
-                        Results and league tables will appear here as soon as any results for this competition become available.
-                    </p>
                 </div>
             </div>
         </div>
