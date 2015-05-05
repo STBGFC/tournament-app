@@ -1,6 +1,4 @@
 var baucis = require('baucis');
-var mongoose = require('mongoose');
-var mongoUri = process.env.STBGFC_MONGO_URI || 'mongodb://localhost/tournamentApp';
 
 var Tournament = require('../models/Tournament.js');
 var Result = require('../models/Result.js');
@@ -13,18 +11,10 @@ var Feedback = require('../models/Feedback.js');
  * tournament api
  * ==========================================================================
  */
-module.exports = function(app,io) {
+module.exports = function(io, mongoose) {
 
     Tournament.locking(true);
     Result.locking(true);
-
-    mongoose.connect(mongoUri, function(err) {
-        if(err) {
-            console.log('mongo connection error', err);
-        } else {
-            console.log('mongo connection successful to ' + mongoUri);
-        }
-    });
 
     baucis.rest(Tournament).methods('delete', false);
     baucis.rest(Result);
@@ -44,7 +34,5 @@ module.exports = function(app,io) {
         io.sockets.emit('remove', result);
     });
 
-    // expose routes
-    app.use('/api', baucis());
-
+    return baucis();
 };
