@@ -17,7 +17,7 @@ module.exports = function(app) {
 
     app.post('/authenticate', function(req, res, next) {
         // TODO: proper User lookup or replace with OAuth call
-        console.log('Authn attempt for: ' + JSON.stringify(req.body));
+        console.log('Authn attempt for: ' + JSON.stringify(req.body.username));
         if (req.body.username !== 'evil') {
             var token = jwt.sign({ userId: req.body.username }, jwtSecret, {expiresInMinutes: jwtExpiresAfter});
             res.json({token: token});
