@@ -40,8 +40,8 @@
             $scope.username = '';
             $scope.password = '';
 
-            $scope.isLoggedIn = function() {
-                return LoginService.isLoggedIn();
+            $scope.loggedInUser = function() {
+                return LoginService.loggedInUser();
             };
 
             $scope.doLogin = function() {
@@ -92,7 +92,7 @@
                     authService.loginCancelled();
                 },
 
-                isLoggedIn: function() {
+                loggedInUser: function() {
                     return $window.sessionStorage.getItem(UID_SESSION_KEY) || false;
                 },
 
