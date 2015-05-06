@@ -53,7 +53,6 @@ module.exports = function(app) {
 
     // QDR (quick and dirty registration).  TODO: replace it :)
     app.post('/qdr', function(req, res) {
-        console.log(req.params);
         var newUser = new User({username: req.body.username, password: req.body.password});
         newUser.save(function(err) {
             if (err) {
