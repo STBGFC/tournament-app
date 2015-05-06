@@ -7,6 +7,7 @@
 var acl = require('acl');
 var mongodb = require('mongodb'); 
 var mongoUri = process.env.STBGFC_MONGO_URI || 'mongodb://localhost/tournamentApp';
+var User = require('./server/models/User');
 
 mongodb.connect(mongoUri, function(error, db) {
     var mongoBackend = new acl.mongodbBackend(db, 'acl_');

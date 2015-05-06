@@ -98,6 +98,7 @@
 
                 logout: function() {
                     $http.defaults.headers.common.Authorization = undefined;
+                    authService.loginCancelled();
                     delete $window.sessionStorage[JWT_SESSION_KEY];
                     delete $window.sessionStorage[UID_SESSION_KEY];
                     $rootScope.$broadcast('event:auth-loginCleared');

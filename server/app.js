@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var mongoUri = process.env.STBGFC_MONGO_URI || 'mongodb://localhost/tournamentApp';
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // basic config
 if (app.get('env') === 'development') {
@@ -36,6 +37,7 @@ mongoose.connect(mongoUri, function(err) {
     var aclCheck = require('./api/acl')(app, mongoose.connection.db);
     var tournamentApi = require('./api/tournament')(io, mongoose);
     app.use('/api', [authCheck, aclCheck, tournamentApi]);
+
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {
