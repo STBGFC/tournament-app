@@ -58,7 +58,7 @@
                 LoginService.logout();
                 $scope.username = '';
                 $scope.password = '';
-                $state.go('home');
+                $state.go('home', {}, {reload: true});
             };
         })
 
@@ -97,7 +97,7 @@
                 },
 
                 logout: function() {
-                    $http.defaults.headers.common.Authorization = null;
+                    $http.defaults.headers.common.Authorization = undefined;
                     delete $window.sessionStorage[JWT_SESSION_KEY];
                     delete $window.sessionStorage[UID_SESSION_KEY];
                     $rootScope.$broadcast('event:auth-loginCleared');

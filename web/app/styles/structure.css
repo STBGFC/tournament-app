@@ -28,6 +28,7 @@ h1 {
     border-radius: 0;
     margin-bottom: 0;
 }
+.navbar-right { margin-right: 0; }
 .navbar-text { font-weight: bold; }
 .nav-tabs { border-bottom: 0px; }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
