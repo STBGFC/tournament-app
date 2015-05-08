@@ -15,3 +15,15 @@ mongodb.connect(mongoUri, function(error, db) {
 });
 
 
+var resources = ['/results','/news','/feedbacks','/tournaments'];
+// pass a users array..
+var showPerms = function(users, resources) {
+    for (var i = 0; i < users.length; i++) {
+        acl.allowedPermissions(users[i], resources, function(err,perms) {
+            console.log(perms);
+        });
+    }
+};
+
+console.log('Try  showPerms(<users>, resources)');
+
