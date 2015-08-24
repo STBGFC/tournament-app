@@ -2,9 +2,15 @@
  * custom branding for STBGFC sites
  */
 
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+
 body {
-    /*background: url("../images/memorial-park.jpg") top center no-repeat;
-    background-attachment: fixed;*/
+    font-family: 'Roboto Condensed', sans-serif;
+}
+blockquote {
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    font-style: italic;
 }
 
 a,
@@ -20,12 +26,11 @@ a.navbar-brand img {
 .btn-default:active,
 .btn-default:focus {
     color: white;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
     background-color: #a00;
+    border-radius: 0;
 }
 .btn-default {
     background-repeat: repeat-x;
-    background-image: linear-gradient(#d00 0%, #a00 100%);
 }
 .btn-default .caret {
     border-top-color: white;
@@ -56,7 +61,14 @@ a.navbar-brand img {
     width: 22px;
     font-weight: bold;
 }
-
+.container .jumbotron {
+    text-shadow: 0 -1px 0 rgba(127,0,0, 0.75);
+    border-radius: 0;
+    border: 0 solid #a00;
+    border-bottom-width: 2px;
+    padding: 20px 15px;
+    background: url("../images/badge.png") no-repeat center 2.5em #eee;
+}
 .league-table {
     background: url("../images/badge.png") no-repeat center 2.5em white;
 }
@@ -78,6 +90,10 @@ a.navbar-brand img {
 #footer {
     height: 40px;
     background: url("../images/footer-grass.jpg") repeat-x white;
+}
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    border-color: #333;
 }
 
 /*

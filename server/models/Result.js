@@ -19,7 +19,7 @@ var ResultSchema = new mongoose.Schema({
 
 ResultSchema.virtual('homeScore').get(function () {
     if ('homeGoals' in this && this.homeGoals >= 0) {
-        return this.homeGoals + (this.homePens ? '(' + this.homePens + ')' : '');
+        return this.homeGoals + (this.awayPens || this.homePens ? '(' + this.homePens + ')' : '');
     } else {
         return '';
     }
@@ -27,7 +27,7 @@ ResultSchema.virtual('homeScore').get(function () {
 
 ResultSchema.virtual('awayScore').get(function () {
     if ('awayGoals' in this && this.awayGoals >= 0) {
-        return (this.awayPens ? '(' + this.awayPens + ')' : '') + this.awayGoals;
+        return (this.awayPens || this.homePens ? '(' + this.awayPens + ')' : '') + this.awayGoals;
     } else {
         return '';
     }

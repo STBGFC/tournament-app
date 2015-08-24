@@ -81,15 +81,7 @@
         <tr ng-repeat="result in competition.results">
             <td class="text-left text-muted" style="width: 6%">{{ result.tag }}</td>
             <td class="text-right" style="width:32%">
-                <div class="dropdown pull-right">
-                    <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500">
-                        {{ result.homeTeam }}
-                    </span>
-                    <ul class="dropdown-menu">
-                        <li><a tabindex="-1" ng-click="setTeam(result.homeTeam, true)">Home Team</a></li>
-                        <li><a tabindex="-1" ng-click="setTeam(result.homeTeam, false)">Away Team</a></li>
-                    </ul>
-                </div>
+                <input name="homeTeam" ng-model="result.homeTeam" class="form-control text-right" placeholder="Home Team" type="text" required>
             </td>
             <td class="text-center" style="width:90px">
                 <input name="homeGoals" ng-model="result.homeGoals" class="form-control text-right" placeholder="Goals" type="number" min="0">
@@ -100,15 +92,7 @@
                 <input name="awayPens" ng-model="result.awayPens" class="form-control" placeholder="Pens" type="number" min="0">
             </td>
             <td class="text-left" style="width:32%">
-                <div class="dropdown">
-                    <span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500">
-                        {{ result.awayTeam }}
-                    </span>
-                    <ul class="dropdown-menu">
-                        <li><a tabindex="-1" ng-click="setTeam(result.awayTeam, true)">Home Team</a></li>
-                        <li><a tabindex="-1" ng-click="setTeam(result.awayTeam, false)">Away Team</a></li>
-                    </ul>
-                </div>
+                <input name="awayTeam" ng-model="result.awayTeam" class="form-control" placeholder="Away Team" type="text" required>
             </td>
             <td style="width:12%">
                 <a ng-click="updateResult(result)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save"></span></a>

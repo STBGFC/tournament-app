@@ -5,7 +5,7 @@
 
     <ul id="groupTabs" class="nav nav-tabs">
         <li ng-repeat="group in competition.groups" ng-class="{'active': $index == 0}">
-            <a show-tab="" href="#group{{$index + 1}}" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> {{$index + 1}}</a>
+            <a show-tab="" href="#group{{$index + 1}}" data-toggle="tab"><strong>{{$index + 1}}</strong></a>
         </li>
     </ul>
     <div class="tab-content">
@@ -15,7 +15,7 @@
                     <p ng-show="group.results.length == 0" class="lead noresults">
                         Results and league tables will appear here as soon as any results for this competition become available.
                     </p>
-                    <table ng-show="group.table.length > 0" class="table league-table">
+                    <table class="table league-table">
                         <thead>
                             <tr>
                                 <th class="text-left">Team</th>
