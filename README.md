@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/STBGFC/tournament-app.png?label=ready&title=Ready)](https://waffle.io/STBGFC/tournament-app)
 # tournament-app
 
 A simple Node/Express API server with an HTML5 application used to distribute
