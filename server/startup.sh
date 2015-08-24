@@ -20,8 +20,8 @@
 #
 # ---------------------------------------------------------------------------
 usage() {
-        echo "Usage: $0 [location_of_mongo_db]"
-        exit 1
+    echo "Usage: $0 [location_of_mongo_db]"
+    exit 1
 }
 
 [[ $# -eq 1 ]] || usage
