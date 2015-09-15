@@ -6,7 +6,7 @@
 
     angular
         .module('stbgfc.security', [
-            'angularLocalStorage',,
+            'angularLocalStorage',
             'ui.router',
             'http-auth-interceptor',
             'mgcrea.ngStrap.modal'
