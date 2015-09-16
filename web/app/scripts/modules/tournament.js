@@ -375,6 +375,19 @@
         // ============================================================================================
 
         /*
+         * render a list of fixtures/results
+         */
+        .directive('leagueTable', function() {
+            return {
+                restrict: 'E',
+                templateUrl: '/views/templates/league-table.html',
+                scope: {
+                    results: '=results'
+                }
+            };
+        })
+
+        /*
          * simulate the tab switching behaviour for bootstrap tabs
          */
         .directive('showTab', function () {

@@ -47,27 +47,7 @@
                     <div class="col-sm-6">
                         <section ng-show="group.results.length > 0">
                         <h4 class="text-center"><span class="glyphicon glyphicon-globe"></span> Group Results</h4>
-                        <table class="table table-condensed results">
-                            <thead>
-                                <tr>
-                                    <th>game</th>
-                                    <th>pitch</th>
-                                    <th class="text-right">home</th>
-                                    <th colspan="2">
-                                    <th>away</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="result in group.results">
-                                    <td class="text-center text-muted" width="30px">{{result.tag}}</td>
-                                    <td class="text-center text-muted" width="30px">{{result.pitch}}</td>
-                                    <td class="text-right" width="40%">{{result.homeTeam}}</td>
-                                    <td class="text-center points">{{result.homeScore}}</td>
-                                    <td class="text-center points">{{result.awayScore}}</td>
-                                    <td class="text-left" width="40%">{{result.awayTeam}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <league-table results="group.results"></league-table>
                         </section>
                     </div>
                 </div>
@@ -78,27 +58,7 @@
     <div class="block-section">
         <div id="kosection" ng-show="competition.results.length > 0">
             <h4 class="text-center"><span class="glyphicon glyphicon-bell"></span> Knockout Section</h4>
-            <table class="table table-condensed" id=koresults>
-                <thead>
-                    <tr>
-                        <th class="text-center">game</th>
-                        <th class="text-center">pitch</th>
-                        <th class="text-right">home</th>
-                        <th colspan="2">
-                        <th>away</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="result in competition.results">
-                        <td class="text-center text-muted" width="30px">{{result.tag}}</td>
-                        <td class="text-center text-muted" width="30px">{{result.pitch}}</td>
-                        <td class="text-right" width="40%">{{result.homeTeam}}</td>
-                        <td class="text-center points">{{result.homeScore}}</td>
-                        <td class="text-center points">{{result.awayScore}}</td>
-                        <td class="text-left" width="40%">{{result.awayTeam}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <league-table results="competition.results"></league-table>
         </div>
     </div>
 </div>
