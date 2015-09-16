@@ -42,8 +42,7 @@
             };
 
             var numericTagComparator = function(a, b) {
-                var re = /\D/g;
-                return (parseInt(a.tag.replace(re, ''), 10) - parseInt(b.tag.replace(re, ''),10));
+                return a.index - b.index;
             };
 
             var tourneys = Tournament.query(function() {
