@@ -46,8 +46,8 @@
 
                     <div class="col-sm-6">
                         <section ng-show="group.results.length > 0">
-                        <h4 class="text-center"><span class="glyphicon glyphicon-globe"></span> Group Results</h4>
-                            <league-table results="group.results"></league-table>
+                            <h4 class="text-center"><span class="glyphicon glyphicon-globe"></span> Group Results</h4>
+                            <result-list results="group.results" user="loggedInUser()"></result-list>
                         </section>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
     <div class="block-section">
         <div id="kosection" ng-show="competition.results.length > 0">
             <h4 class="text-center"><span class="glyphicon glyphicon-bell"></span> Knockout Section</h4>
-            <league-table results="competition.results"></league-table>
+            <result-list results="competition.results" user="loggedInUser()"></result-list>
         </div>
     </div>
 </div>

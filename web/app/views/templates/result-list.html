@@ -1,0 +1,25 @@
+<table class="table table-condensed results">
+    <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">pitch</th>
+            <th class="text-right">home</th>
+            <th colspan="2"></th>
+            <th>away</th>
+            <th ng-show="user"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="result in results">
+            <td class="text-center text-muted" style="width: 15px">{{result.tag}}</td>
+            <td class="text-center text-muted" style="width: 15px">{{result.pitch}}</td>
+            <td class="text-right">{{result.homeTeam}}</td>
+            <td class="text-center points">{{result.homeScore}}</td>
+            <td class="text-center points">{{result.awayScore}}</td>
+            <td class="text-left">{{result.awayTeam}}</td>
+            <td style="width: 25px" ng-show="user">
+                <a ui-sref="editresult({ id: result.id })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
