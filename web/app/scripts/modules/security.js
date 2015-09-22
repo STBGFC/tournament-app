@@ -58,7 +58,6 @@
                 LoginService.logout();
                 $scope.username = '';
                 $scope.password = '';
-                $state.go('home', {}, {reload: true});
             };
         })
 
