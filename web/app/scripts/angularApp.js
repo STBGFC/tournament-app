@@ -15,10 +15,6 @@
                     url: '/',
                     templateUrl: 'views/home.html'
                 })
-                .state('login', {
-                    url: '/login',
-                    templateUrl: 'views/login.html'
-                })
 
                 // TODO: replace with dynamic pages and markdown content
                 .state('rules', {
@@ -27,7 +23,7 @@
                 })
                 // end to do
 
-                .state('resultsView', {
+                .state('results', {
                     url: '/results/:name/:section',
                     templateUrl: 'views/results.html',
                     controller: 'ResultsController'
@@ -41,14 +37,15 @@
                     url: '/feedback',
                     templateUrl: 'views/feedback.html'
                 })
+                .state('editresult', {
+                    url: '/results/:id',
+                    templateUrl: 'views/admin/editresult.html',
+                    controller: 'ResultEditController'
+                })
+                // admin views
                 .state('admin', {
                     url: '/admin',
                     templateUrl: 'views/admin/main.html'
-                })
-                .state('admin.results', {
-                    url: '/results/:name/:section',
-                    templateUrl: 'views/admin/results.html',
-                    controller: 'ResultsController'
                 })
                 .state('admin.feedback', {
                     url: '/feedback',

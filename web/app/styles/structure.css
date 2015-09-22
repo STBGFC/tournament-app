@@ -8,6 +8,10 @@ body { padding-top: 80px; }
 h1 {
     margin-top: 0;
 }
+h2.points {
+    margin-top: 2px;
+    padding: 4px 0;
+}
 
 .btn-agegroup {
     width: 88px;
@@ -80,3 +84,26 @@ p.noresults {
 span.dropdown-toggle {
     cursor: pointer;
 }
+
+input.borderless {
+    border-width: 0;
+}
+input.borderless :focus :active :hover {
+    border-width: 1px;
+}
+input.input-lg {
+    font-size: 21px;
+}
+
+button.btn-goals {
+    font-size: xx-large;
+    width: 45%;
+    height: 60px;
+    font-weight: bold;
+}
+.centered-pills { text-align:center; }
+.centered-pills ul.nav-pills { display:inline-block; }
+.centered-pills li { display:inline; }
+.centered-pills a { float:left; }
+* html .centered-pills ul.nav-pills { display:inline; } /* IE6 */
+*+html .centered-pills ul.nav-pills { display:inline; } /* IE7 */

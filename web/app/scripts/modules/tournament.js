@@ -235,10 +235,54 @@
                 }
                 return -1;
             };
+        })
 
+        .controller('ResultEditController', function($scope, $state, $stateParams, Result, $log) {
 
-            // -------------------- A D M I N -----------------------
+            $scope.goalEntry = true; // or false for Penalties
 
+            var res = Result.get({id: $stateParams.id}, function() {
+                $scope.result = res;
+            });
+
+            $scope.addGoal = function(homeTeam, count) {
+                var res = $scope.result;
+
+                // initialise if no scores entered yet
+                if (! ('homeGoals' in res)) {
+                    res.homeGoals = 0;
+                    res.awayGoals = 0;
+                }
+                if (!$scope.goalEntry && !('homePens' in res)) {
+                    res.homePens = 0;
+                    res.awayPens = 0;
+                }
+
+                var teamGoals = ($scope.goalEntry ? (homeTeam ? 'homeGoals' : 'awayGoals') : (homeTeam ? 'homePens' : 'awayPens')); // ugh.
+
+                res[teamGoals] = res[teamGoals] + count;
+                if (res[teamGoals] < 0) {
+                    res[teamGoals] = 0
+                }
+            };
+
+            $scope.updateResult = function(res) {
+                var result = new Result(res);
+                $log.info('Updating result: ' + JSON.stringify(result));
+                result.$update(function() {
+                    $state.go('results', {name: result.competition.name, section: result.competition.section});
+                });
+            };
+
+            $scope.deleteResult = function(result) {
+                $log.info('Deleting result: ' + JSON.stringify(result));
+                var params = {name: result.competition.name, section: result.competition.section};
+                result.$delete(function() {
+                    $state.go('results', params);
+                });
+            };
+
+            /*
             $scope.createResult = function(group) {
                 var result = new Result($scope.newResult);
                 result.competition = {
@@ -255,20 +299,6 @@
                 $scope.newResult = {};
             };
 
-            $scope.updateResult = function(res) {
-                var result = new Result(res);
-                $log.info('Updating result: ' + JSON.stringify(result));
-                result.$update();
-            };
-
-            $scope.deleteResult = function(result) {
-                $log.info('Deleting result: ' + JSON.stringify(result));
-                result.$delete(function() {
-                    $state.reload();
-                });
-                $scope.newResult = {};
-            };
-
             $scope.setTeam = function(teamName, isHome) {
                 if (isHome) {
                     $scope.newResult.homeTeam = teamName;
@@ -276,7 +306,7 @@
                 else {
                     $scope.newResult.awayTeam = teamName;
                 }
-            };
+            */
         })
 
         .controller('NewsListController', function (News, $scope, $log) {
@@ -377,12 +407,13 @@
         /*
          * render a list of fixtures/results
          */
-        .directive('leagueTable', function() {
+        .directive('resultList', function() {
             return {
                 restrict: 'E',
-                templateUrl: '/views/templates/league-table.html',
+                templateUrl: '/views/templates/result-list.html',
                 scope: {
-                    results: '=results'
+                    results: '=results',
+                    user: '=user'
                 }
             };
         })
