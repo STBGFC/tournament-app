@@ -55,8 +55,8 @@
         </div>
     </div>
 
-    <div class="block-section">
-        <div id="kosection" ng-show="competition.results.length > 0">
+    <div class="block-section" ng-show="competition.results.length > 0">
+        <div id="kosection">
             <h4 class="text-center"><span class="glyphicon glyphicon-bell"></span> Knockout Section</h4>
             <result-list results="competition.results" user="loggedInUser()"></result-list>
         </div>
