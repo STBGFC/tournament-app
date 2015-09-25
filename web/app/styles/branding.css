@@ -38,10 +38,6 @@ a.navbar-brand img {
 .btn-default:hover {
     background-position: 0 -15px;
 }
-.btn-goals {
-    background-color: #ddd;
-    color: #a32;
-}
 
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {

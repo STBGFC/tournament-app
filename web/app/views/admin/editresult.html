@@ -26,8 +26,8 @@
         </div>
         <div class="row">
             <div class="col-md-5 col-xs-4 text-right">
-                <button class="btn-default btn-lg btn-goals" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus"></span></button>
-                <button class="btn-default btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus"></span></button>
+                <button class="btn btn-danger btn-lg" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                <button class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
             </div>
             <div class="col-md-2 col-xs-4 centered-pills">
                 <ul class="nav nav-pills" ng-hide="result.competition.group">
@@ -36,14 +36,14 @@
                 </ul>
             </div>
             <div class="col-md-5 col-xs-4 text-left">
-                <button class="btn-default btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus"></span></button>
-                <button class="btn-default btn-lg btn-goals" ng-click="addGoal(false, -1)"><span class="glyphicon glyphicon-minus"></span></button>
+                <button class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                <button class="btn btn-danger btn-lg" ng-click="addGoal(false, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-offset-5 col-xs-offset-4 col-md-2 col-xs-4 text-center">
-                <a ng-click="updateResult(result)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-save-file"></span> SAVE RESULT</a>
-                <a ng-click="deleteResult(result)" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span> DELETE RESULT</a>
+                <button ng-click="updateResult(result)" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-save-file"></span> SAVE RESULT</button>
+                <button ng-click="deleteResult(result)" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-trash"></span> DELETE RESULT</button>
             </div>
         </div>
     </div>
