@@ -4,13 +4,13 @@
 
 body {
     font-family: 'Roboto Condensed', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #eee;
 }
 blockquote {
     font-family: Arial, sans-serif;
     font-weight: normal;
     font-style: italic;
-    border-color: #a32;
+    border-color: #a00;
 }
 
 a,
@@ -53,7 +53,8 @@ a.navbar-brand img {
     margin: 12px 0;
     padding: 6px;
     background-color: #fff;
-    box-shadow: 1px 1px 2px 1px #ccc;
+    border-radius: 4px;
+    border: 1px solid #ddd;
 }
 
 .list-group-item.active,
@@ -63,8 +64,8 @@ a.navbar-brand img {
     border-color: #a00;
 }
 .points {
-    color: white;
-    background-color: #a00;
+    color: #a00;
+    background-color: #eee;
     width: 22px;
     font-weight: bold;
 }
@@ -95,7 +96,7 @@ a.navbar-brand img {
 #footer {
     padding-top: 10px;
     height: 40px;
-    background: url("../images/footer-grass.png") repeat-x #f5f5f5;
+    background: url("../images/footer-grass.png") repeat-x #eee;
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
