@@ -48,8 +48,39 @@
                         <section ng-show="group.results.length > 0">
                             <h4 class="text-center"><span class="glyphicon glyphicon-globe"></span> Group Results</h4>
                             <result-list results="group.results" user="loggedInUser()"></result-list>
+                            <form class="form-horizontal" ng-show="newResult.competition">
+                                <div class="form-group form-group-sm">
+                                    <label class="col-sm-2 control-label">Comp</label>
+                                    <div class="col-sm-2">
+                                        <span>{{newResult.competition.name}}/{{newResult.competition.section}}<span ng-show="newResult.competition.group">/{{newResult.competition.group}}</span></span>
+                                    </div>
+                                    <label class="col-sm-2 control-label" for="tag">Tag</label>
+                                    <div class="col-sm-2">
+                                        <input id="tag" type="text" class="form-control" ng-model="newResult.tag" placeholder="1">
+                                    </div>
+                                    <label class="col-sm-2 control-label" for="pitch">Pitch</label>
+                                    <div class="col-sm-2">
+                                        <input id="pitch" type="text" class="form-control" ng-model="newResult.pitch" placeholder="5">
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-sm">
+                                    <label class="col-sm-2 control-label" for="homeTeam">Home</label>
+                                    <div class="col-sm-10">
+                                        <input id="homeTeam" type="text" class="form-control" ng-model="newResult.homeTeam" placeholder="Home Team">
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-sm">
+                                    <label class="col-sm-2 control-label" for="homeTeam">Away</label>
+                                    <div class="col-sm-10">
+                                        <input id="awayTeam" type="text" class="form-control" ng-model="newResult.awayTeam" placeholder="Away Team">
+                                    </div>
+                                </div>
+                                <button ng-click="saveResult(newResult)" class="col-sm-offset-2 btn btn-default btn-sm"><span class="glyphicon glyphicon-save"></span> SAVE MATCH</button>
+                            </form>
+                          <button ng-show="loggedInUser() && !(newResult.competition)" ng-click="createResult()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> ADD MATCH</button>
                         </section>
                     </div>
+
                 </div>
             </div>
         </div>

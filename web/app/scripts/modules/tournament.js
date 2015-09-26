@@ -45,47 +45,43 @@
                 return a.index - b.index;
             };
 
-            var tourneys = Tournament.query(function() {
-                $scope.tournament = tourneys[0];
+            // awkward.. find the competition on the tournament and populate the UI version based on attributes
+            for (var c = 0; c < $scope.tournament.competitions.length; c++) {
+                var it = $scope.tournament.competitions[c];
+                if (it.name === $stateParams.name && it.section === $stateParams.section) {
+                    // populate groups array
+                    for (var j = 0; j < it.groups; j++) {
+                        competition.groups.push({
+                            results: [],
+                            table: []
+                        });
+                    }
+                }
+            }
 
-                // awkward.. find the competition on the tournament and populate the UI version based on attributes
-                for (var c = 0; c < $scope.tournament.competitions.length; c++) {
-                    var it = $scope.tournament.competitions[c];
-                    if (it.name === $stateParams.name && it.section === $stateParams.section) {
-                        // populate groups array
-                        for (var j = 0; j < it.groups; j++) {
-                            competition.groups.push({
-                                results: [],
-                                table: []
-                            });
-                        }
+            // fetch results for the competition and split into groups in the scope
+            var compResults = Result.query({
+                conditions:'{"competition.name":"' + $stateParams.name + '","competition.section":"' + $stateParams.section + '"}'
+            }, function() {
+                // split the results up into their groups
+                for (var i=0; i < compResults.length; i++) {
+                    var res = compResults[i];
+                    if ('group' in res.competition) {
+                        competition.groups[res.competition.group - 1].results.push(res);
+                    }
+                    else {
+                        competition.results.push(res);
                     }
                 }
 
-                // fetch results for the competition and split into groups in the scope
-                var compResults = Result.query({
-                    conditions:'{"competition.name":"' + $stateParams.name + '","competition.section":"' + $stateParams.section + '"}'
-                }, function() {
-                    // split the results up into their groups
-                    for (var i=0; i < compResults.length; i++) {
-                        var res = compResults[i];
-                        if ('group' in res.competition) {
-                            competition.groups[res.competition.group - 1].results.push(res);
-                        }
-                        else {
-                            competition.results.push(res);
-                        }
-                    }
-
-                    // update tables
-                    for (var j = 0; j < competition.groups.length; j++) {
-                        competition.groups[j].table = [];
-                        // sort results
-                        competition.groups[j].results.sort(numericTagComparator);
-                        updateTable(competition.groups[j].results, competition.groups[j].table);
-                    }
-                    competition.results.sort(numericTagComparator);
-                });
+                // update tables
+                for (var j = 0; j < competition.groups.length; j++) {
+                    competition.groups[j].table = [];
+                    // sort results
+                    competition.groups[j].results.sort(numericTagComparator);
+                    updateTable(competition.groups[j].results, competition.groups[j].table);
+                }
+                competition.results.sort(numericTagComparator);
             });
 
             /*
@@ -162,12 +158,8 @@
                 return (a.name < b.name);
             };
 
-
             // assign local setup to $scope
             $scope.competition = competition;
-
-            // form backing object for additional results in any section
-            $scope.newResult = {};
 
             /*
              * event handler for results broadcast over the websocket
@@ -195,7 +187,39 @@
                 withResult(data, true);
             });
 
-            var withResult = function(result, del) {
+            $scope.createResult = function() {
+                $log.info('Creating new result');
+                $scope.newResult = {
+                    index: 1000,
+                    competition: {
+                        name: $stateParams.name,
+                        section: $stateParams.section
+                    }
+                };
+                if ($stateParams.group > 0) {
+                    $scope.newResult.competition.group = $stateParams.group;
+                }
+            };
+
+            $scope.saveResult = function(group) {
+                var result = new Result($scope.newResult);
+                $log.info('Saving new result: ' + JSON.stringify(result));
+                result.$save(function() {
+                    withResult(result, false);
+                });
+                $scope.newResult = {};
+            };
+
+            $scope.setTeam = function(teamName, isHome) {
+                if (isHome) {
+                    $scope.newResult.homeTeam = teamName;
+                }
+                else {
+                    $scope.newResult.awayTeam = teamName;
+                }
+            };
+
+            var withResult = function(result, del) { //test
 
                 // if the result affects the current scope, update that scope
                 if (result.competition.name === $scope.competition.name && result.competition.section === $scope.competition.section) {
@@ -281,32 +305,6 @@
                     $state.go('results', params);
                 });
             };
-
-            /*
-            $scope.createResult = function(group) {
-                var result = new Result($scope.newResult);
-                result.competition = {
-                    name: $stateParams.name,
-                    section: $stateParams.section
-                };
-                if (group > 0) {
-                    result.competition.group = group;
-                }
-                $log.info('Creating result: ' + JSON.stringify(result));
-                result.$save(function() {
-                    withResult(result, false);
-                });
-                $scope.newResult = {};
-            };
-
-            $scope.setTeam = function(teamName, isHome) {
-                if (isHome) {
-                    $scope.newResult.homeTeam = teamName;
-                }
-                else {
-                    $scope.newResult.awayTeam = teamName;
-                }
-            */
         })
 
         .controller('NewsListController', function (News, $scope, $log) {
@@ -412,8 +410,8 @@
                 restrict: 'E',
                 templateUrl: '/views/templates/result-list.html',
                 scope: {
-                    results: '=results',
-                    user: '=user'
+                    results: '=',
+                    user: '='
                 }
             };
         })
