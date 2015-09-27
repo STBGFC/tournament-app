@@ -38,7 +38,8 @@
                 name: $stateParams.name,
                 section: $stateParams.section,
                 groups: [],
-                results: []
+                results: [],
+                currentGroup: 1
             };
 
             var numericTagComparator = function(a, b) {
@@ -203,6 +204,9 @@
 
             $scope.saveResult = function(group) {
                 var result = new Result($scope.newResult);
+                if (group != 0) {
+                    result.competition.group = group;
+                }
                 $log.info('Saving new result: ' + JSON.stringify(result));
                 result.$save(function() {
                     withResult(result, false);
