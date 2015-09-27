@@ -20,9 +20,6 @@
     <!-- endbuild -->
 </head>
 <body ng-cloak="" ng-app="stbgfc.tournament-app" ng-controller="TournamentController">
-<!--[if lt IE 9]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
 
 <div id="wrap" ng-controller="LoginController">
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -37,6 +34,7 @@
         </div>
         <div class="navbar-collapse collapse" data-toggle="collapse" data-target=".navbar-collapse.in">
             <ul id="navlinks" class="nav navbar-nav">
+                <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
                 <li ui-sref-active="active"><a ui-sref="newsList">News &amp; Social</a></li>
                 <li ui-sref-active="active"><a ui-sref="rules">Tournament Rules</a></li>
                 <li ui-sref-active="active"><a ui-sref="feedback">Feedback</a></li>
