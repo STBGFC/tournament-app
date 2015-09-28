@@ -18,7 +18,8 @@ blockquote {
 }
 
 a,
-a:hover {
+a:hover,
+a:focus {
     color: #a00;
 }
 a.navbar-brand img {
