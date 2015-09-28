@@ -3,7 +3,7 @@
 
     <h4 class="text-right"><span class="glyphicon glyphicon-fire"></span> <strong>{{competition.name}}/{{competition.section}}</strong></h4>
 
-    <div class="block-section">
+    <div class="panel panel-body">
         <ul id="groupTabs" class="nav nav-tabs">
             <li ng-repeat="group in competition.groups" ng-class="{'active': $index == competition.currentGroup-1}">
                 <a show-tab="" href="#group{{$index + 1}}" ng-click="competition.currentGroup = $index+1" data-toggle="tab"><strong>{{$index + 1}}</strong></a>
@@ -16,7 +16,7 @@
                         <p ng-show="group.results.length == 0" class="lead noresults">
                             Results and league tables will appear here as soon as any results for this competition become available.
                         </p>
-                        <table class="table league-table">
+                        <table class="table tp">
                             <thead>
                                 <tr>
                                     <th class="text-left">Team</th>
@@ -46,7 +46,7 @@
 
                     <div class="col-sm-6">
                         <section ng-show="group.results.length > 0">
-                            <h4 class="text-center"><span class="glyphicon glyphicon-globe"></span> Group Results</h4>
+                            <h4 class="text-center"><span class="glyphicon glyphicon-th-list"></span> Group Results</h4>
                             <result-list results="group.results" user="loggedInUser()"></result-list>
                             <form class="form-horizontal" ng-show="newResult.competition">
                                 <div class="form-group form-group-sm">
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="block-section" ng-show="competition.results.length > 0">
+    <div class="panel panel-body" ng-show="competition.results.length > 0">
         <div id="kosection">
             <h4 class="text-center"><span class="glyphicon glyphicon-bell"></span> Knockout Section</h4>
             <result-list results="competition.results" user="loggedInUser()"></result-list>

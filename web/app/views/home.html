@@ -3,12 +3,16 @@
     <div class="row">
 
         <div class="col-md-7">
-            <div class="jumbotron">
-                <h1>{{tournament.name}}</h1> <blockquote>{{tournament.description}}</blockquote>
+            <div class="jumbotron tp">
+                <h1>{{tournament.name}}</h1>
+                <blockquote>
+                    {{tournament.description}}
+                    <br>Select a competition below to view results and fixtures
+                </blockquote>
             </div>
 
-            <h3>Select a competition below to view results and fixtures</h3>
-            <div id="competitions" class="panel-body">
+
+            <div id="competitions">
                 <div class="btn-group" ng-repeat="comp in tournament.competitions | unique: 'name'">
                     <button type="button" class="btn btn-lg btn-default btn-agegroup dropdown-toggle" data-toggle="dropdown">
                         {{ comp.name }} <span class="small glyphicon glyphicon-triangle-bottom"></span>
@@ -22,18 +26,18 @@
             </div>
         </div>
 
-        <div class="col-md-5" ng-controller="NewsListController">
-            <section ng-show="latestNews.title">
-            <div class="page-header">
-                <h2>
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                    {{latestNews.title}}<br>
-                    <small>{{latestNews.created | date:'EEE HH:mm'}}</small>
-                </h2>
+        <section ng-show="latestNews.title">
+            <div class="col-md-5" ng-controller="NewsListController">
+                <div class="page-header">
+                    <h2>
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        {{latestNews.title}}<br>
+                        <small>{{latestNews.created | date:'EEE HH:mm'}}</small>
+                    </h2>
+                </div>
+                <p>{{latestNews.body}}</p>
+                <a ui-sref="newsList" href="#">See all announcements..</a>
             </div>
-            <p>{{latestNews.body}}</p>
-            <a ui-sref="newsList" href="#">See all announcements..</a>
-        </div>
         </section>
     </div>
 </div>

@@ -1,14 +1,13 @@
 
 <div class="container">
-    <h4 class="text-center">
-        <span class="text-muted">Age</span> <strong>{{result.competition.name}}</strong>&nbsp;|
-        <span class="text-muted">Section</span> <strong>{{result.competition.section}}</strong>&nbsp;|
-        <span ng-show="result.competition.group"><span class="text-muted">Group</span> <strong>{{result.competition.group}}</strong>&nbsp;|</span>
-        <span class="text-muted">Match</span> <strong>{{result.tag}}</strong>&nbsp;|
-        <span class="text-muted">Pitch</span> <strong>{{result.pitch}}</strong>
-    </h4>
-
-    <div class="block-section">
+    <div class="panel panel-body">
+        <h4 class="text-center">
+            <span class="text-muted">Age</span> <strong>{{result.competition.name}}</strong>&nbsp;|
+            <span class="text-muted">Section</span> <strong>{{result.competition.section}}</strong>&nbsp;|
+            <span ng-show="result.competition.group"><span class="text-muted">Group</span> <strong>{{result.competition.group}}</strong>&nbsp;|</span>
+            <span class="text-muted">Match</span> <strong>{{result.tag}}</strong>&nbsp;|
+            <span class="text-muted">Pitch</span> <strong>{{result.pitch}}</strong>
+        </h4>
         <div class="row">
             <div class="text-right col-md-5 col-xs-4">
                 <input class="form-control input-lg borderless text-right" ng-model="result.homeTeam">

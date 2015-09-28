@@ -4,7 +4,11 @@
 
 body {
     font-family: 'Roboto Condensed', sans-serif;
-    background-color: #eee;
+    background: url(../images/bg4b.jpg) no-repeat fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 blockquote {
     font-family: Arial, sans-serif;
@@ -39,6 +43,10 @@ a.navbar-brand img {
     background-position: 0 -15px;
 }
 
+#selected-competition > h4 {
+    color: whitesmoke;
+}
+
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
     background-color: #a00;
@@ -47,14 +55,14 @@ a.navbar-brand img {
 
 .panel-default > .panel-heading {
     background-color: #eee;
+    background-color: rgba(239,239,239,0.9);
 }
 
-.block-section {
+.panel-body {
     margin: 12px 0;
     padding: 6px;
     background-color: #fff;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+    background-color: rgba(255,255,255,0.9);
 }
 
 .list-group-item.active,
@@ -65,18 +73,20 @@ a.navbar-brand img {
 }
 .points {
     color: #a00;
-    background-color: #eee;
+    background-color: #ddd;
     width: 22px;
     font-weight: bold;
 }
 .container .jumbotron {
-    text-shadow: 0 -1px 0 rgba(127,0,0, 0.75);
+    background: url("../images/badge.png") right no-repeat;
+    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
     border-radius: 0;
     padding: 20px 15px;
-    background: url("../images/badge.png") no-repeat center 2.5em #ddd;
 }
-.league-table {
-    background: url("../images/badge.png") no-repeat center 2.5em white;
+.tp {
+    background-color: #fff;
+    background-color: rgba(255,255,255,0);
 }
 .table-condensed {
     background-color: white;
@@ -96,7 +106,9 @@ a.navbar-brand img {
 #footer {
     padding-top: 10px;
     height: 40px;
-    background: url("../images/footer-grass.png") repeat-x #eee;
+    color: #ccc;
+    background-color: #333;
+    background-color: rgba(48,48,48,0.75);
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
