@@ -15,14 +15,6 @@
                     url: '/',
                     templateUrl: 'views/home.html'
                 })
-
-                // TODO: replace with dynamic pages and markdown content
-                .state('rules', {
-                    url: '/rules',
-                    templateUrl: 'views/rules.html'
-                })
-                // end to do
-
                 .state('results', {
                     url: '/results/:name/:section',
                     templateUrl: 'views/results.html',
