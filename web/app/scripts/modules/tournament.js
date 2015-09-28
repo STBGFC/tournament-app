@@ -368,6 +368,10 @@
             };
         })
 
+        .controller('PageController', function(Page, $scope, $log) {
+            // TODO
+        })
+
 
         // ============================================================================================
         // services
@@ -399,6 +403,10 @@
 
         .factory('Feedback', function($resource) {
             return $resource('api/feedbacks/:id', { id: '@_id' }); // default plural :)
+        })
+
+        .factory('Page', function($resource) {
+            return $resource('api/pages/:id', { id: '@_id' });
         })
 
 

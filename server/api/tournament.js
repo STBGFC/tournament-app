@@ -3,6 +3,7 @@ var baucis = require('baucis');
 var Tournament = require('../models/Tournament.js');
 var Result = require('../models/Result.js');
 var News = require('../models/News.js');
+var Page = require('../models/Page.js');
 var Feedback = require('../models/Feedback.js');
 
 
@@ -19,6 +20,7 @@ module.exports = function(io, mongoose) {
     baucis.rest(Tournament).methods('delete', false);
     baucis.rest(Result);
     baucis.rest(News);
+    baucis.rest(Page);
     baucis.rest(Feedback);
 
     // mongoose middleware hook to emit the broadcast event after a successful save

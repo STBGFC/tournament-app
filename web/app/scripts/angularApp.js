@@ -61,6 +61,11 @@
                     url: '/createcompetition',
                     templateUrl: 'views/admin/createcompetition.html'
                 })
+                .state('admin.pageeditor', {
+                    url: '/pages',
+                    templateUrl: 'views/admin/pages.html',
+                    controller: 'PageController'
+                })
             ;
 
             $urlRouterProvider
