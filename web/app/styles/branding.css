@@ -79,9 +79,11 @@ a.navbar-brand img {
     font-weight: bold;
 }
 .container .jumbotron {
-    background: url("../images/badge.png") right no-repeat;
+    background: url("../images/badge-icon.png") top right no-repeat;
+    background-size: 85px auto;
     background-color: #fff;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.2);
+    color: white;
     border-radius: 0;
     padding: 20px 15px;
 }
@@ -110,6 +112,11 @@ a.navbar-brand img {
     color: #ccc;
     background-color: #333;
     background-color: rgba(48,48,48,0.75);
+}
+#footer a {
+    color: whitesmoke;
+    border-bottom: 1px dotted whitesmoke;
+    text-decoration: none;
 }
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {

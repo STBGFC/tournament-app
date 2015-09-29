@@ -58,6 +58,7 @@
                         {{loggedInUser()}} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li><a ui-sref="admin">Admin</a></li>
                         <li><a href="#" ng-click="logout()">Logout</a></li>
                     </ul>
                 </li>
@@ -78,7 +79,8 @@
     <div class="container">
         <p class="text-center">
             <small>
-                <a href="{{ tournament.siteUrl }} ">{{ tournament.club }}</a> &copy;2013-2015 Darren Davison.
+                <a href="{{ tournament.siteUrl }} ">{{ tournament.club }}</a>
+                | &copy;2013-16 Darren Davison
             </small>
         </p>
     </div>
