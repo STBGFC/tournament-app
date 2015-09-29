@@ -34,6 +34,11 @@
                     templateUrl: 'views/admin/editresult.html',
                     controller: 'ResultEditController'
                 })
+                .state('page', {
+                    url: '/page/:id',
+                    templateUrl: 'views/page.html',
+                    controller: 'PageController'
+                })
                 // admin views
                 .state('admin', {
                     url: '/admin',
@@ -56,7 +61,7 @@
                 .state('admin.pageeditor', {
                     url: '/pages',
                     templateUrl: 'views/admin/pages.html',
-                    controller: 'PageController'
+                    controller: 'PageAdminController'
                 })
             ;
 

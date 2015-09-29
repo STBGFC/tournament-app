@@ -9,7 +9,9 @@
             'btford.socket-io',
             'angularLocalStorage',
             'mgcrea.ngStrap.modal',
-            'ui.gravatar'
+            'ui.gravatar',
+            'ngSanitize',
+            'btford.markdown'
         ])
 
         // ============================================================================================
@@ -368,8 +370,35 @@
             };
         })
 
-        .controller('PageController', function(Page, $scope, $log) {
-            // TODO
+        .controller('PageController', function(Page, $scope, $stateParams, $log) {
+            var page = Page.get({id: $stateParams.id}, function() {
+                $scope.page = page;
+            });
+        })
+
+        .controller('PageAdminController', function(Page, $scope, $stateParams, $log) {
+
+            $scope.pages = Page.query();
+
+            $scope.editPage = function(id) {
+                var page = Page.get({id: id}, function() {
+                    $scope.page = page;
+                });
+            };
+
+            $scope.savePage = function () {
+                $log.info('Creating new page: ' + $scope.page.title);
+                var page = new Page($scope.page);
+                page.$save();
+                $scope.page = {};
+            };
+
+            $scope.createPage = function () {
+                $scope.page = {
+                    title: '',
+                    body: ''
+                };
+            };
         })
 
 

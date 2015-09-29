@@ -15,20 +15,21 @@ module.exports = function(app, db) {
         {
             roles:[ROLE_ADMIN],
             allows:[
-                {resources:['/tournaments','/news','/results','/feedbacks'], permissions:'*'}
+                {resources:['/tournaments','/news','/results','/feedbacks', '/pages'], permissions:'*'}
             ]
         },
         {
             roles:[ROLE_EDITOR],
             allows:[
-                {resources:['/results','/news'], permissions:['post', 'put', 'delete']}
+                {resources:['/results'], permissions:['post', 'put', 'delete']},
+                {resources:['/news', '/pages'], permissions:['post', 'put']}
             ]
         },
         {
             roles:[ROLE_GUEST],
             allows:[
                 {resources:['/feedbacks'], permissions:['post']},
-                {resources:['/results', '/news', '/tournaments'], permissions:['get']}
+                {resources:['/results', '/news', '/tournaments', '/pages'], permissions:['get']}
             ]
         }
     ],

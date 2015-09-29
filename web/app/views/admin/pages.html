@@ -1,2 +1,32 @@
-<h3 class="col-sm-offset-2">Page Manager</h3>
-<p>page editor will appear here</p>
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="pageEditButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="true">
+        <span class="glyphicon glyphicon-edit"></span> Edit Page <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="pageEditButton">
+        <li ng-repeat="p in pages"><a ng-click="editPage(p._id)"> {{p.title}}</a></li>
+    </ul>
+    <button class="btn btn-default" ng-click="createPage()">
+        <span class="glyphicon glyphicon-plus-sign"></span> Create New Page
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <label for="title" class="control-label">Page Name (appears in menus)</label>
+            <input type="text" class="form-control" id="title" ng-model="page.title" placeholder="Title" required>
+        </div>
+        <div class="form-group">
+            <label for="title" class="control-label">Page Content (live preview)</label>
+            <textarea ng-model="page.body" class="form-control" rows="20"></textarea>
+        </div>
+        <button class="btn btn-default" ng-click="savePage()">
+            <span class="glyphicon glyphicon-save"></span> Save Page
+        </button>
+    </div>
+
+    <div class="col-md-7">
+        <div btf-markdown="page.body"></div>
+    </div>
+</div>
