@@ -36,6 +36,15 @@
             <ul id="navlinks" class="nav navbar-nav">
                 <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
                 <li ui-sref-active="active"><a ui-sref="newsList">News &amp; Social</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Information <span class="caret"></span></a>
+                    <ul class="dropdown-menu" ng-controller="PageListController">
+                        <li ng-repeat="page in pages">
+                            <a ui-sref="page({ id: page._id })">{{page.title}}</a>
+                        </li>
+                    </ul>
+                </li>
                 <li ui-sref-active="active"><a ui-sref="feedback">Feedback</a></li>
             </ul>
 

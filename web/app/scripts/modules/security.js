@@ -35,7 +35,7 @@
         // controllers
         // ============================================================================================
 
-        .controller('LoginController', function(LoginService, $scope, $state) {
+        .controller('LoginController', function(LoginService, $scope) {
 
             $scope.username = '';
             $scope.password = '';

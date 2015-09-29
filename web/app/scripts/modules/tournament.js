@@ -206,7 +206,7 @@
 
             $scope.saveResult = function(group) {
                 var result = new Result($scope.newResult);
-                if (group != 0) {
+                if (group !== 0) {
                     result.competition.group = group;
                 }
                 $log.info('Saving new result: ' + JSON.stringify(result));
@@ -292,7 +292,7 @@
 
                 res[teamGoals] = res[teamGoals] + count;
                 if (res[teamGoals] < 0) {
-                    res[teamGoals] = 0
+                    res[teamGoals] = 0;
                 }
             };
 
@@ -370,13 +370,19 @@
             };
         })
 
-        .controller('PageController', function(Page, $scope, $stateParams, $log) {
+        .controller('PageController', function(Page, $scope, $stateParams) {
             var page = Page.get({id: $stateParams.id}, function() {
                 $scope.page = page;
             });
         })
 
-        .controller('PageAdminController', function(Page, $scope, $stateParams, $log) {
+        .controller('PageListController', function(Page, $scope) {
+            var pages = Page.query(function() {
+                $scope.pages = pages;
+            });
+        })
+
+        .controller('PageAdminController', function(Page, $scope, $state, $log) {
 
             $scope.pages = Page.query();
 
@@ -389,8 +395,13 @@
             $scope.savePage = function () {
                 $log.info('Creating new page: ' + $scope.page.title);
                 var page = new Page($scope.page);
-                page.$save();
+                if ('_id' in $scope.page) {
+                    page.$update();
+                } else {
+                    page.$save();
+                }
                 $scope.page = {};
+                $state.reload();
             };
 
             $scope.createPage = function () {
@@ -435,7 +446,9 @@
         })
 
         .factory('Page', function($resource) {
-            return $resource('api/pages/:id', { id: '@_id' });
+            return $resource('api/pages/:id', { id: '@_id' }, {
+                update: {method:'PUT'}
+            });
         })
 
 
