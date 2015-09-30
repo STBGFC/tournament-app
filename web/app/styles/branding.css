@@ -79,13 +79,22 @@ a.navbar-brand img {
     font-weight: bold;
 }
 .container .jumbotron {
-    background: url("../images/badge-icon.png") top right no-repeat;
-    background-size: 85px auto;
-    background-color: #fff;
-    background-color: rgba(255,255,255,0.2);
+    background-image: url("../images/badge-icon.png");
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-color: #333;
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
     border-radius: 0;
     padding: 20px 15px;
+}
+@media screen and (max-width: 767px) {
+    .jumbotron { background-size: 60px auto; }
+    .jumbotron h1 { margin-left: 65px; }
+}
+@media screen and (min-width: 768px) {
+    .jumbotron { background-size: 85px auto; }
+    .jumbotron h1 { margin-left: 90px; }
 }
 .tp {
     background-color: #fff;
@@ -106,9 +115,13 @@ a.navbar-brand img {
     border-color: #888;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(170, 0, 0, .6);
 }
+
+#competitions {
+    margin-bottom: 5px;
+}
+
 #footer {
     padding-top: 10px;
-    height: 40px;
     color: #ccc;
     background-color: #333;
     background-color: rgba(48,48,48,0.75);

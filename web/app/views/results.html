@@ -46,7 +46,7 @@
 
                     <div class="col-sm-6">
                         <section ng-show="group.results.length > 0">
-                            <h4 class="text-center"><span class="glyphicon glyphicon-th-list"></span> Group Results</h4>
+                            <h4 class="text-center"><span class="glyphicon glyphicon-th-list"></span> Group {{competition.currentGroup}} Results</h4>
                             <result-list results="group.results" user="loggedInUser()"></result-list>
                             <form class="form-horizontal" ng-show="newResult.competition">
                                 <div class="form-group form-group-sm">
