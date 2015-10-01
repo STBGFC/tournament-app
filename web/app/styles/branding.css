@@ -16,6 +16,9 @@ blockquote {
     font-style: italic;
     border-color: #a00;
 }
+blockquote > footer {
+    color: white;
+}
 
 a,
 a:hover,
@@ -24,6 +27,12 @@ a:focus {
 }
 a.navbar-brand img {
     margin-top: -13px;
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #a00;
+    color: white;
 }
 
 .btn-default,
@@ -46,12 +55,6 @@ a.navbar-brand img {
 
 #selected-competition > h4 {
     color: whitesmoke;
-}
-
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
-    background-color: #a00;
-    color: white;
 }
 
 .panel-default > .panel-heading {
@@ -80,21 +83,30 @@ a.navbar-brand img {
 }
 .container .jumbotron {
     background-image: url("../images/badge-icon.png");
-    background-position: top left;
+    background-position: top right;
     background-repeat: no-repeat;
     background-color: #333;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: transparent;
     color: white;
     border-radius: 0;
     padding: 20px 15px;
 }
+
 @media screen and (max-width: 767px) {
     .jumbotron { background-size: 60px auto; }
-    .jumbotron h1 { margin-left: 65px; }
+
+    .navbar-nav .dropdown-menu>li>a {
+        background-color: transparent;
+        color: #888;
+    }
+    .navbar-nav .dropdown-menu>li>a:hover,
+    .navbar-nav .dropdown-menu>li>a:focus {
+        background-color: transparent;
+        color: white;
+    }
 }
 @media screen and (min-width: 768px) {
     .jumbotron { background-size: 85px auto; }
-    .jumbotron h1 { margin-left: 90px; }
 }
 .tp {
     background-color: #fff;

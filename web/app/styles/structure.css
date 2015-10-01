@@ -107,3 +107,10 @@ button.btn-goals {
 .centered-pills a { float:left; }
 * html .centered-pills ul.nav-pills { display:inline; } /* IE6 */
 *+html .centered-pills ul.nav-pills { display:inline; } /* IE7 */
+
+@media screen and (max-width: 384px) {
+    .btn-agegroup {
+        width: 94px;
+        margin: 6px 2px 0 0;
+    }
+}
