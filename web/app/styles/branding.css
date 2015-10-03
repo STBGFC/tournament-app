@@ -69,6 +69,11 @@ a.navbar-brand img {
     background-color: rgba(255,255,255,0.9);
 }
 
+.team-highlight {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {

@@ -161,8 +161,50 @@
                 return (a.name < b.name);
             };
 
+            var withResult = function(result, del) { //test
+
+                // if the result affects the current scope, update that scope
+                if (result.competition.name === $scope.competition.name && result.competition.section === $scope.competition.section) {
+                    var resultsList = $scope.competition.results;
+                    if ('group' in result.competition) {
+                        resultsList = $scope.competition.groups[result.competition.group - 1].results;
+                    }
+
+                    var i = getIndexFor(result, resultsList);
+                    if (i !== -1) {
+                        if (del) {
+                            resultsList.splice(i, 1);
+                        }
+                        else {
+                            resultsList[i] = result;
+                        }
+                    }
+                    else {
+                        resultsList.push(result);
+                    }
+
+                    if ('group' in result.competition) {
+                        $scope.competition.groups[result.competition.group - 1].table = [];
+                        updateTable(resultsList, $scope.competition.groups[result.competition.group - 1].table);
+                    }
+
+                    resultsList.sort(numericTagComparator);
+                }
+
+            };
+
+            var getIndexFor = function(res, list) {
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i]._id === res._id) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+
             // assign local setup to $scope
             $scope.competition = competition;
+            $scope.highlighted = '';
 
             /*
              * event handler for results broadcast over the websocket
@@ -225,46 +267,15 @@
                 }
             };
 
-            var withResult = function(result, del) { //test
-
-                // if the result affects the current scope, update that scope
-                if (result.competition.name === $scope.competition.name && result.competition.section === $scope.competition.section) {
-                    var resultsList = $scope.competition.results;
-                    if ('group' in result.competition) {
-                        resultsList = $scope.competition.groups[result.competition.group - 1].results;
-                    }
-
-                    var i = getIndexFor(result, resultsList);
-                    if (i !== -1) {
-                        if (del) {
-                            resultsList.splice(i, 1);
-                        }
-                        else {
-                            resultsList[i] = result;
-                        }
-                    }
-                    else {
-                        resultsList.push(result);
-                    }
-
-                    if ('group' in result.competition) {
-                        $scope.competition.groups[result.competition.group - 1].table = [];
-                        updateTable(resultsList, $scope.competition.groups[result.competition.group - 1].table);
-                    }
-
-                    resultsList.sort(numericTagComparator);
+            $scope.highlight = function(teamName) {
+                if ($scope.highlighted !== teamName) {
+                    $scope.highlighted = teamName;
                 }
-
-            };
-
-            var getIndexFor = function(res, list) {
-                for (var i = 0; i < list.length; i++) {
-                    if (list[i]._id === res._id) {
-                        return i;
-                    }
+                else {
+                    $scope.highlighted = '';
                 }
-                return -1;
-            };
+            }
+
         })
 
         .controller('ResultEditController', function($scope, $state, $stateParams, Result, $log) {
@@ -465,7 +476,8 @@
                 templateUrl: '/views/templates/result-list.html',
                 scope: {
                     results: '=',
-                    user: '='
+                    user: '=',
+                    highlighted: '='
                 }
             };
         })

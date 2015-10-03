@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="entry in group.table">
+                                <tr ng-repeat="entry in group.table" ng-click="highlight(entry.name)" ng-class="{'team-highlight': highlighted === entry.name}">
                                     <td class="text-left">{{entry.name}}</td>
                                     <td class="text-right">{{entry.played}}</td>
                                     <td class="text-right">{{entry.won}}</td>
@@ -47,7 +47,7 @@
                     <div class="col-sm-6">
                         <section ng-show="group.results.length > 0">
                             <h4 class="text-center"><span class="glyphicon glyphicon-th-list"></span> Group {{competition.currentGroup}} Results</h4>
-                            <result-list results="group.results" user="loggedInUser()"></result-list>
+                            <result-list results="group.results" user="loggedInUser()" highlighted="highlighted"></result-list>
                             <form class="form-horizontal" ng-show="newResult.competition">
                                 <div class="form-group form-group-sm">
                                     <label class="col-sm-2 control-label">Group</label>
