@@ -72,6 +72,7 @@ a.navbar-brand img {
 .team-highlight {
     font-weight: bold;
     text-transform: uppercase;
+    color: blue;
 }
 
 .list-group-item.active,
