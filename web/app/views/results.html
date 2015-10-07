@@ -42,6 +42,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <button ng-show="loggedInUser() && group.table.length > 0" ng-click="confirmTablePositions()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-upload"></span> CONFIRM TABLE POSITIONS</button>
                     </div>
 
                     <div class="col-sm-6">

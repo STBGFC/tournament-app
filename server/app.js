@@ -35,7 +35,7 @@ mongoose.connect(mongoUri, function(err) {
 
     var authCheck = require('./api/authentication')(app);
     var aclCheck = require('./api/acl')(app, mongoose.connection.db);
-    var tournamentApi = require('./api/tournament')(io, mongoose);
+    var tournamentApi = require('./api/tournament')(app, io, mongoose);
     app.use('/api', [authCheck, aclCheck, tournamentApi]);
 
 

@@ -15,7 +15,8 @@ module.exports = function(app, db) {
         {
             roles:[ROLE_ADMIN],
             allows:[
-                {resources:['/tournaments','/news','/results','/feedbacks', '/pages'], permissions:'*'}
+                {resources:['/tournaments','/news','/results','/feedbacks', '/pages'], permissions:'*'},
+                {resources:['/leaguetables'], permissions:['post']}
             ]
         },
         {

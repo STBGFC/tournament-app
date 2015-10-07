@@ -33,7 +33,7 @@
             };
         })
 
-        .controller('ResultsController', function (Tournament, Result, $scope, $state, $stateParams, $log) {
+        .controller('ResultsController', function (Tournament, Result, Table, $scope, $state, $stateParams, $log) {
 
             // build the UI view of the competition
             var competition  = {
@@ -258,13 +258,18 @@
                 $scope.newResult = {};
             };
 
-            $scope.setTeam = function(teamName, isHome) {
-                if (isHome) {
-                    $scope.newResult.homeTeam = teamName;
+            $scope.confirmTablePositions = function() {
+                var teamList = [];
+                var table = competition.groups[competition.currentGroup-1].table;
+                for (var i = 0; i < table.length; i++) {
+                    teamList.push(table[i].name);
                 }
-                else {
-                    $scope.newResult.awayTeam = teamName;
-                }
+                var resourceTable = new Table(teamList);
+                resourceTable.$save({
+                    name: competition.name,
+                    section: competition.section.replace(/ /g,''),
+                    group: competition.currentGroup
+                });
             };
 
             $scope.highlight = function(teamName) {
@@ -274,7 +279,7 @@
                 else {
                     $scope.highlighted = '';
                 }
-            }
+            };
 
         })
 
@@ -459,6 +464,13 @@
         .factory('Page', function($resource) {
             return $resource('api/pages/:id', { id: '@_id' }, {
                 update: {method:'PUT'}
+            });
+        })
+
+        .factory('Table', function($resource) {
+            // pseudo resource where only posting a map of positions:teamnames works
+            return $resource('api/leaguetables/:name/:section/:group', {
+                name: '@_name', section: '@_section', group: '@_group'
             });
         })
 

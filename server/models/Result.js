@@ -14,7 +14,12 @@ var ResultSchema = new mongoose.Schema({
     homeGoals: { type: Number, min: 0 },
     awayGoals: { type: Number, min: 0 },
     homePens: { type: Number, min: 0 },
-    awayPens: { type: Number, min: 0 }
+    awayPens: { type: Number, min: 0 },
+
+    // 'hidden' props
+    stage2Tag: { type: String },
+    homeTeamFrom: { type: String },
+    awayTeamFrom: { type: String }
 }, {
     toObject: { virtuals: true }, toJSON: { virtuals: true }
 });
