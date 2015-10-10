@@ -31,6 +31,24 @@
                     $state.reload();
                 });
             };
+
+            /*
+             * event handler for results broadcast over the websocket
+             */
+            $scope.$on('socket:result', function(event, data) {
+                var result = data;
+                if ('competition' in result && 'homeTeam' in result) {
+                    if ('homeGoals' in result && result.homeGoals >= 0) {
+                        $('#videprinter').teletype({
+                            text: [
+                                result.competition.name + '/' + result.competition.section + (result.competition.group ? '/' + result.competition.group : '') + ': ' +
+                                result.homeTeam + ' ' + result.homeScore + '-' +
+                                result.awayScore + ' ' + result.awayTeam
+                            ]
+                        });
+                    }
+                }
+            });
         })
 
         .controller('ResultsController', function (Tournament, Result, Table, $scope, $state, $stateParams, $log) {
@@ -212,15 +230,6 @@
             $scope.$on('socket:result', function(event, data) {
                 var result = data;
                 if ('competition' in result && 'homeTeam' in result) {
-                    if ('homeGoals' in result && result.homeGoals >= 0) {
-                        $('#videprinter').teletype({
-                            text: [
-                                result.competition.name + '/' + result.competition.section + (result.competition.group ? '/' + result.competition.group : '') + ': ' +
-                                result.homeTeam + ' ' + result.homeScore + '-' +
-                                result.awayScore + ' ' + result.awayTeam
-                            ]
-                        });
-                    }
                     withResult(data, false);
                 }
                 else {
