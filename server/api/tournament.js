@@ -6,6 +6,9 @@ var News = require('../models/News.js');
 var Page = require('../models/Page.js');
 var Feedback = require('../models/Feedback.js');
 
+// dummy model for posting confirmation of a final league table position
+var Leaguetable = require('mongoose').model('Leaguetable', new require('mongoose').Schema ({}));
+
 
 /*
  * ==========================================================================
@@ -22,6 +25,26 @@ module.exports = function(app, io, mongoose) {
     baucis.rest(News);
     baucis.rest(Page);
     baucis.rest(Feedback);
+
+    /*
+     * post a league table so that 2nd stage games can be worked out.  Body should contain
+     * an array of team names in the order they finished in the table; i.e.
+     *
+     * req.body == ["Sheff. Wed.", "Ipswich", "Cardiff", "Leeds", "Rotherham"]
+     */
+    baucis.rest(Leaguetable).post('/:competition/:section/:group', function(req, res, next) {
+        var prefix = req.params.competition + '_' + req.params.section + '_G' + req.params.group + '_P';
+        console.log('Resolving stage 2 placeholders for ' + prefix + ' and team names ' + JSON.stringify(req.body));
+
+        for (var k in req.body) {
+            if (req.body.hasOwnProperty(k) && !isNaN(k)) {
+                var source = prefix + (parseInt(k) + 1);
+                updateStageTwo(source, req.body[k]);
+            }
+        }
+
+        res.sendStatus(200);
+    });
 
     var updateStageTwo = function(source, target) {
         var cb = function(err, count) {
@@ -62,27 +85,6 @@ module.exports = function(app, io, mongoose) {
 
     mongoose.model('Result').schema.post('remove', function(result) {
         io.sockets.emit('remove', result);
-    });
-
-    /*
-     * post a league table so that 2nd stage games can be worked out.  Body should contain
-     * an array of team names in the order they finished in the table; i.e.
-     *
-     * req.body == ["Sheff. Wed.", "Ipswich", "Cardiff", "Leeds", "Rotherham"]
-     */
-    app.post('/api/leaguetables/:competition/:section/:group', function(req, res) {
-        var prefix = req.params.competition + '_' + req.params.section + '_G' + req.params.group + '_P';
-        console.log('Resolving stage 2 placeholders for ' + prefix + ' and team names ' + JSON.stringify(req.body));
-
-        for (var k in req.body) {
-            if (req.body.hasOwnProperty(k) && !isNaN(k)) {
-                var source = prefix + (parseInt(k) + 1);
-                updateStageTwo(source, req.body[k]);
-            }
-        }
-
-        res.sendStatus(200);
-
     });
 
     return baucis();
