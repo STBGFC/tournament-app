@@ -51,7 +51,7 @@
             });
         })
 
-        .controller('ResultsController', function (Tournament, Result, Table, $scope, $state, $stateParams, $log) {
+        .controller('ResultsController', function (Result, Table, $scope, $state, $stateParams, $log) {
 
             // build the UI view of the competition
             var competition  = {

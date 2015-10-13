@@ -60,6 +60,10 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      protractor: {
+        files: ['app/scripts/**/*.js', 'test/e2e/**/*.js'],
+        tasks: ['protractor:continuous']
       }
     },
 
@@ -386,6 +390,27 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    protractor: {
+      options: {
+        configFile: "test/protractor.conf.js",
+        noColor: false,
+        // debug: true,
+        // Additional arguments that are passed to the webdriver command
+        args: { }
+      },
+      e2e: {
+        options: {
+          // Stops Grunt process if a test fails
+          keepAlive: false
+        }
+      },
+      continuous: {
+        options: {
+          keepAlive: true
+        }
+      }
     }
   });
 
@@ -417,6 +442,11 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma'
+  ]);
+
+  grunt.registerTask('e2e-test', [
+      'protractor:continuous',
+      'watch:protractor'
   ]);
 
   grunt.registerTask('build', [

@@ -24,29 +24,46 @@ describe ('Tournament Tests', function() {
 
         it('should attach one competition to the scope', function () {
             scope.createCompetition({name: 'U9', section: 'All', groups: 2});
-            expect(scope.tournament.competitions.length).toBe(2);
-            expect(scope.tournament.competitions[1].name).toBe('U9');
+            expect(scope.tournament.competitions.length).toBe(6);
+            expect(scope.tournament.competitions[1].name).toBe('U8');
         });
 
     });
 
     describe('ResultsController', function () {
-        var scope, Tournament, Result;
+        var scope, Result, stateParams;
 
         beforeEach(
-            inject(function(_Tournament_, _Result_, $rootScope, $controller) {
-                Tournament = _Tournament_;
+            inject(function(_Result_, $rootScope, $controller) {
                 Result = _Result_;
-                spyOn(Tournament, 'query').and.callFake(function() {
-                    scope.tournament = tournamentData;
-                });
                 scope = $rootScope.$new();
-                $controller('ResultsController', {$scope: scope});
+                scope.tournament = tournamentData;
+                stateParams = {name:'U8', section:'A'};
+                $controller('ResultsController', {$scope: scope, $stateParams: stateParams});
+                spyOn(Result, 'query').and.returnValue(competitionData);
             })
         );
 
         it('should attach a list of competitions to the scope', function () {
-            expect(scope.tournament.competitions.length).toBe(2);
+            expect(scope.tournament.competitions.length).toBe(6);
+        });
+
+        it('should setup a new result', function () {
+            scope.createResult();
+            expect(scope.newResult).toBeDefined();
+            expect(scope.newResult.index).toBe(1000);
+        });
+
+        it('should save a new result in group 1', function() {
+            spyOn(Result, 'save').and.callThrough();
+            scope.newResult = newResultData;
+            expect(Result.save).not.toHaveBeenCalled();
+            scope.saveResult(1);
+            var gresults = scope.competition.groups[0].results;
+            expect(Result.save).toHaveBeenCalled();
+            expect(gresults.length).toBe(1);
+            expect(gresults[0].homeTeam).toEqual('Foo');
+            expect(scope.newResult).toEqual({});
         });
 
     });
@@ -88,9 +105,35 @@ describe ('Tournament Tests', function() {
         club: 'Jasmine',
         siteUrl: 'http://www.example.com',
         competitions: [
-            {name: 'U8', section: 'A', groups: 4}
+            {name: 'U8', section: 'A', groups: 4},
+            {name: 'U8', section: 'B', groups: 4},
+            {name: 'U9', section: 'A', groups: 4},
+            {name: 'U9', section: 'Champions League', groups: 2},
+            {name: 'U9', section: 'Europa League', groups: 2}
         ],
         $update: function() {console.log('updating tournament');}
+    };
+
+    var competitionData = {
+        name: 'U8',
+        section: 'A',
+        groups: [
+            {results:[], table:[]}
+        ],
+        results: [],
+        currentGroup: 1
+    };
+
+    var newResultData = {
+        index: 1000,
+        homeTeam: 'Foo',
+        awayTeam: 'Bar',
+        tag: '1',
+        competition: {
+            name: 'U10',
+            section: 'A',
+            group: 1
+        }
     };
 
     var newsItemData = [
