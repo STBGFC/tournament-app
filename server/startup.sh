@@ -20,15 +20,23 @@
 #
 # ---------------------------------------------------------------------------
 usage() {
-    echo "Usage: $0 [location_of_mongo_db]"
+    echo "Usage: $0 [location_of_mongo_db] <development|test|prod>"
     exit 1
 }
 
-[[ $# -eq 1 ]] || usage
+[[ $# -gt 0 ]] || usage
 
+env=$2
+[[ "$env" == "" ]] && env=prod
+pidfile=/var/run/tournament-app.pid
+
+key=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1) 
 JWT_EXPIRES_IN_MINUTES=600 \
-JWT_SECRET_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1) \
-STBGFC_MONGO_URI=mongodb://$1 \
-NODE_ENV=prod \
-node app.js > /var/log/tournament-app.log & 2>&1
-echo $! > /var/run/tournament-app.pid
+  JWT_SECRET_KEY=$key \
+  STBGFC_MONGO_URI=mongodb://$1 \
+  NODE_ENV=$env \
+  node app.js > /var/log/tournament-app.log & 2>&1
+
+echo $! > $pidfile
+cat $pidfile
+
