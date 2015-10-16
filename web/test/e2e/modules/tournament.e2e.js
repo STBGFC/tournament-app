@@ -37,10 +37,7 @@ var loginAndFail = function(name, passwd) {
 
 var loginAndSucceed = function(name, passwd) {
     loginWith(name, passwd);
-    // TODO ----- requires a fix for #30 -----
-    //expect(loginDlg.isDisplayed()).toBeFalsy();
-    loginDlg.sendKeys(protractor.Key.ESCAPE);
-    // ----- end -----
+    expect(loginDlg.isPresent()).toBeFalsy();
     expect(userMenu.isDisplayed()).toBeTruthy();
 };
 

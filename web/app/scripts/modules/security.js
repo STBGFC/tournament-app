@@ -44,6 +44,10 @@
                 return LoginService.loggedInUser();
             };
 
+            $scope.requestLogin = function() {
+                loginModal.show();
+            };
+
             $scope.doLogin = function() {
                 LoginService.authenticate($scope.username, $scope.password);
                 loginModal.hide();
