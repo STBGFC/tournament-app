@@ -26,7 +26,9 @@ Run `grunt build` for building and `grunt serve` for preview.
 
 ### Testing
 
-Running `grunt test` will run the unit tests with karma.
+Running `grunt test` will run the unit tests with karma and the e2e tests
+with protractor, for the e2e tests a backend API will need to be running.  
+`grunt watch` will auto run tests as the code changes.
 
 ## API
 
