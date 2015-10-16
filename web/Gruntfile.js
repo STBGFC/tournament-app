@@ -441,12 +441,12 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma',
+    'protractor:e2e'
   ]);
 
   grunt.registerTask('e2e-test', [
-      'protractor:continuous',
-      'watch:protractor'
+      'protractor:e2e'
   ]);
 
   grunt.registerTask('build', [

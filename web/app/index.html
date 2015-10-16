@@ -49,17 +49,17 @@
             </ul>
 
             <ul ng-hide="loggedInUser()" class="nav navbar-nav navbar-right">
-                <li><a href="#" ng-click="doLogin()">Login</a></li>
+                <li><a href="#" id="loginLink" ng-click="doLogin()">Login</a></li>
             </ul>
 
             <ul ng-show="loggedInUser()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#" id="userMenu">
                         {{loggedInUser()}} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a ui-sref="admin">Admin</a></li>
-                        <li><a href="#" ng-click="logout()">Logout</a></li>
+                        <li><a href="#" id="logoutLink" ng-click="logout()">Logout</a></li>
                     </ul>
                 </li>
                 <li><img gravatar-src="'{{loggedInUser()}}'" gravatar-size="50" secure="true"></li>
