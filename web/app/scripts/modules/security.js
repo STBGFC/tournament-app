@@ -29,6 +29,10 @@
             $rootScope.$on('event:auth-loginRequired', function() {
                 loginModal.$promise.then(loginModal.show);
             });
+
+            $rootScope.$on('event:auth-forbidden', function() {
+                $("#fourOhThree").show().fadeOut(3000);
+            });
         })
 
         // ============================================================================================

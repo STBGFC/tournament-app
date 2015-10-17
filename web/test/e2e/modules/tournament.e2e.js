@@ -11,7 +11,11 @@ describe('In the tournament app,', function() {
     var feedbackAdminLink = element(by.partialLinkText('feedback'));
     var announcementsAdminLink = element(by.partialLinkText('announcement'));
     var competitionAdminLink = element(by.partialLinkText('competition'));
+    var confirmTablePositionsButton = element(by.partialButtonText('CONFIRM TABLE POSITIONS'));
+    var saveResultButton = element(by.partialButtonText('SAVE RESULT'));
+    var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
     var newsAlert = element(by.id('newsalert'));
+    var noEntry = element(by.id('fourOhThree'));
 
     var logout = function () {
         userMenu.click();
@@ -44,6 +48,12 @@ describe('In the tournament app,', function() {
         expect(userMenu.isDisplayed()).toBeTruthy();
     };
 
+    var assertForbidden = function() {
+        expect(noEntry.isDisplayed()).toBeTruthy();
+        browser.wait(protractor.ExpectedConditions.invisibilityOf(noEntry), 5000);
+        expect(noEntry.isDisplayed()).toBeFalsy();
+    };
+
     var clickToAdmin = function (name) {
         element(by.linkText(name)).click();
         element(by.linkText('Admin')).click();
@@ -66,6 +76,7 @@ describe('In the tournament app,', function() {
         element(by.model('page.title')).sendKeys('Ref Title');
         element(by.model('page.body')).sendKeys('Ref Content');
         element(by.buttonText('Save Page')).click();
+        assertForbidden();
 
         element(by.id('pageEditButton')).click();
         element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
@@ -82,27 +93,39 @@ describe('In the tournament app,', function() {
         element(by.model('news.title')).sendKeys('Ref Title');
         element(by.model('news.body')).sendKeys('Ref Content');
         element(by.buttonText('Create Announcement')).click();
+        assertForbidden();
         expect(newsAlert.isDisplayed()).toBeFalsy();
     };
 
     var noViewFeedback = function (email) {
         clickToAdmin(email);
         feedbackAdminLink.click();
-        // TODO
+        assertForbidden();
     };
 
     var noCreateCompetition = function (email) {
         clickToAdmin(email);
         competitionAdminLink.click();
-        // TODO
+        element(by.model('competition.name')).sendKeys('U99');
+        element(by.model('competition.section')).sendKeys('Groups');
+        element(by.model('competition.groups')).sendKeys('2');
+        element(by.buttonText('Add Competition')).click();
+        assertForbidden();
+    };
+
+    var noDeleteResult = function () {
+        deleteResultButton.click();
+        assertForbidden();
     };
 
     var noEditResult = function () {
-        // TODO
+        saveResultButton.click();
+        assertForbidden();
     };
 
     var noConfirmTable = function () {
-        // TODO
+        confirmTablePositionsButton.click();
+        assertForbidden();
     };
 
     describe('a normal user', function () {
@@ -192,6 +215,12 @@ describe('In the tournament app,', function() {
                 // TODO update result
             });
 
+            it('should not be allowed to delete a result', function () {
+                clickToCompetition('U11', 'A');
+                // TODO
+                //noDeleteResult();
+            });
+
             it('should not be allowed to confirm table positions', function () {
                 clickToCompetition('U11', 'A');
                 noConfirmTable();
@@ -257,6 +286,12 @@ describe('In the tournament app,', function() {
             expect(newsItems.count()).toBeGreaterThan(0);
         });
 
+        it('should not be allowed to delete a result', function () {
+            clickToCompetition('U11', 'A');
+            // TODO
+            //noDeleteResult();
+        });
+
         it('should not be allowed to view feedback', function () {
             noViewFeedback(email);
         });
@@ -280,12 +315,31 @@ describe('In the tournament app,', function() {
             // TODO
         });
 
-        it('should be allowed to view feedback', function () {
+        it('should be allowed to delete a result', function () {
+            clickToCompetition('U11', 'A');
             // TODO
         });
 
+        it('should be allowed to view and filter feedback', function () {
+            var items = element.all(by.repeater('item in feedbackItems'));
+            clickToAdmin(email);
+            feedbackAdminLink.click();
+            expect(items.count()).toBeGreaterThan(1);
+            element(by.model('searchBy')).sendKeys('Cool');
+            expect(items.count()).toBe(1);
+            element(by.model('searchBy')).sendKeys('ZWERtwetwerkjhweoitj');
+            expect(items.count()).toBe(0);
+        });
+
         it('should be allowed to create a competition', function () {
-            // TODO
+            clickToAdmin(email);
+            competitionAdminLink.click();
+            element(by.model('competition.name')).sendKeys('U99');
+            element(by.model('competition.section')).sendKeys('Groups');
+            element(by.model('competition.groups')).sendKeys('2');
+            element(by.buttonText('Add Competition')).click();
+            browser.get(homeUrl);
+            expect(element(by.partialButtonText('U99')).isPresent()).toBeTruthy();
         });
 
     });
