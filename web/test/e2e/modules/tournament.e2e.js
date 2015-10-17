@@ -23,27 +23,38 @@ describe('In the tournament app,', function() {
         expect(loginLink.isDisplayed()).toBeTruthy();
     };
 
-    var loginWith = function (name, passwd) {
-        //ensure logged out
+    var login = function(name, passwd) {
+        loginLink.click();
+        element(by.model('username')).sendKeys(name);
+        element(by.model('password')).sendKeys(passwd);
+        element(by.buttonText('Login')).click();
+    };
+
+    var checkLoggedInOrLogin = function (name, passwd) {
+        // already logged in?
         userMenu.isDisplayed().then(function (present) {
             if (present) {
-                logout(name);
+                userMenu.getText().then(function (text) {
+                    if (text !== name) {
+                        logout();
+                        login(name, passwd);
+                    }
+                });
             }
-            loginLink.click();
-            element(by.model('username')).sendKeys(name);
-            element(by.model('password')).sendKeys(passwd);
-            element(by.buttonText('Login')).click();
+            else {
+                login(name, passwd);
+            }
         });
     };
 
     var loginAndFail = function (name, passwd) {
-        loginWith(name, passwd);
+        checkLoggedInOrLogin(name, passwd);
         expect(loginDlg.isDisplayed()).toBeTruthy();
         loginDlg.sendKeys(protractor.Key.ESCAPE);
     };
 
     var loginAndSucceed = function (name, passwd) {
-        loginWith(name, passwd);
+        checkLoggedInOrLogin(name, passwd);
         expect(loginDlg.isPresent()).toBeFalsy();
         expect(userMenu.isDisplayed()).toBeTruthy();
     };
