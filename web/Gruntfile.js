@@ -445,7 +445,12 @@ module.exports = function (grunt) {
     'protractor:e2e'
   ]);
 
+  grunt.registerTask('resetdb', function() {
+    grunt.util.spawn({cmd: 'mongo', args:['tournamentApp', 'test/testdb-seed.js']}, function done(){});
+  });
+
   grunt.registerTask('e2e-test', [
+      'resetdb',
       'protractor:e2e'
   ]);
 

@@ -226,6 +226,11 @@ describe('In the tournament app,', function() {
                 noConfirmTable();
             });
 
+            it('should not be allowed to add a new fixture or result', function () {
+                clickToCompetition('U11', 'A');
+                // TODO
+            });
+
             it('should not be allowed to view feedback', function () {
                 noViewFeedback(email);
             });
@@ -286,10 +291,14 @@ describe('In the tournament app,', function() {
             expect(newsItems.count()).toBeGreaterThan(0);
         });
 
-        it('should not be allowed to delete a result', function () {
+        it('should be allowed to delete a result', function () {
             clickToCompetition('U11', 'A');
             // TODO
-            //noDeleteResult();
+        });
+
+        it('should be allowed to add a new fixture or result', function () {
+            clickToCompetition('U11', 'A');
+            // TODO
         });
 
         it('should not be allowed to view feedback', function () {
@@ -315,9 +324,15 @@ describe('In the tournament app,', function() {
             // TODO
         });
 
-        it('should be allowed to delete a result', function () {
-            clickToCompetition('U11', 'A');
-            // TODO
+        it('should be allowed to create a competition', function () {
+            clickToAdmin(email);
+            competitionAdminLink.click();
+            element(by.model('competition.name')).sendKeys('U99');
+            element(by.model('competition.section')).sendKeys('Groups');
+            element(by.model('competition.groups')).sendKeys('2');
+            element(by.buttonText('Add Competition')).click();
+            browser.get(homeUrl);
+            expect(element(by.partialButtonText('U99')).isPresent()).toBeTruthy();
         });
 
         it('should be allowed to view and filter feedback', function () {
@@ -331,15 +346,11 @@ describe('In the tournament app,', function() {
             expect(items.count()).toBe(0);
         });
 
-        it('should be allowed to create a competition', function () {
+        it('should be allowed to delete feedback', function () {
+            var items = element.all(by.repeater('item in feedbackItems'));
             clickToAdmin(email);
-            competitionAdminLink.click();
-            element(by.model('competition.name')).sendKeys('U99');
-            element(by.model('competition.section')).sendKeys('Groups');
-            element(by.model('competition.groups')).sendKeys('2');
-            element(by.buttonText('Add Competition')).click();
-            browser.get(homeUrl);
-            expect(element(by.partialButtonText('U99')).isPresent()).toBeTruthy();
+            feedbackAdminLink.click();
+            // TODO
         });
 
     });
