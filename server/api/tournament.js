@@ -48,19 +48,22 @@ module.exports = function(app, io, mongoose) {
 
     var updateStageTwo = function(source, target) {
         var cb = function(err, count) {
-            Result.find(
-                {$or:[{homeTeamFrom: source}, {awayTeamFrom: source}]},
-                function(err, docs) {
-                    for (var i = 0; i < docs.length; i++) {
-                        io.sockets.emit('result', docs[i]);
-                        console.log('Emiting updated stage2 result ' + JSON.stringify(docs[i]));
-                    }
-                }
-            );
+            if (err) {
+                console.log(err);
+            }
         };
         console.log('Updating ' + source + ' to ' + target);
         Result.update({homeTeamFrom: source}, {$set: {homeTeam: target}}, {multi: true}, cb);
         Result.update({awayTeamFrom: source}, {$set: {awayTeam: target}}, {multi: true}, cb);
+        Result.find(
+            {$or:[{homeTeamFrom: source}, {awayTeamFrom: source}]},
+            function(err, docs) {
+                for (var i = 0; i < docs.length; i++) {
+                    io.sockets.emit('result', docs[i]);
+                    console.log('Emiting updated stage2 result ' + JSON.stringify(docs[i]));
+                }
+            }
+        );
     };
 
     // mongoose middleware hook to emit the broadcast event after a successful save
