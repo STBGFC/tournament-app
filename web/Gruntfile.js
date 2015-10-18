@@ -60,10 +60,6 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
-      },
-      protractor: {
-        files: ['app/scripts/**/*.js', 'test/e2e/**/*.js'],
-        tasks: ['protractor:continuous']
       }
     },
 

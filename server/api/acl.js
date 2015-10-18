@@ -24,7 +24,8 @@ module.exports = function(app, db) {
             roles:[ROLE_EDITOR],
             allows:[
                 {resources:['/results'], permissions:['post', 'put', 'delete']},
-                {resources:['/news','/pages'], permissions:['post', 'put']}
+                {resources:['/feedbacks'], permissions:['get']},
+                {resources:['/news'], permissions:['post', 'put']}
             ]
         },
         {

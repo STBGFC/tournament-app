@@ -14,6 +14,8 @@ describe('In the tournament app,', function() {
     var confirmTablePositionsButton = element(by.partialButtonText('CONFIRM TABLE POSITIONS'));
     var newsAlert = element(by.id('newsalert'));
     var noEntry = element(by.id('fourOhThree'));
+    var addResultButton = element(by.partialButtonText('ADD MATCH'));
+    var saveResultButton = element(by.partialButtonText('SAVE MATCH'));
 
     var logout = function () {
         userMenu.click();
@@ -82,15 +84,15 @@ describe('In the tournament app,', function() {
     var noCreatePage = function (email) {
         clickToAdmin(email);
         pageAdminLink.click();
-        element(by.model('page.title')).sendKeys('Ref Title');
-        element(by.model('page.body')).sendKeys('Ref Content');
+        element(by.model('page.title')).sendKeys('Illegal Title');
+        element(by.model('page.body')).sendKeys('Illegal Content');
         element(by.buttonText('Save Page')).click();
         assertForbidden();
 
         element(by.id('pageEditButton')).click();
         element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
             return elem.getText().then(function (text) {
-                expect(text).not.toContain('Ref Title');
+                expect(text).not.toContain('Illegal Title');
             });
         });
 
@@ -99,8 +101,8 @@ describe('In the tournament app,', function() {
     var noCreateAnnouncement = function (email) {
         clickToAdmin(email);
         announcementsAdminLink.click();
-        element(by.model('news.title')).sendKeys('Ref Title');
-        element(by.model('news.body')).sendKeys('Ref Content');
+        element(by.model('news.title')).sendKeys('Illegal Title');
+        element(by.model('news.body')).sendKeys('Illegal Content');
         element(by.buttonText('Create Announcement')).click();
         assertForbidden();
         expect(newsAlert.isDisplayed()).toBeFalsy();
@@ -125,6 +127,15 @@ describe('In the tournament app,', function() {
     var noConfirmTable = function () {
         confirmTablePositionsButton.click();
         assertForbidden();
+    };
+
+    var addGroupGame = function() {
+        addResultButton.click();
+        element(by.model('newResult.tag')).sendKeys('1');
+        element(by.model('newResult.pitch')).sendKeys('5');
+        element(by.model('newResult.homeTeam')).sendKeys('Home');
+        element(by.model('newResult.awayTeam')).sendKeys('Away');
+        saveResultButton.click();
     };
 
     describe('a normal user', function () {
@@ -211,7 +222,7 @@ describe('In the tournament app,', function() {
             var subAwayGoalButton = element(by.id('subAwayGoal'));
             var saveResultButton = element(by.partialButtonText('SAVE RESULT'));
             var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
-            var table = element.all(by.repeater('entry in group.table'));
+            var bottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
 
             beforeEach(function() {
                 loginAndSucceed(email, pwd);
@@ -219,7 +230,7 @@ describe('In the tournament app,', function() {
 
             it('should be allowed to edit and update a group result', function () {
                 clickToCompetition('U11', 'A');
-                //expect(table.last().getText()).toContain('Liverpool');
+                expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
                 firstResult.$('a').click();
                 expect(element(by.css('h4.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
                 expect(homeTeamInput.getAttribute('value')).toEqual('Arsenal');
@@ -229,7 +240,7 @@ describe('In the tournament app,', function() {
                 addAwayGoalButton.click();
                 expect(score.getText()).toEqual('1 - 2');
                 saveResultButton.click();
-                //expect(table.last().getText()).toContain('Arsenal');
+                expect(bottomOfGroup.getText()).toContain('Arsenal 4 0 3 1 4 5 3');
             });
 
             it('should be allowed to edit and update a result including penalties', function () {
@@ -251,7 +262,8 @@ describe('In the tournament app,', function() {
 
             it('should not be allowed to add a new fixture or result', function () {
                 clickToCompetition('U11', 'A');
-                // TODO
+                addGroupGame();
+                assertForbidden();
             });
 
             it('should not be allowed to view feedback', function () {
@@ -283,24 +295,10 @@ describe('In the tournament app,', function() {
             loginAndSucceed(email, pwd);
         });
 
-        it('should be allowed to modify CMS pages', function () {
-            clickToAdmin(email);
-            pageAdminLink.click();
-            element(by.model('page.title')).sendKeys('Editor Title');
-            element(by.model('page.body')).sendKeys('Editor Content');
-            element(by.buttonText('Save Page')).click();
-            element(by.id('pageEditButton')).click();
-            element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
-                return elem.getText().then(function (text) {
-                    expect(text).toBe('Editor Title');
-                });
-            });
-        });
-
         it('should be allowed to create an announcement', function () {
             clickToAdmin(email);
             announcementsAdminLink.click();
-            element(by.model('news.title')).sendKeys('Editor Announcement');
+            element(by.model('news.title')).sendKeys('Allowed Announcement');
             element(by.model('news.body')).sendKeys('This is a new announcement');
             element(by.buttonText('Create Announcement')).click();
             expect(newsAlert.isDisplayed()).toBeTruthy();
@@ -310,7 +308,7 @@ describe('In the tournament app,', function() {
             element(by.linkText('News & Social')).click();
             var newsItems = element.all(by.repeater('item in newsItems'));
             expect(newsItems.count()).toBeGreaterThan(1);
-            element(by.model('searchBy')).sendKeys('Editor Announcement');
+            element(by.model('searchBy')).sendKeys('Allowed Announcement');
             expect(newsItems.count()).toBeGreaterThan(0);
         });
 
@@ -324,11 +322,24 @@ describe('In the tournament app,', function() {
 
         it('should be allowed to add a new fixture or result', function () {
             clickToCompetition('U11', 'A');
-            // TODO
+            addGroupGame();
+            expect(element.all(by.repeater('result in results')).count()).toBe(30); // includes 2 gorups and KO section
+            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('1 5 Home Away');
         });
 
-        it('should not be allowed to view feedback', function () {
-            noViewFeedback(email);
+        it('should be allowed to view and filter feedback', function () {
+            var items = element.all(by.repeater('item in feedbackItems'));
+            clickToAdmin(email);
+            feedbackAdminLink.click();
+            expect(items.count()).toBeGreaterThan(1);
+            element(by.model('searchBy')).sendKeys('Cool');
+            expect(items.count()).toBe(1);
+            element(by.model('searchBy')).sendKeys('ZWERtwetwerkjhweoitj');
+            expect(items.count()).toBe(0);
+        });
+
+        it('should not be allowed to create a CMS page', function () {
+            noCreatePage(email);
         });
 
         it('should not be allowed to create a competition', function () {
@@ -361,15 +372,18 @@ describe('In the tournament app,', function() {
             expect(element(by.partialButtonText('U99')).isPresent()).toBeTruthy();
         });
 
-        it('should be allowed to view and filter feedback', function () {
-            var items = element.all(by.repeater('item in feedbackItems'));
+        it('should be allowed to modify CMS pages', function () {
             clickToAdmin(email);
-            feedbackAdminLink.click();
-            expect(items.count()).toBeGreaterThan(1);
-            element(by.model('searchBy')).sendKeys('Cool');
-            expect(items.count()).toBe(1);
-            element(by.model('searchBy')).sendKeys('ZWERtwetwerkjhweoitj');
-            expect(items.count()).toBe(0);
+            pageAdminLink.click();
+            element(by.model('page.title')).sendKeys('Allowed Title');
+            element(by.model('page.body')).sendKeys('#Allowed Content');
+            element(by.buttonText('Save Page')).click();
+            element(by.id('pageEditButton')).click();
+            element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
+                return elem.getText().then(function (text) {
+                    expect(text).toBe('Allowed Title');
+                });
+            });
         });
 
         it('should be allowed to delete feedback', function () {
