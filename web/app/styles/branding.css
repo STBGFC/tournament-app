@@ -25,9 +25,6 @@ a:hover,
 a:focus {
     color: #a00;
 }
-a.navbar-brand img {
-    margin-top: -13px;
-}
 
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
