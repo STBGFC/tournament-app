@@ -25,8 +25,8 @@
         </div>
         <div class="row">
             <div class="col-md-5 col-xs-4 text-right">
-                <button class="btn btn-danger btn-lg" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
-                <button class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                <button id="subHomeGoal" class="btn btn-danger btn-lg" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                <button id="addHomeGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
             </div>
             <div class="col-md-2 col-xs-4 centered-pills">
                 <ul class="nav nav-pills" ng-hide="result.competition.group">
@@ -35,8 +35,8 @@
                 </ul>
             </div>
             <div class="col-md-5 col-xs-4 text-left">
-                <button class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
-                <button class="btn btn-danger btn-lg" ng-click="addGoal(false, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                <button id="addAwayGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                <button id="subAwayGoal" class="btn btn-danger btn-lg" ng-click="addGoal(false, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
             </div>
         </div>
         <div class="row">

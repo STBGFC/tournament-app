@@ -12,8 +12,6 @@ describe('In the tournament app,', function() {
     var announcementsAdminLink = element(by.partialLinkText('announcement'));
     var competitionAdminLink = element(by.partialLinkText('competition'));
     var confirmTablePositionsButton = element(by.partialButtonText('CONFIRM TABLE POSITIONS'));
-    var saveResultButton = element(by.partialButtonText('SAVE RESULT'));
-    var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
     var newsAlert = element(by.id('newsalert'));
     var noEntry = element(by.id('fourOhThree'));
 
@@ -124,16 +122,6 @@ describe('In the tournament app,', function() {
         assertForbidden();
     };
 
-    var noDeleteResult = function () {
-        deleteResultButton.click();
-        assertForbidden();
-    };
-
-    var noEditResult = function () {
-        saveResultButton.click();
-        assertForbidden();
-    };
-
     var noConfirmTable = function () {
         confirmTablePositionsButton.click();
         assertForbidden();
@@ -208,9 +196,22 @@ describe('In the tournament app,', function() {
         it('should fail to login when entering the wrong password', function () {
             browser.get(homeUrl);
             loginAndFail(email, 'xxx');
+            browser.get(homeUrl);
         });
 
         describe('when logged in', function() {
+
+            var score = element(by.binding('result.homeGoals')); // includes everything in the surrounding <span/>
+            var homeTeamInput = element(by.model('result.homeTeam'));
+            var awayTeamInput = element(by.model('result.awayTeam'));
+            var firstResult = element.all(by.repeater('result in results')).first();
+            var addHomeGoalButton = element(by.id('addHomeGoal'));
+            var subHomeGoalButton = element(by.id('subHomeGoal'));
+            var addAwayGoalButton = element(by.id('addAwayGoal'));
+            var subAwayGoalButton = element(by.id('subAwayGoal'));
+            var saveResultButton = element(by.partialButtonText('SAVE RESULT'));
+            var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
+            var table = element.all(by.repeater('entry in group.table'));
 
             beforeEach(function() {
                 loginAndSucceed(email, pwd);
@@ -218,7 +219,17 @@ describe('In the tournament app,', function() {
 
             it('should be allowed to edit and update a group result', function () {
                 clickToCompetition('U11', 'A');
-                // TODO update result
+                //expect(table.last().getText()).toContain('Liverpool');
+                firstResult.$('a').click();
+                expect(element(by.css('h4.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
+                expect(homeTeamInput.getAttribute('value')).toEqual('Arsenal');
+                expect(awayTeamInput.getAttribute('value')).toEqual('Liverpool');
+                expect(score.getText()).toEqual('2 - 1');
+                subHomeGoalButton.click();
+                addAwayGoalButton.click();
+                expect(score.getText()).toEqual('1 - 2');
+                saveResultButton.click();
+                //expect(table.last().getText()).toContain('Arsenal');
             });
 
             it('should be allowed to edit and update a result including penalties', function () {
@@ -228,8 +239,9 @@ describe('In the tournament app,', function() {
 
             it('should not be allowed to delete a result', function () {
                 clickToCompetition('U11', 'A');
-                // TODO
-                //noDeleteResult();
+                firstResult.$('a').click();
+                deleteResultButton.click();
+                assertForbidden();
             });
 
             it('should not be allowed to confirm table positions', function () {
@@ -303,7 +315,10 @@ describe('In the tournament app,', function() {
         });
 
         it('should be allowed to delete a result', function () {
-            clickToCompetition('U11', 'A');
+            //clickToCompetition('U11', 'A');
+            //firstResult.$('a').click();
+            //deleteResultButton.click();
+            //assertForbidden();
             // TODO
         });
 
