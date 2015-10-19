@@ -242,6 +242,17 @@ describe('In the tournament app,', function() {
                 saveResultButton.click();
                 expect(bottomOfGroup.getText()).toContain('Arsenal 4 0 3 1 4 5 3');
             });
+            
+            it('should return to the same group in the competition after updating a result', function() {
+                clickToCompetition('U11', 'A');
+                element(by.linkText('2')).click();
+                // gah...  element.all(by.repeater('result in results').row(10)).$('a').click();
+                expect(element(by.css('h4.text-center')).getText()).toEqual('Age U11 | Section A | Group 2 | Match 1 | Pitch 1');
+                subHomeGoalButton.click();
+                addAwayGoalButton.click();
+                saveResultButton.click();
+                // TODO expect(element(by.css('li.active')).toBe(2);
+            });
 
             it('should be allowed to edit and update a result including penalties', function () {
                 clickToCompetition('U11', 'A');

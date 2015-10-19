@@ -53,13 +53,18 @@
 
         .controller('ResultsController', function (Result, Table, $scope, $state, $stateParams, $log) {
 
+            var _grp = $stateParams.group;
+            if (_grp === '' || isNaN(_grp)) {
+                _grp = 1;
+            }
+            
             // build the UI view of the competition
             var competition  = {
                 name: $stateParams.name,
                 section: $stateParams.section,
                 groups: [],
                 results: [],
-                currentGroup: 1
+                currentGroup: _grp
             };
 
             var numericTagComparator = function(a, b) {
@@ -325,7 +330,12 @@
                 var result = new Result(res);
                 $log.info('Updating result: ' + JSON.stringify(result));
                 result.$update(function() {
-                    $state.go('results', {name: result.competition.name, section: result.competition.section});
+                    if ('group' in result.competition) {
+                        $state.go('resultsGroup', {name: result.competition.name, section: result.competition.section, group: result.competition.group});
+                    }
+                    else {
+                        $state.go('results', {name: result.competition.name, section: result.competition.section});
+                    }
                 });
             };
 

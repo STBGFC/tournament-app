@@ -15,6 +15,11 @@
                     url: '/',
                     templateUrl: 'views/home.html'
                 })
+                .state('resultsGroup', {
+                    url: '/results/:name/:section/:group',
+                    templateUrl: 'views/results.html',
+                    controller: 'ResultsController'
+                })
                 .state('results', {
                     url: '/results/:name/:section',
                     templateUrl: 'views/results.html',
