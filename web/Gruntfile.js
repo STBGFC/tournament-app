@@ -390,7 +390,7 @@ module.exports = function (grunt) {
 
     protractor: {
       options: {
-        configFile: "test/protractor.conf.js",
+        configFile: 'test/protractor.conf.js',
         noColor: false,
         // debug: true,
         // Additional arguments that are passed to the webdriver command

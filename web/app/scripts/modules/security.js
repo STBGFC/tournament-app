@@ -31,7 +31,7 @@
             });
 
             $rootScope.$on('event:auth-forbidden', function() {
-                $("#fourOhThree").show().fadeOut(3000);
+                $('#fourOhThree').show().fadeOut(3000);
             });
         })
 
