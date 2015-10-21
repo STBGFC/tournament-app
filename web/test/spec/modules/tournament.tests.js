@@ -2,30 +2,40 @@
 
 describe ('Tournament Tests', function() {
 
+    var $httpBackend;
+
     beforeEach(module('stbgfc.tournament'));
 
     describe('TournamentController', function () {
         var scope, Tournament;
 
         beforeEach(
-            inject(function(_Tournament_, $rootScope, $controller) {
+            inject(function(_Tournament_, _$httpBackend_, $rootScope, $controller) {
                 Tournament = _Tournament_;
+                /*
                 spyOn(Tournament, 'query').and.callFake(function() {
                     scope.tournament = tournamentData;
                 });
+                */
+                $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
                 $controller('TournamentController', {$scope: scope});
+
+                $httpBackend
+                    .whenGET('api/tournaments').respond([tournamentData]);
+                $httpBackend.flush();
             })
         );
 
         it('should attach the tournament to the scope', function () {
-            expect(scope.tournament).toBe(tournamentData);
+            expect(scope.tournament.name).toEqual('Karma Tournament');
+            expect(scope.tournament.competitions.length).toBe(5);
         });
 
         it('should attach one competition to the scope', function () {
-            scope.createCompetition({name: 'U9', section: 'All', groups: 2});
+            scope.createCompetition({name: 'U11', section: 'All', groups: 2});
             expect(scope.tournament.competitions.length).toBe(6);
-            expect(scope.tournament.competitions[1].name).toBe('U8');
+            expect(scope.tournament.competitions[5].name).toBe('U11');
         });
 
     });
@@ -34,19 +44,15 @@ describe ('Tournament Tests', function() {
         var scope, Result, stateParams;
 
         beforeEach(
-            inject(function(_Result_, $rootScope, $controller) {
+            inject(function(_Result_, _$httpBackend_, $rootScope, $controller) {
                 Result = _Result_;
+                $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
                 scope.tournament = tournamentData;
                 stateParams = {name:'U8', section:'A'};
-                $controller('ResultsController', {$scope: scope, $stateParams: stateParams});
-                spyOn(Result, 'query').and.returnValue(competitionData);
+                $controller('ResultsController', {$scope: scope, $stateParams: stateParams, Result: Result});
             })
         );
-
-        it('should attach a list of competitions to the scope', function () {
-            expect(scope.tournament.competitions.length).toBe(6);
-        });
 
         it('should setup a new result', function () {
             scope.createResult();
@@ -55,12 +61,15 @@ describe ('Tournament Tests', function() {
         });
 
         it('should save a new result in group 1', function() {
-            spyOn(Result, 'save').and.callThrough();
+            $httpBackend
+                .whenGET('api/results?conditions=%7B%22competition.name%22:%22U8%22,%22competition.section%22:%22A%22%7D')
+                .respond([newResultData]);
+            $httpBackend.whenPOST('/api/results').respond(newResultData);
+            $httpBackend.flush();
+
             scope.newResult = newResultData;
-            expect(Result.save).not.toHaveBeenCalled();
             scope.saveResult(1);
             var gresults = scope.competition.groups[0].results;
-            expect(Result.save).toHaveBeenCalled();
             expect(gresults.length).toBe(1);
             expect(gresults[0].homeTeam).toEqual('Foo');
             expect(scope.newResult).toEqual({});
@@ -69,7 +78,6 @@ describe ('Tournament Tests', function() {
     });
 
     describe('NewsListController', function () {
-
         var scope, News;
 
         beforeEach(
@@ -110,18 +118,7 @@ describe ('Tournament Tests', function() {
             {name: 'U9', section: 'A', groups: 4},
             {name: 'U9', section: 'Champions League', groups: 2},
             {name: 'U9', section: 'Europa League', groups: 2}
-        ],
-        $update: function() {console.log('updating tournament');}
-    };
-
-    var competitionData = {
-        name: 'U8',
-        section: 'A',
-        groups: [
-            {results:[], table:[]}
-        ],
-        results: [],
-        currentGroup: 1
+        ]
     };
 
     var newResultData = {
@@ -135,7 +132,17 @@ describe ('Tournament Tests', function() {
             group: 1
         }
     };
-
+/*
+    var competitionData = {
+        name: 'U10',
+        section: 'A',
+        groups: [
+            {results:[], table:[]}
+        ],
+        results: [],
+        currentGroup: 1
+    };
+*/
     var newsItemData = [
         {
             created: new Date('2015/5/12 12:26:32'),
