@@ -3,8 +3,24 @@
 describe ('Tournament Tests', function() {
 
     var $httpBackend;
+    var customMatchers = {
+        toEqualData: function () {
+            return {
+                compare: function (actual, expected) {
+                    if (expected === undefined) {
+                        expected = '';
+                    }
+                    return {pass:  angular.equals(actual, expected)};
+                }
+            };
+        }
+    };
 
     beforeEach(module('stbgfc.tournament'));
+
+    beforeEach(function () {
+        jasmine.addMatchers(customMatchers);
+    });
 
     describe('TournamentController', function () {
         var scope, Tournament;
@@ -12,11 +28,6 @@ describe ('Tournament Tests', function() {
         beforeEach(
             inject(function(_Tournament_, _$httpBackend_, $rootScope, $controller) {
                 Tournament = _Tournament_;
-                /*
-                spyOn(Tournament, 'query').and.callFake(function() {
-                    scope.tournament = tournamentData;
-                });
-                */
                 $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
                 $controller('TournamentController', {$scope: scope});
@@ -28,8 +39,7 @@ describe ('Tournament Tests', function() {
         );
 
         it('should attach the tournament to the scope', function () {
-            expect(scope.tournament.name).toEqual('Karma Tournament');
-            expect(scope.tournament.competitions.length).toBe(5);
+            expect(scope.tournament).toEqualData(tournamentData);
         });
 
         it('should attach one competition to the scope', function () {
@@ -81,21 +91,22 @@ describe ('Tournament Tests', function() {
         var scope, News;
 
         beforeEach(
-            inject(function(_News_, $rootScope, $controller) {
+            inject(function(_News_, _$httpBackend_, $rootScope, $controller) {
                 News = _News_;
-                spyOn(News, 'query').and.callFake(function() {
-                    scope.latestNews = newsItemData[newsItemData.length - 1];
-                    scope.newsItems = newsItemData;
-                });
+                $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
                 $controller('NewsListController', {$scope: scope});
+
+                $httpBackend
+                    .whenGET('api/news').respond(newsItemData);
+                $httpBackend.flush();
             })
         );
 
-
         it('should attach a list of news items to the scope', function () {
-            expect(scope.latestNews).toBe(newsItemData[newsItemData.length - 1]);
-            //expect(scope.newsItems).toBe(newsItemData);
+            expect(scope.latestNews).toEqualData(newsItemData[newsItemData.length-1]);
+            expect(scope.newsItems[0].title).toEqual('News1');
+            expect(scope.newsItems[0].body).toEqual('This is the body of the news.  Please take careful note of it :)');
         });
 
     });
@@ -146,23 +157,23 @@ describe ('Tournament Tests', function() {
     var newsItemData = [
         {
             created: new Date('2015/5/12 12:26:32'),
-            title: 'Yet More Newsy Type Stuff',
+            title: 'News1',
             body: 'This is the body of the news.  Please take careful note of it :)'
         },
         {
             created: new Date('2015/4/1 11:17:32'),
-            title: 'News Henin Dude',
+            title: 'News2',
             body: 'This is the body of the news.  Please take careful note of it s adfsgfsd fgdsf gs fg :)'
         },
         {
             created: new Date('2015/4/11 10:13:32'),
-            title: 'More News',
+            title: 'News3',
             body: 'This is the body of the news.  Please take careful note of it :)'
         },
         {
             created: new Date('2015/4/9 17:47:32'),
-            title: 'Stuff\'s Occurin\'',
-            body: 'This is the body of the news.  Please take careful note of it.  This is a rather longer news item too with a bunch of random, generic filler text - probably should have just used Lorum Ipsum to be honest, but I couldn\'t be arsed to google it.'
+            title: 'News4',
+            body: '...'
         }
     ];
 });
