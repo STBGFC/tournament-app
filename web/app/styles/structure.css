@@ -45,6 +45,7 @@ h2.points {
     background-color: #333;
     color: whitesmoke;
 }
+#adminTabs { border-bottom: 3px solid #333; }
 a.navbar-brand img {
     margin-top: -13px;
 }

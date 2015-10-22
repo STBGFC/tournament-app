@@ -174,7 +174,6 @@ describe ('Tournament Tests', function() {
             scope.updateResult(scope.result);
             // TODO: expect(state.go).toHaveBeenCalledWith('resultsGroup', {name: 'U10', section: 'A', group: 1});
         });
-
     });
 
     describe('NewsListController', function () {
@@ -198,7 +197,6 @@ describe ('Tournament Tests', function() {
             expect(scope.newsItems[0].title).toEqual('News1');
             expect(scope.newsItems[0].body).toEqual('This is the body of the news.  Please take careful note of it :)');
         });
-
     });
 
 
@@ -260,17 +258,7 @@ describe ('Tournament Tests', function() {
         {'__v':0,'index':23,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'5', 'homeTeam':'Leeds', 'awayTeam':'QPR'},
         {'__v':0,'index':24,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'6', 'homeTeam':'Fulham FC', 'awayTeam':'Birmingham'}
     ];
-/*
-    var competitionData = {
-        name: 'U10',
-        section: 'A',
-        groups: [
-            {results:[], table:[]}
-        ],
-        results: [],
-        currentGroup: 1
-    };
-*/
+
     var newsItemData = [
         {
             created: new Date('2015/5/12 12:26:32'),

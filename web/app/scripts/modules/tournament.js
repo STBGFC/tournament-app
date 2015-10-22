@@ -19,7 +19,6 @@
         // ============================================================================================
 
         .controller('TournamentController', function (Tournament, $scope, $state, $log) {
-
             var tourneys = Tournament.query(function() {
                 $scope.tournament = tourneys[0];
             });
@@ -52,7 +51,6 @@
         })
 
         .controller('ResultsController', function (Result, Table, $scope, $state, $stateParams, $log) {
-
             var _grp = $stateParams.group;
             if (_grp === '' || isNaN(_grp)) {
                 _grp = 1;
@@ -294,11 +292,9 @@
                     $scope.highlighted = '';
                 }
             };
-
         })
 
         .controller('ResultEditController', function($scope, $state, $stateParams, Result, $log) {
-
             $scope.goalEntry = true; // or false for Penalties
 
             var res = Result.get({id: $stateParams.id}, function() {
@@ -418,7 +414,6 @@
         })
 
         .controller('PageAdminController', function(Page, $scope, $state, $log) {
-
             $scope.pages = Page.query();
 
             $scope.editPage = function(id) {
