@@ -126,7 +126,6 @@ describe ('Tournament Tests', function() {
             expect(grps[0].table.length).toBe(6);
             expect(grps[0].table[5].name).toBe('Wolves');
 
-
             // delete it
             rootScope.$broadcast('socket:remove', addedRes);
             expect(grps[0].results.length).toBe(6);
