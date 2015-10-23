@@ -104,25 +104,37 @@ describe ('Tournament Tests', function() {
                 .whenGET(qry)
                 .respond(u8GroupResults);
             $httpBackend.flush();
+
+            var addedRes = {
+                _id: '0987654321',
+                tag: '1',
+                homeTeam: 'Millwall', homeGoals: 10,
+                awayTeam: 'Wolves', awayGoals: 0,
+                competition: {name: 'U8', section: 'A', group: 1}
+            };
             var grps = scope.competition.groups;
 
             expect(grps[0].results.length).toBe(6);
             expect(grps[0].table.length).toBe(4);
             expect(grps[0].table[3].name).toBe('Brentford');
 
-            rootScope.$broadcast('socket:result', {
-                _id: '0987654321',
-                tag: '1',
-                homeTeam: 'Millwall', homeGoals: 10,
-                awayTeam: 'Wolves', awayGoals: 0,
-                competition: {name: 'U8', section: 'A', group: 1}
-            });
+            rootScope.$broadcast('socket:result', addedRes);
             
             expect(grps[0].results.length).toBe(7);
             expect(grps[0].results[6].homeTeam).toBe('Millwall');
             expect(grps[0].results[6].awayTeam).toBe('Wolves');
             expect(grps[0].table.length).toBe(6);
             expect(grps[0].table[5].name).toBe('Wolves');
+
+
+            // delete it
+            rootScope.$broadcast('socket:remove', addedRes);
+            expect(grps[0].results.length).toBe(6);
+            expect(grps[0].table.length).toBe(4);
+            for (var i = 0; i < grps[0].table.length; i++) {
+                expect(grps[0].table[i].name).not.toBe('Millwall');
+                expect(grps[0].table[i].name).not.toBe('Wolves');
+            }
         });
 
     });
