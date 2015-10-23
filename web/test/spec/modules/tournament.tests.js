@@ -136,6 +136,28 @@ describe ('Tournament Tests', function() {
             }
         });
 
+        it('should POST the correct table order to the API when confirming table positions', function() {
+            $httpBackend
+                .whenGET(qry)
+                .respond(u8GroupResults);
+            $httpBackend.whenPOST('api/leaguetable/U8/A/1').respond();
+            $httpBackend.flush();
+            
+            scope.competition.currentGroup = 1;
+            scope.confirmTablePositions();
+
+            // TODO: spyOn(Table, '$save'); // and expect correct POST body
+        });
+
+        it('should set a variable to use for highlighting a team\'s results', function() {
+            scope.highlighted = '';
+            scope.highlight('Foo');
+            expect(scope.highlighted).toBe('Foo');
+            scope.highlight('Bar');
+            expect(scope.highlighted).toBe('Bar');
+            scope.highlight('Bar');
+            expect(scope.highlighted).toBe('');
+        });
     });
 
     describe('ResultEditController', function () {
@@ -203,12 +225,22 @@ describe ('Tournament Tests', function() {
 
         it('should update an edited result', function() {
             $httpBackend.whenPUT('api/results/dead012345beef')
-                    .respond({});
+                    .respond();
             $httpBackend.flush();
 
             scope.result._id = 'dead012345beef';
             scope.updateResult(scope.result);
             // TODO: expect(state.go).toHaveBeenCalledWith('resultsGroup', {name: 'U10', section: 'A', group: 1});
+        });
+
+        it('should delete a result', function() {
+            $httpBackend.whenDELETE('api/results/dead012345beef')
+                    .respond({});
+            $httpBackend.flush();
+
+            scope.result._id = 'dead012345beef';
+            scope.deleteResult(scope.result);
+            // TODO: expect(state.go).toHaveBeenCalled();
         });
     });
 
