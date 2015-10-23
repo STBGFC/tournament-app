@@ -55,7 +55,7 @@
             if (_grp === '' || isNaN(_grp)) {
                 _grp = 1;
             }
-            
+
             // build the UI view of the competition
             var competition  = {
                 name: $stateParams.name,
@@ -182,8 +182,7 @@
                 return (a.name < b.name);
             };
 
-            var withResult = function(result, del) { //test
-
+            var withResult = function(result, del) {
                 // if the result affects the current scope, update that scope
                 if (result.competition.name === $scope.competition.name && result.competition.section === $scope.competition.section) {
                     var resultsList = $scope.competition.results;
@@ -211,7 +210,6 @@
 
                     resultsList.sort(numericTagComparator);
                 }
-
             };
 
             var getIndexFor = function(res, list) {

@@ -3,22 +3,22 @@
         <ul id="adminTabs" class="nav nav-tabs">
             <li ng-class="{ active: $state.includes('admin.createcompetition') }">
                 <a ui-sref="admin.createcompetition" title="Add Competition">
-                    <span class="glyphicon glyphicon-fire"></span> <span ng-show="$state.includes('admin.createcompetition')">competition</span>
+                    <span class="glyphicon glyphicon-fire"></span> competition
                 </a>
             </li>
             <li ng-class="{ active: $state.includes('admin.createnews') }">
                 <a ui-sref="admin.createnews" title="Create Announcement">
-                    <span class="glyphicon glyphicon-bullhorn"></span> <span ng-show="$state.includes('admin.createnews')">announcement</span>
+                    <span class="glyphicon glyphicon-bullhorn"></span> announcement
                 </a>
             </li>
             <li ng-class="{ active: $state.includes('admin.pageeditor') }">
                 <a ui-sref="admin.pageeditor" title="Edit Pages">
-                    <span class="glyphicon glyphicon-edit"></span> <span ng-show="$state.includes('admin.pageeditor')">pages</span>
+                    <span class="glyphicon glyphicon-edit"></span> pages
                 </a>
             </li>
             <li ng-class="{ active: $state.includes('admin.feedback') }">
                 <a ui-sref="admin.feedback" title="View Feedback">
-                    <span class="glyphicon glyphicon-inbox"></span> <span ng-show="$state.includes('admin.feedback')">feedback</span>
+                    <span class="glyphicon glyphicon-inbox"></span> feedback
                 </a>
             </li>
         </ul>

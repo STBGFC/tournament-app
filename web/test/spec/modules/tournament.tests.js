@@ -16,9 +16,8 @@ describe ('Tournament Tests', function() {
         }
     };
 
-    beforeEach(module('stbgfc.tournament'));
-
     beforeEach(function () {
+        module('stbgfc.tournament');
         jasmine.addMatchers(customMatchers);
     });
 
@@ -51,7 +50,7 @@ describe ('Tournament Tests', function() {
     });
 
     describe('ResultsController', function () {
-        var scope, Result, stateParams;
+        var scope, rootScope, Result, stateParams;
         var qry = 'api/results?conditions=%7B%22competition.name%22:%22U8%22,%22competition.section%22:%22A%22%7D';
 
         beforeEach(
@@ -61,23 +60,10 @@ describe ('Tournament Tests', function() {
                 scope = $rootScope.$new();
                 scope.tournament = tournamentData;
                 stateParams = {name:'U8', section:'A'};
+                rootScope = $rootScope;
                 $controller('ResultsController', {$scope: scope, $stateParams: stateParams, Result: Result});
             })
         );
-
-        it('should populate groups and results for the competition in scope', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond(u8GroupResults); 
-            $httpBackend.flush();
-            var grps = scope.competition.groups;
-            expect(grps.length).toBe(4);
-            expect(grps[0].results.length).toBe(6);
-            expect(grps[1].results[0].homeTeam).toEqual('Rotherham');
-            expect(grps[0].table.length).toBe(4);
-            expect(grps[0].table[0].name).toBe('Sheffield Wednesday');
-            expect(grps[1].table.length).toBe(0);
-        });
 
         it('should setup a new result', function () {
             scope.createResult();
@@ -98,6 +84,39 @@ describe ('Tournament Tests', function() {
             expect(gresults.length).toBe(1);
             expect(gresults[0].homeTeam).toEqual('Foo');
             expect(scope.newResult).toEqual({});
+        });
+
+        it('should populate groups and results for the competition in scope', function() {
+            $httpBackend
+                .whenGET(qry)
+                .respond(u8GroupResults);
+            $httpBackend.flush();
+            var grps = scope.competition.groups;
+            expect(grps.length).toBe(4);
+            expect(grps[0].results.length).toBe(6);
+            expect(grps[1].results[0].homeTeam).toEqual('Rotherham');
+            expect(grps[0].table.length).toBe(4);
+            expect(grps[0].table[0].name).toBe('Sheffield Wednesday');
+            expect(grps[1].table.length).toBe(0);
+        });
+
+        it('should update the results and tables when a new result is received on the socket', function() {
+            $httpBackend
+                .whenGET(qry)
+                .respond(u8GroupResults);
+            $httpBackend.flush();
+            rootScope.$broadcast('socket:result', {
+                tag: '1',
+                homeTeam: 'Millwall', homeGoals: 3,
+                awayTeam: 'Wolves', awayGoals: 1,
+                competition: {name: 'U8', section: 'A', group: 1}
+            });
+            /* TODO
+            var grps = scope.competition.groups;
+            expect(grps[0].results.length).toBe(7);
+            expect(grps[0].results[6].homeTeam).toBe('Foo');
+            expect(grps[0].results[6].awayTeam).toBe('Bar');
+            */
         });
 
     });
@@ -169,7 +188,7 @@ describe ('Tournament Tests', function() {
             $httpBackend.whenPUT('api/results/dead012345beef')
                     .respond({});
             $httpBackend.flush();
-            
+
             scope.result._id = 'dead012345beef';
             scope.updateResult(scope.result);
             // TODO: expect(state.go).toHaveBeenCalledWith('resultsGroup', {name: 'U10', section: 'A', group: 1});
@@ -233,30 +252,30 @@ describe ('Tournament Tests', function() {
     };
 
     var u8GroupResults = [
-        {'__v':0,'index':1,'pitch':'5','competition':{'name':'U8', 'section':'Groups', 'group':'1'},'tag':'1', 'homeTeam':'Sheffield Wednesday', 'awayTeam':'Brentford', 'homeGoals':2, 'awayGoals':0},
-        {'__v':0,'index':2,'pitch':'5','competition':{'name':'U8', 'section':'Groups', 'group':'1'},'tag':'2', 'homeTeam':'Derby County', 'awayTeam':'Middlesbrough', 'homeGoals': 0, 'awayGoals': 0},
-        {'__v':0,'index':3,'pitch':'5','competition':{'name':'U8', 'section':'Groups', 'group':'1'},'tag':'3', 'homeTeam':'Derby County', 'awayTeam':'Sheffield Wednesday', 'homeGoals': 0, 'awayGoals': 3},
-        {'__v':0,'index':4,'pitch':'5','competition':{'name':'U8', 'section':'Groups', 'group':'1'},'tag':'4', 'homeTeam':'Brentford', 'awayTeam':'Middlesbrough'},
-        {'__v':0,'index':5,'pitch':'5','competition':{'name':'U8', 'section':'Groups', 'group':'1'},'tag':'5', 'homeTeam':'Middlesbrough', 'awayTeam':'Sheffield Wednesday'},
-        {'__v':0,'index':6,'pitch':'5','competition':{'name':'U8', 'section':'Groups', 'group':'1'},'tag':'6', 'homeTeam':'Brentford', 'awayTeam':'Derby County'},
-        {'__v':0,'index':7,'pitch':'6','competition':{'name':'U8', 'section':'Groups', 'group':'2'},'tag':'1', 'homeTeam':'Rotherham', 'awayTeam':'Cardiff'},
-        {'__v':0,'index':8,'pitch':'6','competition':{'name':'U8', 'section':'Groups', 'group':'2'},'tag':'2', 'homeTeam':'MK Dons', 'awayTeam':'Bristol City'},
-        {'__v':0,'index':9,'pitch':'6','competition':{'name':'U8', 'section':'Groups', 'group':'2'},'tag':'3', 'homeTeam':'MK Dons', 'awayTeam':'Rotherham'},
-        {'__v':0,'index':10,'pitch':'6','competition':{'name':'U8', 'section':'Groups', 'group':'2'},'tag':'4', 'homeTeam':'Cardiff', 'awayTeam':'Bristol City'},
-        {'__v':0,'index':11,'pitch':'6','competition':{'name':'U8', 'section':'Groups', 'group':'2'},'tag':'5', 'homeTeam':'Bristol City', 'awayTeam':'Rotherham'},
-        {'__v':0,'index':12,'pitch':'6','competition':{'name':'U8', 'section':'Groups', 'group':'2'},'tag':'6', 'homeTeam':'Cardiff', 'awayTeam':'MK Dons'},
-        {'__v':0,'index':13,'pitch':'7','competition':{'name':'U8', 'section':'Groups', 'group':'3'},'tag':'1', 'homeTeam':'Ipswich', 'awayTeam':'Preston North End'},
-        {'__v':0,'index':14,'pitch':'7','competition':{'name':'U8', 'section':'Groups', 'group':'3'},'tag':'2', 'homeTeam':'Hull City', 'awayTeam':'Reading'},
-        {'__v':0,'index':15,'pitch':'7','competition':{'name':'U8', 'section':'Groups', 'group':'3'},'tag':'3', 'homeTeam':'Hull City', 'awayTeam':'Ipswich'},
-        {'__v':0,'index':16,'pitch':'7','competition':{'name':'U8', 'section':'Groups', 'group':'3'},'tag':'4', 'homeTeam':'Preston North End', 'awayTeam':'Reading'},
-        {'__v':0,'index':17,'pitch':'7','competition':{'name':'U8', 'section':'Groups', 'group':'3'},'tag':'5', 'homeTeam':'Reading', 'awayTeam':'Ipswich'},
-        {'__v':0,'index':18,'pitch':'7','competition':{'name':'U8', 'section':'Groups', 'group':'3'},'tag':'6', 'homeTeam':'Preston North End', 'awayTeam':'Hull City'},
-        {'__v':0,'index':19,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'1', 'homeTeam':'QPR', 'awayTeam':'Fulham FC'},
-        {'__v':0,'index':20,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'2', 'homeTeam':'Birmingham', 'awayTeam':'Leeds'},
-        {'__v':0,'index':21,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'3', 'homeTeam':'Birmingham', 'awayTeam':'QPR'},
-        {'__v':0,'index':22,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'4', 'homeTeam':'Fulham FC', 'awayTeam':'Leeds'},
-        {'__v':0,'index':23,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'5', 'homeTeam':'Leeds', 'awayTeam':'QPR'},
-        {'__v':0,'index':24,'pitch':'8','competition':{'name':'U8', 'section':'Groups', 'group':'4'},'tag':'6', 'homeTeam':'Fulham FC', 'awayTeam':'Birmingham'}
+        {'__v':0,'index':1,'pitch':'5','competition':{'name':'U8', 'section':'A', 'group':'1'},'tag':'1', 'homeTeam':'Sheffield Wednesday', 'awayTeam':'Brentford', 'homeGoals':2, 'awayGoals':0},
+        {'__v':0,'index':2,'pitch':'5','competition':{'name':'U8', 'section':'A', 'group':'1'},'tag':'2', 'homeTeam':'Derby County', 'awayTeam':'Middlesbrough', 'homeGoals': 0, 'awayGoals': 0},
+        {'__v':0,'index':3,'pitch':'5','competition':{'name':'U8', 'section':'A', 'group':'1'},'tag':'3', 'homeTeam':'Derby County', 'awayTeam':'Sheffield Wednesday', 'homeGoals': 0, 'awayGoals': 3},
+        {'__v':0,'index':4,'pitch':'5','competition':{'name':'U8', 'section':'A', 'group':'1'},'tag':'4', 'homeTeam':'Brentford', 'awayTeam':'Middlesbrough'},
+        {'__v':0,'index':5,'pitch':'5','competition':{'name':'U8', 'section':'A', 'group':'1'},'tag':'5', 'homeTeam':'Middlesbrough', 'awayTeam':'Sheffield Wednesday'},
+        {'__v':0,'index':6,'pitch':'5','competition':{'name':'U8', 'section':'A', 'group':'1'},'tag':'6', 'homeTeam':'Brentford', 'awayTeam':'Derby County'},
+        {'__v':0,'index':7,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'1', 'homeTeam':'Rotherham', 'awayTeam':'Cardiff'},
+        {'__v':0,'index':8,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'2', 'homeTeam':'MK Dons', 'awayTeam':'Bristol City'},
+        {'__v':0,'index':9,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'3', 'homeTeam':'MK Dons', 'awayTeam':'Rotherham'},
+        {'__v':0,'index':10,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'4', 'homeTeam':'Cardiff', 'awayTeam':'Bristol City'},
+        {'__v':0,'index':11,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'5', 'homeTeam':'Bristol City', 'awayTeam':'Rotherham'},
+        {'__v':0,'index':12,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'6', 'homeTeam':'Cardiff', 'awayTeam':'MK Dons'},
+        {'__v':0,'index':13,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'1', 'homeTeam':'Ipswich', 'awayTeam':'Preston North End'},
+        {'__v':0,'index':14,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'2', 'homeTeam':'Hull City', 'awayTeam':'Reading'},
+        {'__v':0,'index':15,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'3', 'homeTeam':'Hull City', 'awayTeam':'Ipswich'},
+        {'__v':0,'index':16,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'4', 'homeTeam':'Preston North End', 'awayTeam':'Reading'},
+        {'__v':0,'index':17,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'5', 'homeTeam':'Reading', 'awayTeam':'Ipswich'},
+        {'__v':0,'index':18,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'6', 'homeTeam':'Preston North End', 'awayTeam':'Hull City'},
+        {'__v':0,'index':19,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'1', 'homeTeam':'QPR', 'awayTeam':'Fulham FC'},
+        {'__v':0,'index':20,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'2', 'homeTeam':'Birmingham', 'awayTeam':'Leeds'},
+        {'__v':0,'index':21,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'3', 'homeTeam':'Birmingham', 'awayTeam':'QPR'},
+        {'__v':0,'index':22,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'4', 'homeTeam':'Fulham FC', 'awayTeam':'Leeds'},
+        {'__v':0,'index':23,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'5', 'homeTeam':'Leeds', 'awayTeam':'QPR'},
+        {'__v':0,'index':24,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'6', 'homeTeam':'Fulham FC', 'awayTeam':'Birmingham'}
     ];
 
     var newsItemData = [
