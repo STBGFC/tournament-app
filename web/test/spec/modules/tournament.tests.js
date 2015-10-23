@@ -46,7 +46,6 @@ describe ('Tournament Tests', function() {
             expect(scope.tournament.competitions.length).toBe(6);
             expect(scope.tournament.competitions[5].name).toBe('U11');
         });
-
     });
 
     describe('ResultsController', function () {
@@ -105,18 +104,25 @@ describe ('Tournament Tests', function() {
                 .whenGET(qry)
                 .respond(u8GroupResults);
             $httpBackend.flush();
+            var grps = scope.competition.groups;
+
+            expect(grps[0].results.length).toBe(6);
+            expect(grps[0].table.length).toBe(4);
+            expect(grps[0].table[3].name).toBe('Brentford');
+
             rootScope.$broadcast('socket:result', {
+                _id: '0987654321',
                 tag: '1',
-                homeTeam: 'Millwall', homeGoals: 3,
-                awayTeam: 'Wolves', awayGoals: 1,
+                homeTeam: 'Millwall', homeGoals: 10,
+                awayTeam: 'Wolves', awayGoals: 0,
                 competition: {name: 'U8', section: 'A', group: 1}
             });
-            /* TODO
-            var grps = scope.competition.groups;
+            
             expect(grps[0].results.length).toBe(7);
-            expect(grps[0].results[6].homeTeam).toBe('Foo');
-            expect(grps[0].results[6].awayTeam).toBe('Bar');
-            */
+            expect(grps[0].results[6].homeTeam).toBe('Millwall');
+            expect(grps[0].results[6].awayTeam).toBe('Wolves');
+            expect(grps[0].table.length).toBe(6);
+            expect(grps[0].table[5].name).toBe('Wolves');
         });
 
     });
