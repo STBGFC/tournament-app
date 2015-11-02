@@ -10,9 +10,9 @@ var news = [{title:"Test announcement 1", body:"this is a test announcement"}, {
 var feedback = {email:"foo@user.org", body:"Cool tournament app!"};
 var users = [
     { "guest" : true, "key" : "anonymous" },
-    { username : "referee@referee.org", "password" : "$2a$10$qmCfYo3NvYNucjOfoQCGRO2qu2al5.70L7G5TAp7VCEScX34iA/lG", loginAttempts: 0 },
-    { username : "admin@admin.org", "password" : "$2a$10$i75OpE.org3nSECUyXJhCu4ql7vNaglq6w2NcW0fjlAD1sUF/BRvm", loginAttempts: 0 },
-    { username : "editor@editor.org", "password" : "$2a$10$iZmeN3WbFOTEZoKXOThkluOWIb8/nDnKtwLYDksLRWm8B0xUTRADm", loginAttempts: 0 }
+    { username : "referee@referee.org", "password" : "$2a$10$qmCfYo3NvYNucjOfoQCGRO2qu2al5.70L7G5TAp7VCEScX34iA/lG" /*referee*/, loginAttempts: 0 },
+    { username : "admin@admin.org", "password" : "$2a$10$i75OpE.org3nSECUyXJhCu4ql7vNaglq6w2NcW0fjlAD1sUF/BRvm" /*admin*/, loginAttempts: 0 },
+    { username : "editor@editor.org", "password" : "$2a$10$iZmeN3WbFOTEZoKXOThkluOWIb8/nDnKtwLYDksLRWm8B0xUTRADm" /*editor*/, loginAttempts: 0 }
 
 ];
 var acl_users = [
@@ -116,14 +116,14 @@ var results = [
 
 // --------------------------------------------------------------------------
 
-db.tournaments.remove();
-db.results.remove();
-db.news.remove();
-db.users.remove();
-db.acl_users.remove();
-db.acl_roles.remove();
-db.pages.remove();
-db.feedback.remove();
+db.tournaments.remove({});
+db.results.remove({});
+db.news.remove({});
+db.users.remove({});
+db.acl_users.remove({});
+db.acl_roles.remove({});
+db.pages.remove({});
+db.feedback.remove({});
 
 db.tournaments.insert(tournament);
 db.results.insert(results);
