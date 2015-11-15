@@ -11,11 +11,11 @@ describe('In the tournament app,', function() {
     var feedbackAdminLink = element(by.partialLinkText('feedback'));
     var announcementsAdminLink = element(by.partialLinkText('announcement'));
     var competitionAdminLink = element(by.partialLinkText('competition'));
-    var confirmTablePositionsButton = element(by.partialButtonText('CONFIRM TABLE POSITIONS'));
+    var confirmTablePositionsButton = element.all(by.partialButtonText('CONFIRM TABLE POSITIONS')).first();
     var newsAlert = element(by.id('newsalert'));
     var noEntry = element(by.id('fourOhThree'));
-    var addResultButton = element(by.partialButtonText('ADD MATCH'));
-    var saveResultButton = element(by.partialButtonText('SAVE MATCH'));
+    var addResultButton = element.all(by.partialButtonText('ADD MATCH')).first();
+    var saveResultButton = element.all(by.partialButtonText('SAVE MATCH')).first();
 
     var logout = function () {
         userMenu.click();
@@ -131,10 +131,10 @@ describe('In the tournament app,', function() {
 
     var addGroupGame = function() {
         addResultButton.click();
-        element(by.model('newResult.tag')).sendKeys('1');
-        element(by.model('newResult.pitch')).sendKeys('5');
-        element(by.model('newResult.homeTeam')).sendKeys('Home');
-        element(by.model('newResult.awayTeam')).sendKeys('Away');
+        element.all(by.model('newResult.tag')).first().sendKeys('1');
+        element.all(by.model('newResult.pitch')).first().sendKeys('5');
+        element.all(by.model('newResult.homeTeam')).first().sendKeys('Home');
+        element.all(by.model('newResult.awayTeam')).first().sendKeys('Away');
         saveResultButton.click();
     };
 

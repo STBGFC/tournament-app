@@ -123,7 +123,7 @@ db.users.remove({});
 db.acl_users.remove({});
 db.acl_roles.remove({});
 db.pages.remove({});
-db.feedback.remove({});
+db.feedbacks.remove({});
 
 db.tournaments.insert(tournament);
 db.results.insert(results);
@@ -131,4 +131,4 @@ db.news.insert(news);
 db.users.insert(users);
 db.acl_roles.insert(acl_roles);
 db.acl_users.insert(acl_users);
-db.feedback.insert(feedback);
+db.feedbacks.insert(feedback);
