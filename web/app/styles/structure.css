@@ -13,6 +13,10 @@ h2.points {
     padding: 4px 0;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 .btn-agegroup {
     width: 113px;
     margin: 10px 5px 0 0;
