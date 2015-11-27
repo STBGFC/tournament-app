@@ -22,13 +22,14 @@ describe ('Tournament Tests', function() {
     });
 
     describe('TournamentController', function () {
-        var scope, Tournament;
+        var rootScope, scope, Tournament;
 
         beforeEach(
             inject(function(_Tournament_, _$httpBackend_, $rootScope, $controller) {
                 Tournament = _Tournament_;
                 $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
+                rootScope = $rootScope;
                 $controller('TournamentController', {$scope: scope});
 
                 $httpBackend
@@ -45,6 +46,15 @@ describe ('Tournament Tests', function() {
             scope.createCompetition({name: 'U11', section: 'All', groups: 2});
             expect(scope.tournament.competitions.length).toBe(6);
             expect(scope.tournament.competitions[5].name).toBe('U11');
+        });
+
+        it('should add a new item when received on the socket', function() {
+            var newItem = {title: 'Socket News', body: 'Socket News Body', created: new Date('2015/5/19 12:26:32')};
+            rootScope.$broadcast('socket:news',newItem);
+            expect(scope.announcement).toEqualData(newItem);
+
+            rootScope.$broadcast('socket:news',{title: 'Socket News'});
+            expect(scope.announcement).toEqualData(newItem);
         });
     });
 
@@ -305,15 +315,6 @@ describe ('Tournament Tests', function() {
             expect(scope.latestNews).toEqualData(newsItemData[newsItemData.length-1]);
             expect(scope.newsItems[0].title).toEqual('News1');
             expect(scope.newsItems[0].body).toEqual('This is the body of the news.  Please take careful note of it :)');
-        });
-
-        it('should add a new item when received on the socket', function() {
-            var newItem = {title: 'Socket News', body: 'Socket News Body', created: new Date('2015/5/19 12:26:32')};
-            rootScope.$broadcast('socket:news',newItem);
-            expect(scope.announcement).toEqualData(newItem);
-
-            rootScope.$broadcast('socket:news',{title: 'Socket News'});
-            expect(scope.announcement).toEqualData(newItem);
         });
     });
 

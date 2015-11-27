@@ -32,7 +32,7 @@
             };
 
             /*
-             * event handler for results broadcast over the websocket
+             * event handlers for things broadcast over the websocket
              */
             $scope.$on('socket:result', function(event, data) {
                 var result = data;
@@ -46,6 +46,19 @@
                             ]
                         });
                     }
+                }
+            });
+
+            $scope.$on('socket:news', function(event, data) {
+                $log.debug('news received', data);
+                if (data.title && data.body && data.created) {
+                    $scope.announcement = data;
+
+                    // OMG! this is awful.. jQuery from inside a controller. Please help!
+                    $('#newsalert').modal({backdrop: false});
+                }
+                else {
+                    $log.warn('invalid news broadcast message received');
                 }
             });
         })
@@ -342,26 +355,11 @@
             };
         })
 
-        .controller('NewsListController', function (News, $scope, $log) {
-            $scope.newsItems = News.query(function() {
+        .controller('NewsListController', function (News, $scope) {
+            $scope.newsItems = News.query(function () {
                 $scope.latestNews = $scope.newsItems[$scope.newsItems.length - 1];
             });
             $scope.searchBy = '';
-
-            // socket broadcasts
-            $scope.$on('socket:news', function(event, data) {
-                $log.debug('news received', data);
-                if (data.title && data.body && data.created) {
-                    $scope.announcement = data;
-                    $scope.newsItems.push(data);
-
-                    // OMG! this is awful.. jQuery from inside a controller. Please help!
-                    $('#newsalert').modal({backdrop: false});
-                }
-                else {
-                    $log.warn('invalid news broadcast message received');
-                }
-            });
         })
 
         .controller('NewsAdminController', function(News, $scope, $log) {
