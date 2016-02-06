@@ -232,7 +232,7 @@ describe('In the tournament app,', function() {
                 clickToCompetition('U11', 'A');
                 expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
                 firstResult.$('a').click();
-                expect(element(by.css('h4.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
+                expect(element(by.css('h5.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
                 expect(homeTeamInput.getAttribute('value')).toEqual('Arsenal');
                 expect(awayTeamInput.getAttribute('value')).toEqual('Liverpool');
                 expect(score.getText()).toEqual('2 - 1');
