@@ -1,47 +1,56 @@
 
 <div class="container">
     <div class="panel panel-body">
-        <h4 class="text-center">
-            <span class="text-muted">Age</span> <strong>{{result.competition.name}}</strong>&nbsp;|
-            <span class="text-muted">Section</span> <strong>{{result.competition.section}}</strong>&nbsp;|
-            <span ng-show="result.competition.group"><span class="text-muted">Group</span> <strong>{{result.competition.group}}</strong>&nbsp;|</span>
-            <span class="text-muted">Match</span> <strong>{{result.tag}}</strong>&nbsp;|
-            <span class="text-muted">Pitch</span> <strong>{{result.pitch}}</strong>
-        </h4>
         <div class="row">
-            <div class="text-right col-md-5 col-xs-4">
-                <input class="form-control input-lg borderless text-right" ng-model="result.homeTeam">
+            <div class="text-center">
+                <span class="text-muted">Age</span> <strong>{{result.competition.name}}</strong>&nbsp;|
+                <span class="text-muted">Section</span> <strong>{{result.competition.section}}</strong>&nbsp;|
+                <span ng-show="result.competition.group"><span class="text-muted">Group</span> <strong>{{result.competition.group}}</strong>&nbsp;|</span>
+                <span class="text-muted">Match</span> <strong>{{result.tag}}</strong>&nbsp;|
+                <span class="text-muted">Pitch</span> <strong>{{result.pitch}}</strong>
             </div>
-            <div class="text-center col-md-2 col-xs-4">
-                <h2 class="points" style="width:100%">
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 text-right">
+                <button id="subHomeGoal" class="btn btn-danger btn-lg btn-goals" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
+            </div>
+            <div class="col-md-1 text-right">
+                <button id="addHomeGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control input-lg borderless text-center" ng-model="result.homeTeam">
+            </div>
+            <div class="col-md-2 text-center">
+                <div class="points" style="width: 100%; font-size: 31px">
                     {{result.homeGoals}} <span ng-show="result.homePens||result.awayPens">({{result.homePens}})</span>
                     -
                     <span ng-show="result.homePens||result.awayPens">({{result.awayPens}})</span> {{result.awayGoals}}
-                </h2>
+                </div>
             </div>
-            <div class="col-md-5 col-xs-4">
-                <input class="form-control input-lg borderless text-left" ng-model="result.awayTeam">
+            <div class="col-md-3">
+                <input class="form-control input-lg borderless text-center" ng-model="result.awayTeam">
+            </div>
+            <div class="col-md-1">
+                <button id="addAwayGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
+            </div>
+            <div class="col-md-1">
+                <button id="subAwayGoal" class="btn btn-danger btn-lg btn-goals" ng-click="addGoal(false, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-5 col-xs-4 text-right">
-                <button id="subHomeGoal" class="btn btn-danger btn-lg" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
-                <button id="addHomeGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
-            </div>
-            <div class="col-md-2 col-xs-4 centered-pills">
+            <div class="col-md-12 centered-pills">
                 <ul class="nav nav-pills" ng-hide="result.competition.group">
                     <li role="presentation" ng-class="{'active': goalEntry == true}"><a ng-click="goalEntry=true">Goals</a></li>
                     <li role="presentation" ng-class="{'active': goalEntry == false}"><a ng-click="goalEntry=false">Pens</a></li>
                 </ul>
             </div>
-            <div class="col-md-5 col-xs-4 text-left">
-                <button id="addAwayGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
-                <button id="subAwayGoal" class="btn btn-danger btn-lg" ng-click="addGoal(false, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
-            </div>
         </div>
+
         <div class="row">
-            <div class="col-md-offset-5 col-xs-offset-4 col-md-2 col-xs-4 text-center">
-                <button ng-click="updateResult(result)" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-save-file"></span> SAVE RESULT</button>
+            <div class="col-md-offset-5 col-md-2 text-center">
+                <button ng-click="updateResult(result)" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-save-file"></span> SAVE RESULT</button>
                 <button ng-click="deleteResult(result)" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-trash"></span> DELETE RESULT</button>
             </div>
         </div>
