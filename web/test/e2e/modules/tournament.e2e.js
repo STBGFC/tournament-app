@@ -79,11 +79,13 @@ describe('In the tournament app,', function() {
         element(by.buttonText(name)).click();
         element(by.partialLinkText(section)).click();
         expect(element(by.binding('competition.name')).getText()).toEqual(name + '/' + section);
+        expect(browser.getTitle()).toEqual(name + '/' + section + ' - Tournament App');
     };
 
     var noCreatePage = function (email) {
         clickToAdmin(email);
         pageAdminLink.click();
+        expect(browser.getTitle()).toEqual('Info Page Admin - Tournament App');
         element(by.model('page.title')).sendKeys('Illegal Title');
         element(by.model('page.body')).sendKeys('Illegal Content');
         element(by.buttonText('Save Page')).click();
@@ -101,6 +103,7 @@ describe('In the tournament app,', function() {
     var noCreateAnnouncement = function (email) {
         clickToAdmin(email);
         announcementsAdminLink.click();
+        expect(browser.getTitle()).toEqual('New Announcement - Tournament App');
         element(by.model('news.title')).sendKeys('Illegal Title');
         element(by.model('news.body')).sendKeys('Illegal Content');
         element(by.buttonText('Create Announcement')).click();
@@ -117,6 +120,7 @@ describe('In the tournament app,', function() {
     var noCreateCompetition = function (email) {
         clickToAdmin(email);
         competitionAdminLink.click();
+        expect(browser.getTitle()).toEqual('Add Competition - Tournament App');
         element(by.model('competition.name')).sendKeys('U99');
         element(by.model('competition.section')).sendKeys('Groups');
         element(by.model('competition.groups')).sendKeys('2');
@@ -142,7 +146,8 @@ describe('In the tournament app,', function() {
 
         it('should see the correct title in the browser', function () {
             browser.get(homeUrl);
-            expect(browser.getTitle()).toEqual('Tournament App');
+            expect(browser.getTitle()).toEqual('Sandhurst 2016 - Tournament App');
+            clickToCompetition('U8', 'All');
         });
 
         it('should highlight a team\'s results when clicking a row in the table', function () {
@@ -169,6 +174,7 @@ describe('In the tournament app,', function() {
 
         it('should open the announcements page and filter announcements', function () {
             element(by.linkText('News & Social')).click();
+            expect(browser.getTitle()).toEqual('News - Tournament App');
             var newsItems = element.all(by.repeater('item in newsItems'));
             expect(newsItems.count()).toBeGreaterThan(1);
             element(by.model('searchBy')).sendKeys('Another');
@@ -183,6 +189,7 @@ describe('In the tournament app,', function() {
 
             // invalid email address - submit disabled
             element(by.linkText('Feedback')).click();
+            expect(browser.getTitle()).toEqual('Feedback - Tournament App');
             emailField.sendKeys('not-valid-email-address');
             element(by.model('feedback.body')).sendKeys(body);
             expect(submitButton.isEnabled()).toBe(false);

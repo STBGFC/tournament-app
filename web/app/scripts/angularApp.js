@@ -5,6 +5,7 @@
         .module('stbgfc.tournament-app', [
             'stbgfc.tournament',
             'stbgfc.security',
+            'viewtitle',
             'ui.router',
             'ngAnimate'
         ])
