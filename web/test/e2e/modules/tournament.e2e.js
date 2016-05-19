@@ -16,6 +16,9 @@ describe('In the tournament app,', function() {
     var noEntry = element(by.id('fourOhThree'));
     var addResultButton = element.all(by.partialButtonText('ADD MATCH')).first();
     var saveResultButton = element.all(by.partialButtonText('SAVE MATCH')).first();
+    var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
+    var firstResult = element.all(by.repeater('result in results')).first();
+    var bottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
 
     var logout = function () {
         userMenu.click();
@@ -222,14 +225,12 @@ describe('In the tournament app,', function() {
             var score = element(by.binding('result.homeGoals')); // includes everything in the surrounding <span/>
             var homeTeamInput = element(by.model('result.homeTeam'));
             var awayTeamInput = element(by.model('result.awayTeam'));
-            var firstResult = element.all(by.repeater('result in results')).first();
             var addHomeGoalButton = element(by.id('addHomeGoal'));
             var subHomeGoalButton = element(by.id('subHomeGoal'));
             var addAwayGoalButton = element(by.id('addAwayGoal'));
             var subAwayGoalButton = element(by.id('subAwayGoal'));
             var saveResultButton = element(by.partialButtonText('SAVE RESULT'));
             var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
-            var bottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
 
             beforeEach(function() {
                 loginAndSucceed(email, pwd);
@@ -238,6 +239,7 @@ describe('In the tournament app,', function() {
             it('should be allowed to edit and update a group result', function () {
                 clickToCompetition('U11', 'A');
                 expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
+                expect(firstResult.getText()).toContain('Arsenal 2 1 Liverpool');
                 firstResult.$('a').click();
                 expect(element(by.css('h5.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
                 expect(homeTeamInput.getAttribute('value')).toEqual('Arsenal');
@@ -247,6 +249,8 @@ describe('In the tournament app,', function() {
                 addAwayGoalButton.click();
                 expect(score.getText()).toEqual('1 - 2');
                 saveResultButton.click();
+                browser.get(homeUrl);
+                clickToCompetition('U11', 'A');
                 expect(bottomOfGroup.getText()).toContain('Arsenal 4 0 3 1 4 5 3');
             });
 
@@ -282,6 +286,12 @@ describe('In the tournament app,', function() {
             it('should not be allowed to add a new fixture or result', function () {
                 clickToCompetition('U11', 'A');
                 addGroupGame();
+                assertForbidden();
+            });
+
+            it('should not be allowed to confirm table positions', function () {
+                clickToCompetition('U11', 'A');
+                confirmTablePositionsButton.click();
                 assertForbidden();
             });
 
@@ -332,18 +342,25 @@ describe('In the tournament app,', function() {
         });
 
         it('should be allowed to delete a result', function () {
-            //clickToCompetition('U11', 'A');
-            //firstResult.$('a').click();
-            //deleteResultButton.click();
-            //assertForbidden();
-            // TODO
+            clickToCompetition('U11', 'A');
+            expect(firstResult.getText()).toContain('Arsenal 1 2 Liverpool');
+            firstResult.$('a').click();
+            deleteResultButton.click().then(function() {
+                // cannot get it to see the updates directly
+                browser.get(homeUrl);
+                clickToCompetition('U11', 'A');
+                var newFirstResult = element.all(by.repeater('result in results')).first();
+                var newBottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
+                expect(newFirstResult.getText()).toContain('Chelsea 0 1 Man. Utd.');
+                expect(newBottomOfGroup.getText()).toContain('Liverpool 3 1 0 2 3 6 3');
+            });
         });
 
         it('should be allowed to add a new fixture or result', function () {
             clickToCompetition('U11', 'A');
             addGroupGame();
-            expect(element.all(by.repeater('result in results')).count()).toBe(30); // includes 2 gorups and KO section
-            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('1 5 Home Away');
+            expect(element.all(by.repeater('result in results')).count()).toBe(29); // includes 2 groups and KO section
+            expect(element.all(by.repeater('result in results').row(9)).getText()).toContain('1 5 Home Away');
         });
 
         it('should be allowed to view and filter feedback', function () {
@@ -365,6 +382,16 @@ describe('In the tournament app,', function() {
             noCreateCompetition(email);
         });
 
+        it('should be allowed to confirm table positions', function () {
+            clickToCompetition('U11', 'A');
+            confirmTablePositionsButton.click().then(function() {
+                // cannot get it to see the updates directly
+                browser.get(homeUrl);
+                clickToCompetition('U11', 'A');
+                expect(element.all(by.repeater('result in results').row(20)).getText()).toContain('PO1 1 Arsenal 5th Group 2');
+            });
+        });
+
     });
 
     describe('an administrator', function() {
@@ -373,11 +400,6 @@ describe('In the tournament app,', function() {
 
         beforeEach(function() {
             loginAndSucceed(email, pwd);
-        });
-
-        it('should be allowed to confirm table positions', function () {
-            clickToCompetition('U11', 'A');
-            // TODO
         });
 
         it('should be allowed to create a competition', function () {
