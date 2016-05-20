@@ -18,7 +18,7 @@
                         {{ comp.name }} <span class="small glyphicon glyphicon-triangle-bottom"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="comp2 in tournament.competitions | filter: {name: comp.name}">
+                        <li ng-repeat="comp2 in tournament.competitions | filter: {name: comp.name}: true">
                             <a ui-sref="results({ name: comp2.name, section: comp2.section })">{{comp2.section}}</a>
                         </li>
                     </ul>
