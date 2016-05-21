@@ -7,6 +7,7 @@
     angular
         .module('stbgfc.security', [
             'angularLocalStorage',
+            'angular-jwt',
             'ui.router',
             'http-auth-interceptor',
             'mgcrea.ngStrap.modal'
@@ -48,6 +49,10 @@
                 return LoginService.loggedInUser();
             };
 
+            $scope.userHasRole = function(role) {
+                return LoginService.userHasRole(role);
+            };
+
             $scope.requestLogin = function() {
                 loginModal.show();
             };
@@ -74,7 +79,7 @@
         // services
         // ============================================================================================
 
-        .factory('LoginService', function($rootScope, $http, $window, authService) {
+        .factory('LoginService', function($rootScope, $http, $window, authService, jwtHelper) {
             var UID_SESSION_KEY = 'stbgfc.security.uid';
 
             return {
@@ -82,9 +87,10 @@
                     $http.post('/authenticate', {username: username, password: password})
                         .success(function(data) {
                             $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
+                            var decodedToken = JSON.stringify(jwtHelper.decodeToken(data.token));
                             $window.sessionStorage.setItem(JWT_SESSION_KEY, data.token);
-                            $window.sessionStorage.setItem(UID_SESSION_KEY, username);
-                            authService.loginConfirmed('success', function(config){
+                            $window.sessionStorage.setItem(UID_SESSION_KEY, decodedToken);
+                            authService.loginConfirmed('success', function(config) {
                                 config.headers.Authorization = 'Bearer ' + data.token;
                                 return config;
                             });
@@ -100,7 +106,19 @@
                 },
 
                 loggedInUser: function() {
-                    return $window.sessionStorage.getItem(UID_SESSION_KEY) || false;
+                    var token = JSON.parse($window.sessionStorage.getItem(UID_SESSION_KEY));
+                    if (!token) {
+                        return false;
+                    }
+                    return token.userId;
+                },
+
+                userHasRole: function(role) {
+                    var token = JSON.parse($window.sessionStorage.getItem(UID_SESSION_KEY));
+                    if (!token) {
+                        return false;
+                    }
+                    return token.userRoles.indexOf(role) > -1;
                 },
 
                 logout: function() {

@@ -58,7 +58,7 @@ module.exports = function(app, db) {
 
     // can't seem to get the inbuilt middleware() function from the acl 
     // pkg to work at all.  Replicate a lot of it here.
-    return function (req, res, next) {
+    var _mw = function (req, res, next) {
         if (!req.user) {
             req.user = {userId: USER_ANONYMOUS};
         }
@@ -79,6 +79,13 @@ module.exports = function(app, db) {
                 }
             }
         });
+    };
+
+    return {
+        middleware: _mw,
+        roleCheck: function(username, cb) {
+            acl.userRoles(username, cb);
+        }
     };
     
 };

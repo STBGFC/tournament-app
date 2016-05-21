@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var User = require('../models/User');
 
-module.exports = function(app) {
+module.exports = function(app, roleCheck) {
 
     var jwtSecret = process.env.JWT_SECRET_KEY;
 
@@ -25,28 +25,36 @@ module.exports = function(app) {
             }
 
             if (user) {
-                console.log('  ..success');
-                var token = jwt.sign({ userId: req.body.username }, jwtSecret, {expiresInMinutes: jwtExpiresAfter});
-                res.json({token: token});
-                return;
-            }
+                roleCheck(user.username, function(err, roles) {
+                    if (err) {
+                        console.log(err);
+                        roles = '';
+                    }
 
-            // otherwise we can determine why we failed
-            var reasons = User.failedLogin;
-            switch (reason) {
-                case reasons.NOT_FOUND:
-                    console.log('  ..user not found');
-                    res.status(401).send('Unknown username or password');
-                    break;
-                case reasons.PASSWORD_INCORRECT:
-                    console.log('  ..incorrect password');
-                    res.status(401).send('Unknown username or password');
-                    break;
-                case reasons.MAX_ATTEMPTS:
-                    // send email or otherwise notify user that account is
-                    // temporarily locked
-                    console.log('  ..max attempts exceeded, account locked');
-                    break;
+                    console.log('  ..success.  User has roles: ' + roles);
+
+                    var token = jwt.sign({ userId: user.username, userRoles: roles }, jwtSecret, {expiresInMinutes: jwtExpiresAfter});
+                    res.json({token: token});
+                });
+            }
+            else {
+                // otherwise we can determine why we failed
+                var reasons = User.failedLogin;
+                switch (reason) {
+                    case reasons.NOT_FOUND:
+                        console.log('  ..user not found');
+                        res.status(401).send('Unknown username or password');
+                        break;
+                    case reasons.PASSWORD_INCORRECT:
+                        console.log('  ..incorrect password');
+                        res.status(401).send('Unknown username or password');
+                        break;
+                    case reasons.MAX_ATTEMPTS:
+                        // send email or otherwise notify user that account is
+                        // temporarily locked
+                        console.log('  ..max attempts exceeded, account locked');
+                        break;
+                }
             }
         });
     });

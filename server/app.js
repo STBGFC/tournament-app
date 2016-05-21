@@ -33,10 +33,10 @@ mongoose.connect(mongoUri, function(err) {
         console.log('mongo connection successful to ' + mongoUri);
     }
 
-    var authCheck = require('./api/authentication')(app);
-    var aclCheck = require('./api/acl')(app, mongoose.connection.db);
+    var acl = require('./api/acl')(app, mongoose.connection.db);
+    var authCheck = require('./api/authentication')(app, acl.roleCheck);
     var tournamentApi = require('./api/tournament')(app, io, mongoose);
-    app.use('/api', [authCheck, aclCheck, tournamentApi]);
+    app.use('/api', [authCheck, acl.middleware, tournamentApi]);
 
 
     // catch 404 and forward to error handler
