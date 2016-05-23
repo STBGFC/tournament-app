@@ -30,6 +30,7 @@ module.exports = function(config) {
       'bower_components/angular-socket-io/socket.js',
       'bower_components/angularLocalStorage/src/angularLocalStorage.js',
       'bower_components/angular-http-auth/src/http-auth-interceptor.js',
+      'bower_components/angular-jwt/dist/angular-jwt.js',
       'bower_components/angular-strap/dist/angular-strap.js',
       'bower_components/angular-strap/dist/angular-strap.tpl.js',
       'bower_components/angular-animate/angular-animate.js',
