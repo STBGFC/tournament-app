@@ -84,16 +84,13 @@
         // ============================================================================================
 
         .factory('LoginService', function($rootScope, $http, $window, authService, jwtHelper) {
-            var UID_SESSION_KEY = 'stbgfc.security.uid';
 
             return {
                 authenticate: function(username, password) {
                     $http.post('/authenticate', {username: username, password: password})
                         .success(function(data) {
                             $http.defaults.headers.common.Authorization = 'Bearer ' + data.token;
-                            var decodedToken = JSON.stringify(jwtHelper.decodeToken(data.token));
                             $window.sessionStorage.setItem(JWT_SESSION_KEY, data.token);
-                            $window.sessionStorage.setItem(UID_SESSION_KEY, decodedToken);
                             authService.loginConfirmed('success', function(config) {
                                 config.headers.Authorization = 'Bearer ' + data.token;
                                 return config;
@@ -110,26 +107,25 @@
                 },
 
                 loggedInUser: function() {
-                    var token = JSON.parse($window.sessionStorage.getItem(UID_SESSION_KEY));
+                    var token = $window.sessionStorage.getItem(JWT_SESSION_KEY);
                     if (!token) {
                         return false;
                     }
-                    return token.userId;
+                    return jwtHelper.decodeToken(token).userId;
                 },
 
                 userHasRole: function(role) {
-                    var token = JSON.parse($window.sessionStorage.getItem(UID_SESSION_KEY));
+                    var token = JSON.parse($window.sessionStorage.getItem(JWT_SESSION_KEY));
                     if (!token) {
                         return false;
                     }
-                    return token.userRoles.indexOf(role) > -1;
+                    return jwtHelper.decodeToken(token).userRoles.indexOf(role) > -1;
                 },
 
                 logout: function() {
                     $http.defaults.headers.common.Authorization = undefined;
                     authService.loginCancelled();
                     delete $window.sessionStorage[JWT_SESSION_KEY];
-                    delete $window.sessionStorage[UID_SESSION_KEY];
                     $rootScope.$broadcast('event:auth-loginCleared');
                 }
             };
