@@ -13,7 +13,7 @@
             'mgcrea.ngStrap.modal'
         ])
 
-        .run(function($rootScope, $http, $window, $modal) {
+        .run(function($rootScope, $http, $window, $modal, $state) {
 
             var savedJwtToken = $window.sessionStorage.getItem(JWT_SESSION_KEY);
             if (savedJwtToken) {
@@ -29,6 +29,10 @@
 
             $rootScope.$on('event:auth-loginRequired', function() {
                 loginModal.$promise.then(loginModal.show);
+            });
+
+            $rootScope.$on('event:auth-loginCleared', function() {
+                $state.go('home');
             });
 
             $rootScope.$on('event:auth-forbidden', function() {
