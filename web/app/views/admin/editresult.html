@@ -19,7 +19,8 @@
                 <button id="addHomeGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
             </div>
             <div class="col-md-3">
-                <input class="form-control input-lg borderless text-center" ng-model="result.homeTeam">
+                <input ng-show="userHasRole('editor')" class="form-control input-lg borderless text-center" ng-model="result.homeTeam">
+                <div ng-hide="userHasRole('editor')" class="text-center"><h2>{{result.homeTeam}}</h2></div>
             </div>
             <div class="col-md-2 text-center">
                 <div class="points" style="width: 100%; font-size: 31px">
@@ -29,7 +30,8 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <input class="form-control input-lg borderless text-center" ng-model="result.awayTeam">
+                <div ng-hide="userHasRole('editor')" class="text-center"><h2>{{result.awayTeam}}</h2></div>
+                <input ng-show="userHasRole('editor')" class="form-control input-lg borderless text-center" ng-model="result.awayTeam">
             </div>
             <div class="col-md-1">
                 <button id="addAwayGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>

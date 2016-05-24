@@ -19,6 +19,8 @@ describe('In the tournament app,', function() {
     var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
     var firstResult = element.all(by.repeater('result in results')).first();
     var bottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
+    var homeTeamInput = element(by.model('result.homeTeam'));
+    var awayTeamInput = element(by.model('result.awayTeam'));
 
     var logout = function () {
         userMenu.click();
@@ -210,8 +212,6 @@ describe('In the tournament app,', function() {
         describe('when logged in', function() {
 
             var score = element(by.binding('result.homeGoals')); // includes everything in the surrounding <span/>
-            var homeTeamInput = element(by.model('result.homeTeam'));
-            var awayTeamInput = element(by.model('result.awayTeam'));
             var addHomeGoalButton = element(by.id('addHomeGoal'));
             var subHomeGoalButton = element(by.id('subHomeGoal'));
             var addAwayGoalButton = element(by.id('addAwayGoal'));
@@ -249,8 +249,8 @@ describe('In the tournament app,', function() {
                 expect(firstResult.getText()).toContain('Arsenal 2 1 Liverpool');
                 firstResult.$('a').click();
                 expect(element(by.css('h5.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
-                expect(homeTeamInput.getAttribute('value')).toEqual('Arsenal');
-                expect(awayTeamInput.getAttribute('value')).toEqual('Liverpool');
+                expect(homeTeamInput.isDisplayed()).toBeFalsy();
+                expect(awayTeamInput.isDisplayed()).toBeFalsy();
                 expect(score.getText()).toEqual('2 - 1');
                 subHomeGoalButton.click();
                 addAwayGoalButton.click();
@@ -319,6 +319,13 @@ describe('In the tournament app,', function() {
 
         it('should be allowed to create an announcement', function () {
             createAnnouncement(email);
+        });
+
+        it('should be allowed to edit team names when editing a result', function() {
+            clickToCompetition('U11', 'A');
+            firstResult.$('a').click();
+            expect(homeTeamInput.isPresent()).toBeTruthy();
+            expect(awayTeamInput.isPresent()).toBeTruthy();
         });
 
         it('should be allowed to view and filter feedback', function () {
