@@ -30,7 +30,6 @@ module.exports = function(config) {
       'bower_components/angular-socket-io/socket.js',
       'bower_components/angularLocalStorage/src/angularLocalStorage.js',
       'bower_components/angular-http-auth/src/http-auth-interceptor.js',
-      'bower_components/angular-jwt/dist/angular-jwt.js',
       'bower_components/angular-strap/dist/angular-strap.js',
       'bower_components/angular-strap/dist/angular-strap.tpl.js',
       'bower_components/angular-animate/angular-animate.js',
@@ -38,6 +37,7 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/showdown/src/showdown.js',
       'bower_components/angular-markdown-directive/markdown.js',
+      'bower_components/angular-jwt/dist/angular-jwt.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-socket.io-mock/angular-socket.io-mock.js',
       // endbower
