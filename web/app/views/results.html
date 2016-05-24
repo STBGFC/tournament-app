@@ -42,7 +42,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button ng-show="loggedInUser() && group.table.length > 0" ng-click="confirmTablePositions()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-upload"></span> CONFIRM TABLE POSITIONS</button>
+                        <button ng-show="userHasRole('editor') && group.table.length > 0" ng-click="confirmTablePositions()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-upload"></span> CONFIRM TABLE POSITIONS</button>
                     </div>
 
                     <div class="col-sm-6">
@@ -78,7 +78,7 @@
                                 </div>
                                 <button ng-click="saveResult(competition.currentGroup)" class="col-sm-offset-2 btn btn-default btn-sm"><span class="glyphicon glyphicon-save"></span> SAVE MATCH</button>
                             </form>
-                            <button ng-show="loggedInUser() && !(newResult.competition)" ng-click="createResult()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> ADD MATCH</button>
+                            <button ng-show="userHasRole('editor') && !(newResult.competition)" ng-click="createResult()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> ADD MATCH</button>
                         </section>
                     </div>
 
@@ -116,7 +116,7 @@
                 </div>
                 <button ng-click="saveResult(0)" class="col-sm-offset-2 btn btn-default btn-sm"><span class="glyphicon glyphicon-save"></span> SAVE MATCH</button>
             </form>
-            <button ng-show="loggedInUser() && !(newResult.competition)" ng-click="createResult()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> ADD MATCH</button>
+            <button ng-show="userHasRole('editor') && !(newResult.competition)" ng-click="createResult()" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> ADD MATCH</button>
         </div>
     </div>
 </div>

@@ -32,7 +32,9 @@
             });
 
             $rootScope.$on('event:auth-loginCleared', function() {
-                $state.go('home');
+                if ($state.includes('admin')) {
+                    $state.go('home');
+                }
             });
 
             $rootScope.$on('event:auth-forbidden', function() {
@@ -115,11 +117,12 @@
                 },
 
                 userHasRole: function(role) {
-                    var token = JSON.parse($window.sessionStorage.getItem(JWT_SESSION_KEY));
+                    var token = $window.sessionStorage.getItem(JWT_SESSION_KEY);
                     if (!token) {
                         return false;
                     }
-                    return jwtHelper.decodeToken(token).userRoles.indexOf(role) > -1;
+                    var dt = jwtHelper.decodeToken(token);
+                    return dt.userRoles.indexOf(role) > -1;
                 },
 
                 logout: function() {

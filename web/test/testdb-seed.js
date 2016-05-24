@@ -17,8 +17,8 @@ var users = [
 ];
 var acl_users = [
     { "guest" : true, key : "anonymous" },
-    { "admin" : true, key : "admin%40admin%2Eorg" },
-    { "editor" : true, key : "editor%40editor%2Eorg" },
+    { "admin" : true, "editor": true, "referee": true, key : "admin%40admin%2Eorg" },
+    { "editor" : true, "referee": true, key : "editor%40editor%2Eorg" },
     { "referee" : true, key : "referee%40referee%2Eorg" }
 ];
 var acl_roles = [

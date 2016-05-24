@@ -13,7 +13,7 @@ describe('In the tournament app,', function() {
     var competitionAdminLink = element(by.partialLinkText('competition'));
     var confirmTablePositionsButton = element.all(by.partialButtonText('CONFIRM TABLE POSITIONS')).first();
     var newsAlert = element(by.id('newsalert'));
-    var noEntry = element(by.id('fourOhThree'));
+    //var noEntry = element(by.id('fourOhThree'));
     var addResultButton = element.all(by.partialButtonText('ADD MATCH')).first();
     var saveResultButton = element.all(by.partialButtonText('SAVE MATCH')).first();
     var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
@@ -62,18 +62,18 @@ describe('In the tournament app,', function() {
         expect(userMenu.isDisplayed()).toBeTruthy();
     };
 
+    /*
     var assertForbidden = function() {
         expect(noEntry.isDisplayed()).toBeTruthy();
         browser.wait(protractor.ExpectedConditions.invisibilityOf(noEntry), 5000);
         expect(noEntry.isDisplayed()).toBeFalsy();
     };
+    */
 
     var clickToAdmin = function (name) {
         element(by.linkText(name)).click();
         element(by.linkText('Admin')).click();
-        expect(competitionAdminLink.isDisplayed()).toBeTruthy();
         expect(announcementsAdminLink.isDisplayed()).toBeTruthy();
-        expect(pageAdminLink.isDisplayed()).toBeTruthy();
         expect(feedbackAdminLink.isDisplayed()).toBeTruthy();
     };
 
@@ -85,55 +85,42 @@ describe('In the tournament app,', function() {
         expect(browser.getTitle()).toEqual(name + '/' + section + ' - Tournament App');
     };
 
-    var noCreatePage = function (email) {
-        clickToAdmin(email);
-        pageAdminLink.click();
-        expect(browser.getTitle()).toEqual('Info Page Admin - Tournament App');
-        element(by.model('page.title')).sendKeys('Illegal Title');
-        element(by.model('page.body')).sendKeys('Illegal Content');
-        element(by.buttonText('Save Page')).click();
-        assertForbidden();
-
-        element(by.id('pageEditButton')).click();
-        element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
-            return elem.getText().then(function (text) {
-                expect(text).not.toContain('Illegal Title');
-            });
+    var confirmTablePositions = function() {
+        clickToCompetition('U11', 'A');
+        confirmTablePositionsButton.click().then(function() {
+            // cannot get it to see the updates directly
+            browser.get(homeUrl);
+            clickToCompetition('U11', 'A');
+            expect(element.all(by.repeater('result in results').row(20)).getText()).toContain('PO1 1 Chelsea 5th Group 2');
         });
-
     };
 
-    var noCreateAnnouncement = function (email) {
-        clickToAdmin(email);
-        announcementsAdminLink.click();
-        expect(browser.getTitle()).toEqual('New Announcement - Tournament App');
-        element(by.model('news.title')).sendKeys('Illegal Title');
-        element(by.model('news.body')).sendKeys('Illegal Content');
-        element(by.buttonText('Create Announcement')).click();
-        assertForbidden();
-        expect(newsAlert.isDisplayed()).toBeFalsy();
-    };
-
-    var noViewFeedback = function (email) {
+    var viewFeedback = function (email) {
+        var items = element.all(by.repeater('item in feedbackItems'));
         clickToAdmin(email);
         feedbackAdminLink.click();
-        assertForbidden();
+        expect(items.count()).toBeGreaterThan(1);
+        element(by.model('searchBy')).sendKeys('Cool');
+        expect(items.count()).toBe(1);
+        element(by.model('searchBy')).sendKeys('ZWERtwetwerkjhweoitj');
+        expect(items.count()).toBe(0);
     };
 
-    var noCreateCompetition = function (email) {
+    var createAnnouncement = function(email) {
         clickToAdmin(email);
-        competitionAdminLink.click();
-        expect(browser.getTitle()).toEqual('Add Competition - Tournament App');
-        element(by.model('competition.name')).sendKeys('U99');
-        element(by.model('competition.section')).sendKeys('Groups');
-        element(by.model('competition.groups')).sendKeys('2');
-        element(by.buttonText('Add Competition')).click();
-        assertForbidden();
-    };
-
-    var noConfirmTable = function () {
-        confirmTablePositionsButton.click();
-        assertForbidden();
+        announcementsAdminLink.click();
+        element(by.model('news.title')).sendKeys('Allowed Announcement');
+        element(by.model('news.body')).sendKeys('This is a new announcement by ' + email);
+        element(by.buttonText('Create Announcement')).click();
+        expect(newsAlert.isDisplayed()).toBeTruthy();
+        element(by.buttonText('OK')).click();
+        browser.wait(protractor.ExpectedConditions.invisibilityOf(newsAlert), 5000);
+        expect(newsAlert.isDisplayed()).toBeFalsy();
+        element(by.linkText('News & Social')).click();
+        var newsItems = element.all(by.repeater('item in newsItems'));
+        expect(newsItems.count()).toBeGreaterThan(1);
+        element(by.model('searchBy')).sendKeys(email);
+        expect(newsItems.count()).toBe(1);
     };
 
     var addGroupGame = function() {
@@ -236,6 +223,26 @@ describe('In the tournament app,', function() {
                 loginAndSucceed(email, pwd);
             });
 
+            it('should not be allowed to delete a result', function () {
+                clickToCompetition('U11', 'A');
+                firstResult.$('a').click();
+                expect(deleteResultButton.isDisplayed()).toBeFalsy();
+            });
+
+            it('should not be allowed to confirm table positions', function () {
+                clickToCompetition('U11', 'A');
+                expect(confirmTablePositionsButton.isDisplayed()).toBeFalsy();
+            });
+
+            it('should not be allowed to add a new fixture or result', function () {
+                clickToCompetition('U11', 'A');
+                expect(addResultButton.isDisplayed()).toBeFalsy();
+            });
+
+            it('should not be allowed to access admin screens', function () {
+                expect(element(by.linkText('Admin')).isPresent()).toBeFalsy();
+            });
+
             it('should be allowed to edit and update a group result', function () {
                 clickToCompetition('U11', 'A');
                 expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
@@ -249,66 +256,36 @@ describe('In the tournament app,', function() {
                 addAwayGoalButton.click();
                 expect(score.getText()).toEqual('1 - 2');
                 saveResultButton.click();
-                browser.get(homeUrl);
                 clickToCompetition('U11', 'A');
                 expect(bottomOfGroup.getText()).toContain('Arsenal 4 0 3 1 4 5 3');
             });
 
-            it('should return to the same group in the competition after updating a result', function() {
+            /* something in this test is causing a memory leak on my machine.. */
+            xit('should return to the same group in the competition after updating a result', function() {
                 clickToCompetition('U11', 'A');
                 element(by.linkText('2')).click();
-                /* gah...  element.all(by.repeater('result in results').row(10)).$('a').click();
+                var lastGame = element.all(by.repeater('result in results').row(20));
+                lastGame.first().$('a').click();
                 expect(element(by.css('h4.text-center')).getText()).toEqual('Age U11 | Section A | Group 2 | Match 1 | Pitch 1');
                 subHomeGoalButton.click();
                 addAwayGoalButton.click();
                 saveResultButton.click();
-                // TODO expect(element(by.css('li.active')).toBe(2);
-                */
+                expect(element(by.css('li.active'))).toBe(2);
             });
 
             it('should be allowed to edit and update a result including penalties', function () {
                 clickToCompetition('U11', 'A');
-                // TODO update result
-            });
-
-            it('should not be allowed to delete a result', function () {
-                clickToCompetition('U11', 'A');
-                firstResult.$('a').click();
-                deleteResultButton.click();
-                assertForbidden();
-            });
-
-            it('should not be allowed to confirm table positions', function () {
-                clickToCompetition('U11', 'A');
-                noConfirmTable();
-            });
-
-            it('should not be allowed to add a new fixture or result', function () {
-                clickToCompetition('U11', 'A');
-                addGroupGame();
-                assertForbidden();
-            });
-
-            it('should not be allowed to confirm table positions', function () {
-                clickToCompetition('U11', 'A');
-                confirmTablePositionsButton.click();
-                assertForbidden();
-            });
-
-            it('should not be allowed to view feedback', function () {
-                noViewFeedback(email);
-            });
-
-            it('should not be allowed to create a competition', function () {
-                noCreateCompetition(email);
-            });
-
-            it('should not be allowed to create an announcement', function () {
-                noCreateAnnouncement(email);
-            });
-
-            it('should not be allowed to create a CMS page', function () {
-                noCreatePage(email);
+                // SF1
+                var sf1 = element.all(by.repeater('result in results').row(26));
+                sf1.first().$('a').click();
+                addHomeGoalButton.click();
+                addAwayGoalButton.click();
+                element(by.linkText('Pens')).click();
+                addHomeGoalButton.click();
+                addAwayGoalButton.click();
+                subAwayGoalButton.click();
+                expect(score.getText()).toEqual('1 (1) - (0) 1');
+                saveResultButton.click();
             });
 
         });
@@ -324,21 +301,93 @@ describe('In the tournament app,', function() {
             loginAndSucceed(email, pwd);
         });
 
-        it('should be allowed to create an announcement', function () {
+        it('should not be allowed to delete a result', function () {
+            clickToCompetition('U11', 'A');
+            firstResult.$('a').click();
+            expect(deleteResultButton.isDisplayed()).toBeFalsy();
+        });
+
+        it('should not be allowed to create a CMS page', function () {
             clickToAdmin(email);
-            announcementsAdminLink.click();
-            element(by.model('news.title')).sendKeys('Allowed Announcement');
-            element(by.model('news.body')).sendKeys('This is a new announcement');
-            element(by.buttonText('Create Announcement')).click();
-            expect(newsAlert.isDisplayed()).toBeTruthy();
-            element(by.buttonText('OK')).click();
-            browser.wait(protractor.ExpectedConditions.invisibilityOf(newsAlert), 5000);
-            expect(newsAlert.isDisplayed()).toBeFalsy();
-            element(by.linkText('News & Social')).click();
-            var newsItems = element.all(by.repeater('item in newsItems'));
-            expect(newsItems.count()).toBeGreaterThan(1);
-            element(by.model('searchBy')).sendKeys('Allowed Announcement');
-            expect(newsItems.count()).toBeGreaterThan(0);
+            expect(pageAdminLink.isPresent()).toBeFalsy();
+        });
+
+        it('should not be allowed to create a competition', function () {
+            clickToAdmin(email);
+            expect(competitionAdminLink.isPresent()).toBeFalsy();
+        });
+
+        it('should be allowed to create an announcement', function () {
+            createAnnouncement(email);
+        });
+
+        it('should be allowed to view and filter feedback', function () {
+            viewFeedback(email);
+        });
+
+        it('should be allowed to confirm table positions', function () {
+            confirmTablePositions();
+        });
+
+        it('should be allowed to add a new fixture or result', function () {
+            clickToCompetition('U11', 'A');
+            addGroupGame();
+            expect(element.all(by.repeater('result in results')).count()).toBe(30); // includes 2 groups and KO section
+            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('1 5 Home Away');
+        });
+
+    });
+
+    describe('an administrator', function() {
+        var email = 'admin@admin.org';
+        var pwd = 'admin';
+
+        beforeEach(function() {
+            loginAndSucceed(email, pwd);
+        });
+
+        it('should be allowed to confirm table positions', function () {
+            confirmTablePositions();
+        });
+
+        it('should be allowed to create an announcement', function () {
+            createAnnouncement(email);
+        });
+
+        it('should be allowed to create a competition', function () {
+            clickToAdmin(email);
+            competitionAdminLink.click();
+            element(by.model('competition.name')).sendKeys('U99');
+            element(by.model('competition.section')).sendKeys('Groups');
+            element(by.model('competition.groups')).sendKeys('2');
+            element(by.buttonText('Add Competition')).click();
+            browser.get(homeUrl);
+            expect(element(by.partialButtonText('U99')).isPresent()).toBeTruthy();
+        });
+
+        it('should be allowed to view and filter feedback', function () {
+            viewFeedback(email);
+        });
+
+        it('should be allowed to modify CMS pages', function () {
+            clickToAdmin(email);
+            pageAdminLink.click();
+            element(by.model('page.title')).sendKeys('Allowed Title');
+            element(by.model('page.body')).sendKeys('#Allowed Content');
+            element(by.buttonText('Save Page')).click();
+            element(by.id('pageEditButton')).click();
+            element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
+                return elem.getText().then(function (text) {
+                    expect(text).toBe('Allowed Title');
+                });
+            });
+        });
+
+        it('should be allowed to add a new fixture or result', function () {
+            clickToCompetition('U11', 'A');
+            addGroupGame();
+            expect(element.all(by.repeater('result in results')).count()).toBe(31); // includes 2 groups and KO section
+            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('1 5 Home Away');
         });
 
         it('should be allowed to delete a result', function () {
@@ -353,77 +402,6 @@ describe('In the tournament app,', function() {
                 var newBottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
                 expect(newFirstResult.getText()).toContain('Chelsea 0 1 Man. Utd.');
                 expect(newBottomOfGroup.getText()).toContain('Liverpool 3 1 0 2 3 6 3');
-            });
-        });
-
-        it('should be allowed to add a new fixture or result', function () {
-            clickToCompetition('U11', 'A');
-            addGroupGame();
-            expect(element.all(by.repeater('result in results')).count()).toBe(29); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(9)).getText()).toContain('1 5 Home Away');
-        });
-
-        it('should be allowed to view and filter feedback', function () {
-            var items = element.all(by.repeater('item in feedbackItems'));
-            clickToAdmin(email);
-            feedbackAdminLink.click();
-            expect(items.count()).toBeGreaterThan(1);
-            element(by.model('searchBy')).sendKeys('Cool');
-            expect(items.count()).toBe(1);
-            element(by.model('searchBy')).sendKeys('ZWERtwetwerkjhweoitj');
-            expect(items.count()).toBe(0);
-        });
-
-        it('should not be allowed to create a CMS page', function () {
-            noCreatePage(email);
-        });
-
-        it('should not be allowed to create a competition', function () {
-            noCreateCompetition(email);
-        });
-
-        it('should be allowed to confirm table positions', function () {
-            clickToCompetition('U11', 'A');
-            confirmTablePositionsButton.click().then(function() {
-                // cannot get it to see the updates directly
-                browser.get(homeUrl);
-                clickToCompetition('U11', 'A');
-                expect(element.all(by.repeater('result in results').row(20)).getText()).toContain('PO1 1 Arsenal 5th Group 2');
-            });
-        });
-
-    });
-
-    describe('an administrator', function() {
-        var email = 'admin@admin.org';
-        var pwd = 'admin';
-
-        beforeEach(function() {
-            loginAndSucceed(email, pwd);
-        });
-
-        it('should be allowed to create a competition', function () {
-            clickToAdmin(email);
-            competitionAdminLink.click();
-            element(by.model('competition.name')).sendKeys('U99');
-            element(by.model('competition.section')).sendKeys('Groups');
-            element(by.model('competition.groups')).sendKeys('2');
-            element(by.buttonText('Add Competition')).click();
-            browser.get(homeUrl);
-            expect(element(by.partialButtonText('U99')).isPresent()).toBeTruthy();
-        });
-
-        it('should be allowed to modify CMS pages', function () {
-            clickToAdmin(email);
-            pageAdminLink.click();
-            element(by.model('page.title')).sendKeys('Allowed Title');
-            element(by.model('page.body')).sendKeys('#Allowed Content');
-            element(by.buttonText('Save Page')).click();
-            element(by.id('pageEditButton')).click();
-            element.all(by.repeater('p in pages')).reduce(function (acc, elem) {
-                return elem.getText().then(function (text) {
-                    expect(text).toBe('Allowed Title');
-                });
             });
         });
 
