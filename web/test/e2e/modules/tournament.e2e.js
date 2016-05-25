@@ -128,9 +128,9 @@ describe('In the tournament app,', function() {
         expect(newsItems.count()).toBe(1);
     };
 
-    var addGroupGame = function() {
+    var addGroupGame = function(tag) {
         addResultButton.click();
-        element.all(by.model('newResult.tag')).first().sendKeys('1');
+        element.all(by.model('newResult.tag')).first().sendKeys(tag);
         element.all(by.model('newResult.pitch')).first().sendKeys('5');
         element.all(by.model('newResult.homeTeam')).first().sendKeys('Home');
         element.all(by.model('newResult.awayTeam')).first().sendKeys('Away');
@@ -346,9 +346,9 @@ describe('In the tournament app,', function() {
 
         it('should be allowed to add a new fixture or result', function () {
             clickToCompetition('U11', 'A');
-            addGroupGame();
+            addGroupGame(11);
             expect(element.all(by.repeater('result in results')).count()).toBe(30); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('1 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('11 5 Home Away');
         });
 
     });
@@ -400,9 +400,9 @@ describe('In the tournament app,', function() {
 
         it('should be allowed to add a new fixture or result', function () {
             clickToCompetition('U11', 'A');
-            addGroupGame();
+            addGroupGame(12);
             expect(element.all(by.repeater('result in results')).count()).toBe(31); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('1 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('12 5 Home Away');
         });
 
         it('should be allowed to delete a result', function () {

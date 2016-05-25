@@ -274,6 +274,9 @@
                 if (group !== 0) {
                     result.competition.group = group;
                 }
+                if (!isNaN(result.tag)) {
+                    result.index = result.tag;
+                }
                 $log.info('Saving new result: ' + JSON.stringify(result));
                 result.$save(function() {
                     withResult(result, false);
