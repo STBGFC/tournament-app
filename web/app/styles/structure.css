@@ -119,6 +119,12 @@ input.borderless :focus :active :hover {
 input.input-lg {
     font-size: 31px;
 }
+form#matchlabel input {
+    width: 30px !important;
+    float: none;
+    display: inline-block;
+    font-weight: bold;
+}
 
 button.btn-goals {
     font-size: xx-large;

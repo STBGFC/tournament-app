@@ -15,12 +15,15 @@ describe('In the tournament app,', function() {
     var newsAlert = element(by.id('newsalert'));
     //var noEntry = element(by.id('fourOhThree'));
     var addResultButton = element.all(by.partialButtonText('ADD MATCH')).first();
-    var saveResultButton = element.all(by.partialButtonText('SAVE MATCH')).first();
+    var saveMatchButton = element.all(by.partialButtonText('SAVE MATCH')).first();
+    var saveResultButton = element.all(by.partialButtonText('SAVE RESULT')).first();
     var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
     var firstResult = element.all(by.repeater('result in results')).first();
     var bottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
     var homeTeamInput = element(by.model('result.homeTeam'));
     var awayTeamInput = element(by.model('result.awayTeam'));
+    var matchTagInput = element(by.model('result.tag'));
+    var pitchNumberInput = element(by.model('result.pitch'));
 
     var logout = function () {
         userMenu.click();
@@ -87,13 +90,13 @@ describe('In the tournament app,', function() {
         expect(browser.getTitle()).toEqual(name + '/' + section + ' - Tournament App');
     };
 
-    var confirmTablePositions = function() {
+    var confirmTablePositions = function(rowNum) {
         clickToCompetition('U11', 'A');
         confirmTablePositionsButton.click().then(function() {
             // cannot get it to see the updates directly
             browser.get(homeUrl);
             clickToCompetition('U11', 'A');
-            expect(element.all(by.repeater('result in results').row(20)).getText()).toContain('PO1 1 Chelsea 5th Group 2');
+            expect(element.all(by.repeater('result in results').row(rowNum)).getText()).toContain('PO1 1 Chelsea 5th Group 2');
         });
     };
 
@@ -131,7 +134,7 @@ describe('In the tournament app,', function() {
         element.all(by.model('newResult.pitch')).first().sendKeys('5');
         element.all(by.model('newResult.homeTeam')).first().sendKeys('Home');
         element.all(by.model('newResult.awayTeam')).first().sendKeys('Away');
-        saveResultButton.click();
+        saveMatchButton.click();
     };
 
     describe('a normal user', function () {
@@ -216,7 +219,6 @@ describe('In the tournament app,', function() {
             var subHomeGoalButton = element(by.id('subHomeGoal'));
             var addAwayGoalButton = element(by.id('addAwayGoal'));
             var subAwayGoalButton = element(by.id('subAwayGoal'));
-            var saveResultButton = element(by.partialButtonText('SAVE RESULT'));
             var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
 
             beforeEach(function() {
@@ -248,7 +250,7 @@ describe('In the tournament app,', function() {
                 expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
                 expect(firstResult.getText()).toContain('Arsenal 2 1 Liverpool');
                 firstResult.$('a').click();
-                expect(element(by.css('h5.text-center')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
+                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
                 expect(homeTeamInput.isDisplayed()).toBeFalsy();
                 expect(awayTeamInput.isDisplayed()).toBeFalsy();
                 expect(score.getText()).toEqual('2 - 1');
@@ -321,11 +323,17 @@ describe('In the tournament app,', function() {
             createAnnouncement(email);
         });
 
-        it('should be allowed to edit team names when editing a result', function() {
+        it('should be allowed to edit team names and pitch number when editing a result', function() {
             clickToCompetition('U11', 'A');
             firstResult.$('a').click();
             expect(homeTeamInput.isPresent()).toBeTruthy();
             expect(awayTeamInput.isPresent()).toBeTruthy();
+            expect(pitchNumberInput.isPresent()).toBeTruthy();
+            expect(matchTagInput.isPresent()).toBeTruthy();
+            element.all(by.model('result.pitch')).first().sendKeys('2');
+            saveResultButton.click();
+            clickToCompetition('U11', 'A');
+            expect(firstResult.getText()).toContain('1 12 Arsenal');
         });
 
         it('should be allowed to view and filter feedback', function () {
@@ -333,7 +341,7 @@ describe('In the tournament app,', function() {
         });
 
         it('should be allowed to confirm table positions', function () {
-            confirmTablePositions();
+            confirmTablePositions(20);
         });
 
         it('should be allowed to add a new fixture or result', function () {
@@ -354,7 +362,7 @@ describe('In the tournament app,', function() {
         });
 
         it('should be allowed to confirm table positions', function () {
-            confirmTablePositions();
+            confirmTablePositions(21);
         });
 
         it('should be allowed to create an announcement', function () {
@@ -416,7 +424,9 @@ describe('In the tournament app,', function() {
             var items = element.all(by.repeater('item in feedbackItems'));
             clickToAdmin(email);
             feedbackAdminLink.click();
-            // TODO
+            expect(items.count()).toBe(2);
+            element.all(by.partialLinkText('delete')).first().click();
+            expect(items.count()).toBe(1);
         });
 
     });

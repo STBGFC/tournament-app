@@ -1,16 +1,28 @@
 <div class="container">
     <view-title>Edit Result</view-title>
     <div class="panel panel-body">
-        <div class="row">
-            <h5 class="text-center">
-                <span class="text-muted">Age</span> <strong>{{result.competition.name}}</strong>&nbsp;|
-                <span class="text-muted">Section</span> <strong>{{result.competition.section}}</strong>&nbsp;|
-                <span ng-show="result.competition.group"><span class="text-muted">Group</span> <strong>{{result.competition.group}}</strong>&nbsp;|</span>
-                <span class="text-muted">Match</span> <strong>{{result.tag}}</strong>&nbsp;|
-                <span class="text-muted">Pitch</span> <strong>{{result.pitch}}</strong>
-            </h5>
-        </div>
 
+        <div class="text-center">
+        <form id="matchlabel" class="form-inline">
+            <p>
+                <span class="text-muted">Age</span>
+                <strong>{{result.competition.name}}</strong> |
+                <span class="text-muted">Section</span>
+                <strong>{{result.competition.section}}</strong> |
+                <span ng-show="result.competition.group">
+                    <span class="text-muted">Group</span>
+                    <strong>{{result.competition.group}}</strong> |
+                </span>
+                <span class="text-muted">Match</span>
+                <strong ng-hide="userHasRole('editor')">{{result.tag}}</strong>
+                <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.tag"> |
+                <span class="text-muted">Pitch</span>
+                <strong ng-hide="userHasRole('editor')">{{result.pitch}}</strong>
+                <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.pitch">
+            </p>
+        </form>
+        </div>
+     
         <div class="row">
             <div class="col-md-1 text-right">
                 <button id="subHomeGoal" class="btn btn-danger btn-lg btn-goals" ng-click="addGoal(true, -1)"><span class="glyphicon glyphicon-minus-sign"></span></button>
@@ -19,7 +31,7 @@
                 <button id="addHomeGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(true, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
             </div>
             <div class="col-md-3">
-                <input ng-show="userHasRole('editor')" class="form-control input-lg borderless text-center" ng-model="result.homeTeam">
+                <input ng-show="userHasRole('editor')" class="form-control input-lg text-center" ng-model="result.homeTeam">
                 <div ng-hide="userHasRole('editor')" class="text-center"><h2>{{result.homeTeam}}</h2></div>
             </div>
             <div class="col-md-2 text-center">
@@ -31,7 +43,7 @@
             </div>
             <div class="col-md-3">
                 <div ng-hide="userHasRole('editor')" class="text-center"><h2>{{result.awayTeam}}</h2></div>
-                <input ng-show="userHasRole('editor')" class="form-control input-lg borderless text-center" ng-model="result.awayTeam">
+                <input ng-show="userHasRole('editor')" class="form-control input-lg text-center" ng-model="result.awayTeam">
             </div>
             <div class="col-md-1">
                 <button id="addAwayGoal" class="btn btn-success btn-lg btn-goals" ng-click="addGoal(false, 1)"><span class="glyphicon glyphicon-plus-sign"></span></button>
