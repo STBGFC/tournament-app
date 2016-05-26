@@ -114,7 +114,8 @@ describe ('Tournament Tests', function() {
             expect(grps[0].table.length).toBe(4);
             expect(grps[0].table[0].name).toBe('Sheffield Wednesday');
             expect(grps[1].table.length).toBe(4);
-            expect(grps[2].table.length).toBe(0);
+            expect(grps[2].table.length).toBe(4);
+            expect(grps[3].table.length).toBe(0);
         });
 
         it('should update the results and tables when a new result is received on the socket', function() {
@@ -180,6 +181,13 @@ describe ('Tournament Tests', function() {
             expect(grps[1].table[0].goalsFor).toBeGreaterThan(grps[1].table[1].goalsFor);
             expect(grps[1].table[1].goalsFor).toBeGreaterThan(grps[1].table[2].goalsFor);
             expect(grps[1].table[2].goalsFor).toBeGreaterThan(grps[1].table[3].goalsFor);
+
+            // group 3 - Reading ahead of Ipswich on head2head
+            expect(grps[2].table[2].points).toEqual(grps[2].table[3].points);
+            expect(grps[2].table[2].goalsFor).toEqual(grps[2].table[3].goalsFor);
+            expect(grps[2].table[2].goalsAgainst).toEqual(grps[2].table[3].goalsAgainst);
+            expect(grps[2].table[2].name).toBe('Reading');
+            expect(grps[2].table[3].name).toBe('Ipswich');
         });
 
         it('should POST the correct table order to the API when confirming table positions', function() {
@@ -366,12 +374,13 @@ describe ('Tournament Tests', function() {
         {'__v':0,'index':11,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'5', 'homeTeam':'Bristol City', 'awayTeam':'Rotherham', 'homeGoals':1, 'awayGoals':1},
         {'__v':0,'index':12,'pitch':'6','competition':{'name':'U8', 'section':'A', 'group':'2'},'tag':'6', 'homeTeam':'Cardiff', 'awayTeam':'MK Dons', 'homeGoals':4, 'awayGoals':4},
 
-        {'__v':0,'index':13,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'1', 'homeTeam':'Ipswich', 'awayTeam':'Preston North End'},
-        {'__v':0,'index':14,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'2', 'homeTeam':'Hull City', 'awayTeam':'Reading'},
-        {'__v':0,'index':15,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'3', 'homeTeam':'Hull City', 'awayTeam':'Ipswich'},
-        {'__v':0,'index':16,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'4', 'homeTeam':'Preston North End', 'awayTeam':'Reading'},
-        {'__v':0,'index':17,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'5', 'homeTeam':'Reading', 'awayTeam':'Ipswich'},
-        {'__v':0,'index':18,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'6', 'homeTeam':'Preston North End', 'awayTeam':'Hull City'},
+        {'__v':0,'index':13,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'1', 'homeTeam':'Ipswich', 'awayTeam':'Preston North End', 'homeGoals':2, 'awayGoals':1},
+        {'__v':0,'index':14,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'2', 'homeTeam':'Hull City', 'awayTeam':'Reading', 'homeGoals':2, 'awayGoals':1},
+        {'__v':0,'index':15,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'3', 'homeTeam':'Hull City', 'awayTeam':'Ipswich', 'homeGoals':2, 'awayGoals':0},
+        {'__v':0,'index':16,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'4', 'homeTeam':'Preston North End', 'awayTeam':'Reading', 'homeGoals':2, 'awayGoals':0},
+        {'__v':0,'index':17,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'5', 'homeTeam':'Reading', 'awayTeam':'Ipswich', 'homeGoals':2, 'awayGoals':1},
+        {'__v':0,'index':18,'pitch':'7','competition':{'name':'U8', 'section':'A', 'group':'3'},'tag':'6', 'homeTeam':'Preston North End', 'awayTeam':'Hull City', 'homeGoals':1, 'awayGoals':1},
+
         {'__v':0,'index':19,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'1', 'homeTeam':'QPR', 'awayTeam':'Fulham FC'},
         {'__v':0,'index':20,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'2', 'homeTeam':'Birmingham', 'awayTeam':'Leeds'},
         {'__v':0,'index':21,'pitch':'8','competition':{'name':'U8', 'section':'A', 'group':'4'},'tag':'3', 'homeTeam':'Birmingham', 'awayTeam':'QPR'},

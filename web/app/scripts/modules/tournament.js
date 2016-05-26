@@ -133,8 +133,7 @@
                         var ag = r.awayGoals;
                         var ht = findEntryInTable(r.homeTeam, table);
                         var at = findEntryInTable(r.awayTeam, table);
-                        applyRes(ht, hg, ag);
-                        applyRes(at, ag, hg);
+                        applyResult(ht, at, hg, ag);
                     }
                 }
                 table.sort(leagueComparator);
@@ -147,7 +146,7 @@
                     }
                 }
 
-                var entry = {played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0};
+                var entry = {played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0, versus: []};
                 entry.name = name;
                 table.push(entry);
                 return entry;
@@ -157,15 +156,40 @@
              * function to apply a result to an existing table of entries in order to
              * update them.  The entries can then be resorted using the comparator
              */
-            var applyRes = function(entry, myGoals, yourGoals) {
-                entry.played++;
-                entry.won += (myGoals > yourGoals ? 1 : 0);
-                entry.drawn += (myGoals === yourGoals ? 1 : 0);
-                entry.lost += (myGoals < yourGoals ? 1 : 0);
-                entry.goalsFor += myGoals;
-                entry.goalsAgainst += yourGoals;
-                entry.points += (myGoals > yourGoals ? 3 : (myGoals === yourGoals ? 1 : 0));
-                return entry;
+            var applyResult = function(home, away, homeGoals, awayGoals) {
+                home.played++;
+                away.played++;
+                var res = 0;
+                if (homeGoals > awayGoals) {
+                    home.won++;
+                    away.lost++;
+                    home.points += 3;
+                    res = 1;
+                }
+                else if (homeGoals === awayGoals) {
+                    home.drawn++;
+                    away.drawn++;
+                    home.points += 1;
+                    away.points += 1;
+                }
+                else {
+                    home.lost++;
+                    away.won++;
+                    away.points += 3;
+                    res = -1;
+                }
+                home.goalsFor += homeGoals;
+                away.goalsFor += awayGoals;
+                home.goalsAgainst += awayGoals;
+                away.goalsAgainst += homeGoals;
+
+                // record head to head
+                home.versus.push({
+                    name: away.name, res: res
+                });
+                away.versus.push({
+                    name: home.name, res: -res
+                });
             };
 
             /*
@@ -191,8 +215,19 @@
                 if (a.won > b.won) { return -1; }
                 if (a.won < b.won) { return 1; }
 
+                // head to head
+                if (b.versus.length > 0) {
+                    var c = 0;
+                    for (var g = 0; g < a.versus.length; g++) {
+                        c += (b.versus[g].name === a.name ? b.versus[g].res : 0);
+                    }
+                    if (c !== 0) {
+                        return c;
+                    }
+                }
+
                 // name
-                return (a.name < b.name);
+                return (a.name > b.name);
             };
 
             var withResult = function(result, del) {
