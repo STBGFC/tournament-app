@@ -21,10 +21,10 @@ module.exports = function(app, roleCheck) {
 
         User.getAuthenticated(req.body.username, req.body.password, function(err, user, reason) {
             if (err) {
-                throw err;
+                res.status(400).send('Unknown username or password');
             }
 
-            if (user) {
+            else if (user) {
                 roleCheck(user.username, function(err, roles) {
                     if (err) {
                         console.log(err);

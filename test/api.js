@@ -66,6 +66,13 @@ describe('When testing the Tournament API', function() {
                 .send({username: 'referee@referee.org',password:'h4x0r'})
                 .expect(401, done);
         });
+
+        it('cannot crash the server by sending a null authentication payload', function(done) {
+            request
+                .post('/authenticate')
+                .send()
+                .expect(400, done);
+        });
     });
 
     describe('a normal user', function() {
