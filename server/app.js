@@ -9,6 +9,7 @@ var mongoUri = process.env.STBGFC_MONGO_URI || 'mongodb://localhost/tournamentAp
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.disable('x-powered-by');
 
 // basic config
 if (app.get('env') === 'development') {

@@ -49,7 +49,9 @@ describe('When testing the Tournament API', function() {
 
     describe('an unauthorised user', function() {
 
-        latestBearerToken = '';
+        before(function() {
+            latestBearerToken = '';
+        });
         
         it('cannot login with invalid name and password', function(done) {
             request
@@ -68,8 +70,21 @@ describe('When testing the Tournament API', function() {
 
     describe('a normal user', function() {
 
-        latestBearerToken = '';
+        before(function() {
+            latestBearerToken = '';
+        });
         
+        it('should not see the x-powered-by header', function(done) {
+            request
+                .get('/')
+                .expect(function(res) {
+                    if ('x-powered-by' in res.header) {
+                        throw new Error('x-powered-by is visible');
+                    }
+                })
+                .expect(404, done);
+        });
+
         it('cannot create tournament data', function(done) {
             cannotCreate('/api/tournaments', {}, 401, done);
         });
@@ -125,6 +140,7 @@ describe('When testing the Tournament API', function() {
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(200, done);
+            // TODO validate response body
         });
 
         it('cannot update news', function(done) {
@@ -157,7 +173,9 @@ describe('When testing the Tournament API', function() {
    
     describe('a referee', function() {
 
-        latestBearerToken = '';
+        before(function() {
+            latestBearerToken = '';
+        });
         
         it('can login with valid credentials', function(done) {
             authenticator('referee@referee.org', 'referee', ["referee"], done);
@@ -238,7 +256,9 @@ describe('When testing the Tournament API', function() {
    
     describe('an editor', function() {
 
-        latestBearerToken = '';
+        before(function() {
+            latestBearerToken = '';
+        });
         
         it('can login with valid credentials', function(done) {
             authenticator('editor@editor.org', 'editor', ['editor', 'referee'], done);
@@ -269,12 +289,23 @@ describe('When testing the Tournament API', function() {
                 });
         });
 
-        // TODO.. editor functions (announcement, read feedback)
+        it('can read feedback', function(done) {
+            request
+                .get('/api/feedbacks')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+            // TODO validate response body
+        });
+
+        // TODO.. editor functions (announcement)
     });
 
     describe('an administrator', function() {
 
-        latestBearerToken = '';
+        before(function() {
+            latestBearerToken = '';
+        });
         
         it('can login with valid credentials', function(done) {
             authenticator('admin@admin.org', 'admin', ['admin', 'editor', 'referee'], done);
