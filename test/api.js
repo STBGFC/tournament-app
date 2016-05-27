@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 var request = require('supertest')('http://localhost:3000');
+var assert = require('assert');
 
 describe('When testing the Tournament API', function() {
 
@@ -125,8 +126,9 @@ describe('When testing the Tournament API', function() {
         });
 
         it('can search for results by competition', function(done) {
-            // TODO
-            done();
+            request
+                .get('/api/results?conditions=%7B%22competition.name%22:%22U11%22,%22competition.section%22:%22A%22%7D')
+                .expect(200, done);
         });
 
         it('cannot update results', function(done) {
@@ -147,7 +149,6 @@ describe('When testing the Tournament API', function() {
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(200, done);
-            // TODO validate response body
         });
 
         it('cannot update news', function(done) {
@@ -276,23 +277,31 @@ describe('When testing the Tournament API', function() {
                 .post('/api/results')
                 .set('Authorization', 'Bearer ' + latestBearerToken)
                 .send(newResult)
-                .expect(201)
-                .end(function(err, res) {
-                    var added = res.body[res.body.length-1];
-                    // assert added === newResult;
-                    done();
-                });
+                .expect(function(res) {
+                    assert.equal(res.body.tag, newResult.tag);
+                    assert.equal(res.body.pitch, newResult.pitch);
+                    assert.equal(res.body.index, newResult.index);
+                })
+                .expect(201, done)
         });
 
         it('can confirm league table positions', function(done) {
+            var table = {0: "Newcastle", 1: "Arsenal", 2: "Man. Utd.", 3: "Chelsea", 4: "Liverpool"};
             request
-                .post('/api/leaguetables/U11/B/2')
+                .post('/api/leaguetables/U11/A/2')
                 .set('Authorization', 'Bearer ' + latestBearerToken)
-                .send({0: "Newcastle", 1: "Arsenal", 2: "Man. Utd.", 3: "Chelsea", 4: "Liverpool"})
+                .send(table)
                 .expect(200)
                 .end(function(err, res) {
-                    // TODO verify the second stage results get populated
-                    done();
+                    request
+                        .get('/api/results?conditions=%7B%22competition.name%22:%22U11%22,%22competition.section%22:%22A%22%7D')
+                        .expect(function(res) { 
+                            assert.equal(res.body[21].homeTeam, table['3']);
+                            assert.equal(res.body[22].awayTeam, table['2']);
+                            assert.equal(res.body[23].homeTeam, table['1']);
+                            assert.equal(res.body[25].homeTeam, table['0']);
+                        })
+                        .expect(200, done);
                 });
         });
 
@@ -303,7 +312,6 @@ describe('When testing the Tournament API', function() {
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(200, done);
-            // TODO validate response body
         });
 
         // TODO.. editor functions (announcement)
