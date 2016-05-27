@@ -442,7 +442,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('resetdb', function() {
-    grunt.util.spawn({cmd: 'mongo', args:['tournamentApp', 'test/testdb-seed.js']}, function done(){});
+    grunt.util.spawn({cmd: 'mongo', args:['tournament-auto-tests', '../scripts/testdb-seed.js']}, function done(){});
   });
 
   grunt.registerTask('e2e-test', [

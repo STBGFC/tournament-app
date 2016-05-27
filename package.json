@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournamentApp NODE_ENV=dev node server/app.js",
+    "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
+    "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=dev node server/app.js",
+    "pretest":"mongo tournament-auto-tests scripts/testdb-seed.js",
     "test": "mocha -s 150ms ./test/api.js"
   },
   "dependencies": {

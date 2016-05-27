@@ -22,9 +22,12 @@ functional parts of the display.
 The API is an [Express](https://www.npmjs.org/package/express) application that
 creates a RESTful interface to the data stored in a MongoDB.
 
-To run the server up quickly, `npm start` should work, but the secret key
-will be insecure.  In production, use the provided `startup.sh` script which
-generates a secure key for the JWT digest.
+To run the server up quickly, `npm start` should work, but the secret key will
+be insecure.  This method will create (if needed), and pre-seed a test database
+that can be used with the api tests or the e2e web tests.  If you want to start
+up with a different database, or you're running in production, use the provided
+`startup.sh` script which generates a secure key for the JWT digest and allows
+you to specify the mongo URL and the node environment (i.e. `dev` or `prod`)
 
 ### Testing
 
@@ -32,6 +35,8 @@ generates a secure key for the JWT digest.
 have the server running (i.e. with `npm start` in a separate terminal).  This
 is because the express app won't seem to start correctly if invoked by the 
 [supertest](https://www.npmjs.org/package/supertest) framework.  PR's welcome :)
+The `npm test` command will also cause the `tournament-auto-tests` database to 
+be seeded with the initial test data used by API and web e2e tests.
 
 
 ## Web App
@@ -48,7 +53,7 @@ and CDNified resources. `grunt serve` for dev preview.
 ### Testing
 
 Running `grunt test` will run the unit tests with karma and the e2e tests with
-protractor. For the e2e tests a backend API will need to be running (see
+protractor.  For the e2e tests a backend API will need to be running (see
 above).  `grunt watch` will auto run tests as the code changes.
 
 
