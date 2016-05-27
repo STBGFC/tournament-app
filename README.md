@@ -15,6 +15,25 @@ simply by changing the CSS in the file `branding.css` and supplying your own
 images and icons.  Most of the CSS in `structure.css` affects layouts and
 functional parts of the display.
 
+## Server
+
+### Running
+
+The API is an [Express](https://npmjs.org/packages/express) application that
+creates a RESTful interface to the data stored in a MongoDB.
+
+To run the server up quickly, `npm start` should work, but the secret key
+will be insecure.  In production, use the provided `startup.sh` script which
+generates a secure key for the JWT digest.
+
+### Testing
+
+`npm test` will run the mocha test suite for the API, but you must already
+have the server running (i.e. with `npm start` in a separate terminal).  This
+is because the express app won't seem to start correctly if invoked by the 
+[supertest](https://npmjs.org/packages/supertest) framework.  PR's welcome :)
+
+
 ## Web App
 
 ### Build & development
@@ -22,14 +41,14 @@ functional parts of the display.
 The web part of the  project was originally generated with [yo angular
 generator](https://github.com/yeoman/generator-angular) version 0.11.1.
 
-Run `grunt build` for building and `grunt serve` for preview.
+Run `grunt build` for building production artifacts, including minified
+and CDNified resources. `grunt serve` for dev preview.
 
 
 ### Testing
 
-Running `grunt test` will run the unit tests with karma and the e2e tests
-with protractor, for the e2e tests a backend API will need to be running.  
-`grunt watch` will auto run tests as the code changes.
+Running `grunt test` will run the unit tests with karma and the e2e tests with
+protractor. For the e2e tests a backend API will need to be running (see
+above).  `grunt watch` will auto run tests as the code changes.
 
-## API
 

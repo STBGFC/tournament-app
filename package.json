@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournamentApp NODE_ENV=dev node server/app.js",
     "test": "mocha -s 150ms ./test/api.js"
   },
   "dependencies": {
