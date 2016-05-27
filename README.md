@@ -19,7 +19,7 @@ functional parts of the display.
 
 ### Running
 
-The API is an [Express](https://npmjs.org/packages/express) application that
+The API is an [Express](https://www.npmjs.org/package/express) application that
 creates a RESTful interface to the data stored in a MongoDB.
 
 To run the server up quickly, `npm start` should work, but the secret key
@@ -31,7 +31,7 @@ generates a secure key for the JWT digest.
 `npm test` will run the mocha test suite for the API, but you must already
 have the server running (i.e. with `npm start` in a separate terminal).  This
 is because the express app won't seem to start correctly if invoked by the 
-[supertest](https://npmjs.org/packages/supertest) framework.  PR's welcome :)
+[supertest](https://www.npmjs.org/package/supertest) framework.  PR's welcome :)
 
 
 ## Web App

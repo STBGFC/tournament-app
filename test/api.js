@@ -299,6 +299,7 @@ describe('When testing the Tournament API', function() {
         it('can read feedback', function(done) {
             request
                 .get('/api/feedbacks')
+                .set('Authorization', 'Bearer ' + latestBearerToken)
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(200, done);
