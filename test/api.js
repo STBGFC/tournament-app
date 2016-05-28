@@ -35,17 +35,22 @@ describe('When testing the Tournament API', function() {
     };
 
     /* common authz */
-    var cannotCreate = function(uri, payload, code, done) { 
-        request.post(uri).set('Authorization', 'Bearer ' + latestBearerToken).send(payload).expect(code, done); 
+
+    var authHeader = function() {
+        return (latestBearerToken !== '' ? 'Authorization' : 'Dummy');
     };
-    var cannotRead = function(uri, code, done) {
-        request.get(uri).set('Authorization', 'Bearer ' + latestBearerToken).expect(code, done); 
+
+    var checkCreate = function(uri, payload, code, done) {
+        request.post(uri).set(authHeader(), 'Bearer ' + latestBearerToken).send(payload).expect(code, done);
     };
-    var cannotUpdate = function(uri, payload, code, done) { 
-        request.put(uri).set('Authorization', 'Bearer ' + latestBearerToken).send(payload).expect(code, done); 
+    var checkRead = function(uri, code, done) {
+        request.get(uri).set(authHeader(), 'Bearer ' + latestBearerToken).expect(code, done);
     };
-    var cannotDelete = function(uri, payload, code, done) { 
-        request.delete(uri).set('Authorization', 'Bearer ' + latestBearerToken).expect(code, done); 
+    var checkUpdate = function(uri, payload, code, done) {
+        request.put(uri).set(authHeader(), 'Bearer ' + latestBearerToken).send(payload).expect(code, done);
+    };
+    var checkDelete = function(uri, payload, code, done) {
+        request.delete(uri).set(authHeader(), 'Bearer ' + latestBearerToken).expect(code, done);
     };
 
     describe('an unauthorised user', function() {
@@ -84,7 +89,7 @@ describe('When testing the Tournament API', function() {
         
         it('should not see the x-powered-by header', function(done) {
             request
-                .get('/')
+                .get('/foo')
                 .expect(function(res) {
                     if ('x-powered-by' in res.header) {
                         throw new Error('x-powered-by is visible');
@@ -94,88 +99,75 @@ describe('When testing the Tournament API', function() {
         });
 
         it('cannot create tournament data', function(done) {
-            cannotCreate('/api/tournaments', {}, 401, done);
+            checkCreate('/api/tournaments', {}, 401, done);
         });
 
         it('can read tournament data', function(done) {
-            request
-                .get('/api/tournaments')
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200, done);
+            checkRead('/api/tournaments', 200, done);
         });
 
         it('cannot update tournament data', function(done) {
-            cannotUpdate('/api/tournaments', {}, 401, done);
+            checkUpdate('/api/tournaments', {}, 401, done);
         });
 
         it('cannot delete tournament data', function(done) {
-            cannotDelete('/api/tournaments', {}, 401, done);
+            checkDelete('/api/tournaments', {}, 401, done);
         });
 
         it('cannot create results', function(done) {
-            cannotCreate('/api/results', newResult, 401, done);
+            checkCreate('/api/results', newResult, 401, done);
         });
 
         it('can read results', function(done) {
-            request
-                .get('/api/results')
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200, done);
+            checkRead('/api/results', 200, done);
         });
 
         it('can search for results by competition', function(done) {
-            request
-                .get('/api/results?conditions=%7B%22competition.name%22:%22U11%22,%22competition.section%22:%22A%22%7D')
-                .expect(200, done);
+            checkRead(
+                '/api/results?conditions=%7B%22competition.name%22:%22U11%22,%22competition.section%22:%22A%22%7D',
+                200,
+                done
+            );
         });
 
         it('cannot update results', function(done) {
-            cannotUpdate('/api/results', {}, 401, done);
+            checkUpdate('/api/results', {}, 401, done);
         });
 
         it('cannot delete results', function(done) {
-            cannotDelete('/api/results', {}, 401, done);
+            checkDelete('/api/results', {}, 401, done);
         });
 
         it('cannot create news', function(done) {
-            cannotCreate('/api/news', {}, 401, done);
+            checkCreate('/api/news', {}, 401, done);
         });
 
         it('can read news', function(done) {
-            request
-                .get('/api/news')
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200, done);
+            checkRead('/api/news', 200, done);
         });
 
         it('cannot update news', function(done) {
-            cannotUpdate('/api/news', {}, 401, done);
+            checkUpdate('/api/news', {}, 401, done);
         });
 
         it('cannot delete news', function(done) {
-            cannotDelete('/api/news', {}, 401, done);
+            checkDelete('/api/news', {}, 401, done);
         });
 
         it('can create feedback', function(done) {
-            request
-                .post('/api/feedbacks')
-                .send( {email: "user@user.org", body: "test feedback"} )
-                .expect(201, done);
+            checkCreate('/api/feedbacks', {email: "user@user.org", body: "test feedback"}, 201, done);
         });
 
         it('cannot read feedback', function(done) {
-            cannotRead('/api/feedbacks', 401, done)
+            checkRead('/api/feedbacks', 401, done)
         });
 
         it('cannot update feedback', function(done) {
-            cannotUpdate('/api/feedbacks', {}, 401, done);
+            checkUpdate('/api/feedbacks', {}, 401, done);
         });
 
         it('cannot delete feedback', function(done) {
-            cannotDelete('/api/feedbacks', {}, 401, done);
+            checkDelete('/api/feedbacks', {}, 401, done);
         });
     });
    
@@ -190,19 +182,19 @@ describe('When testing the Tournament API', function() {
         });
 
         it('cannot create tournament data', function(done) {
-            cannotCreate('/api/tournaments', {}, 403, done);
+            checkCreate('/api/tournaments', {}, 403, done);
         });
 
         it('cannot update tournament data', function(done) {
-            cannotUpdate('/api/tournaments', {}, 403, done);
+            checkUpdate('/api/tournaments', {}, 403, done);
         });
 
         it('cannot delete tournament data', function(done) {
-            cannotDelete('/api/tournaments', {}, 403, done);
+            checkDelete('/api/tournaments', {}, 403, done);
         });
 
         it('cannot create results', function(done) {
-            cannotCreate('/api/results', newResult, 403, done);
+            checkCreate('/api/results', newResult, 403, done);
         });
 
         it('can update results', function(done) {
@@ -225,35 +217,35 @@ describe('When testing the Tournament API', function() {
         });
 
         it('cannot delete results', function(done) {
-            cannotDelete('/api/results', {}, 403, done);
+            checkDelete('/api/results', {}, 403, done);
         });
 
         it('cannot create news', function(done) {
-            cannotCreate('/api/news', {}, 403, done);
+            checkCreate('/api/news', {}, 403, done);
         });
 
         it('cannot update news', function(done) {
-            cannotUpdate('/api/news', {}, 403, done);
+            checkUpdate('/api/news', {}, 403, done);
         });
 
         it('cannot delete news', function(done) {
-            cannotDelete('/api/news', {}, 403, done);
+            checkDelete('/api/news', {}, 403, done);
         });
 
         it('cannot read feedback', function(done) {
-            cannotRead('/api/feedbacks', 403, done)
+            checkRead('/api/feedbacks', 403, done)
         });
 
         it('cannot update feedback', function(done) {
-            cannotUpdate('/api/feedbacks', {}, 403, done);
+            checkUpdate('/api/feedbacks', {}, 403, done);
         });
 
         it('cannot delete feedback', function(done) {
-            cannotDelete('/api/feedbacks', {}, 403, done);
+            checkDelete('/api/feedbacks', {}, 403, done);
         });
 
         it('cannot confirm league positions', function(done) {
-            cannotCreate(
+            checkCreate(
                 '/api/leaguetables/U11/B/2',
                 {0: "Newcastle", 1: "Arsenal", 2: "Man. Utd.", 3: "Chelsea", 4: "Liverpool"},
                 403,
@@ -306,12 +298,7 @@ describe('When testing the Tournament API', function() {
         });
 
         it('can read feedback', function(done) {
-            request
-                .get('/api/feedbacks')
-                .set('Authorization', 'Bearer ' + latestBearerToken)
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200, done);
+            checkRead('/api/feedbacks', 200, done);
         });
 
         // TODO.. editor functions (announcement)
