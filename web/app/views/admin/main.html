@@ -1,7 +1,12 @@
 <div class="container">
     <view-title>Admin</view-title>
     <div class="panel panel-body">
-        <ul id="adminTabs" class="nav nav-tabs">
+        <ul id="adminTabs" class="nav nav-tabs hidden-print">
+            <li ng-show="userHasRole('editor')" ng-class="{ active: $state.includes('admin.scorecard') }">
+                <a ui-sref="admin.scorecard" title="Score Cards">
+                    <span class="glyphicon glyphicon-list-alt"></span> score cards
+                </a>
+            </li>
             <li ng-show="userHasRole('editor')" ng-class="{ active: $state.includes('admin.createnews') }">
                 <a ui-sref="admin.createnews" title="Create Announcement">
                     <span class="glyphicon glyphicon-bullhorn"></span> announcement

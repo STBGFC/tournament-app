@@ -145,3 +145,13 @@ button.btn-goals {
         margin: 6px 2px 0 0;
     }
 }
+
+@media print {
+    .table {
+        font-size: 12px; /* from 14 */
+        font-weight: bold;
+    }
+    body {
+        padding-top: 10px;  /* from 80 */
+    }
+}

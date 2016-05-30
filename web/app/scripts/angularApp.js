@@ -69,6 +69,11 @@
                     templateUrl: 'views/admin/pages.html',
                     controller: 'PageAdminController'
                 })
+                .state('admin.scorecard', {
+                    url: '/scorecard',
+                    templateUrl: 'views/admin/scorecard.html',
+                    controller: 'ScoreCardController'
+                })
             ;
 
             $urlRouterProvider

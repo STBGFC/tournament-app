@@ -1,0 +1,38 @@
+
+<h3 class="text-center hidden-print">
+    Select Pitch:
+    <select
+        ng-model="searchBy"
+        ng-options="result.pitch for result in results | unique: 'pitch' | orderBy: 'pitch'">
+    </select>
+</h3>
+
+<h3 class="text-center visible-print-block" view-title="">Score Card - Pitch {{searchBy.pitch}}</h3>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th width="20%" class="text-right">competition</th>
+            <th width="3%" class="text-center"><small><span class="glyphicon glyphicon-time"></span></small></th>
+            <th width="3%" class="text-center"><small><span class="glyphicon glyphicon-map-marker"></span></small></th>
+            <th width="28%" class="text-right">home</th>
+            <th width="18%"></th>
+            <th width="28%">away</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="result in results|filter: {pitch: searchBy.pitch} | orderBy: 'pitch' | orderBy: 'index'">
+            <td class="text-right">
+                {{result.competition.name}}
+                {{result.competition.section}}
+                <span ng-show="{{result.competition.group}}">/ G{{result.competition.group}}</span>
+            </td>
+            <td class="text-center">{{result.tag}}</td>
+            <td class="text-center">{{result.pitch}}</td>
+            <td class="text-right">{{result.homeTeam}}</td>
+            <td class="text-center">{{result.homeScore}} - {{result.awayScore}}</td>
+            <td>{{result.awayTeam}}</td>
+        </tr>
+    </tbody>
+</table>

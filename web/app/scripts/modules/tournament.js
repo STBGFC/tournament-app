@@ -476,6 +476,13 @@
             };
         })
 
+        .controller('ScoreCardController', function(Result, $scope, $window) {
+            var results = Result.query(function() {
+                $scope.results = results;
+                $scope.searchBy = results[0];
+            });
+        })
+
 
         // ============================================================================================
         // services
