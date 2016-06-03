@@ -148,8 +148,8 @@ button.btn-goals {
 
 @media print {
     .table {
-        font-size: 12px; /* from 14 */
-        font-weight: bold;
+        page-break-after: always;
+        page-break-inside: avoid;
     }
     body {
         padding-top: 10px;  /* from 80 */
