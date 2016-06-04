@@ -6,7 +6,7 @@ module.exports = function(app, roleCheck) {
 
     var jwtSecret = process.env.JWT_SECRET_KEY;
 
-    var jwtExpiresAfter = process.env.JWT_EXPIRES_IN_MINUTES || 30;
+    var jwtExpiresAfter = (process.env.JWT_EXPIRES_IN_MINUTES || 30) * 60;
 
     /*
      * ensure the JWT token has been received and decoded if available
@@ -33,7 +33,7 @@ module.exports = function(app, roleCheck) {
 
                     console.log('  ..success.  User has roles: ' + roles);
 
-                    var token = jwt.sign({ userId: user.username, userRoles: roles }, jwtSecret, {expiresInMinutes: jwtExpiresAfter});
+                    var token = jwt.sign({ userId: user.username, userRoles: roles }, jwtSecret, {expiresIn: jwtExpiresAfter});
                     res.json({token: token});
                 });
             }

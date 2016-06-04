@@ -9,7 +9,7 @@ describe('When testing the Tournament API', function() {
     var jwtDecoder = function (res) {
         latestBearerToken = res.body.token;
         var decoded = jwt.decode(res.body.token, {complete: true});
-        res.body = {userId: decoded.userId, userRoles: decoded.userRoles};
+        res.body = {userId: decoded.payload.userId, userRoles: decoded.payload.userRoles};
     };
 
     var authenticator = function(email, pwd, roles, done) {
