@@ -13,10 +13,10 @@
 #
 #   The environment is set to 'prod' which means the server will NOT serve
 #   files from the web application - you are expected to have an nginx or
-#   apache server do that using the compressed/minified sources.
+#   apache server do that using the compressed/minified sources in web/dist.
 #
-#   To shutdown the server, run:
-#      kill $(cat /var/run/tournament-app.pid)
+#   The server process is managed by pm2 which you need to install with
+#      npm install -g pm2
 #
 # ---------------------------------------------------------------------------
 usage() {
@@ -35,8 +35,4 @@ JWT_EXPIRES_IN_MINUTES=600 \
   JWT_SECRET_KEY=$key \
   STBGFC_MONGO_URI=mongodb://$1 \
   NODE_ENV=$env \
-  node app.js > /var/log/tournament-app.log & 2>&1
-
-echo $! > $pidfile
-cat $pidfile
-
+  pm2 start app.js
