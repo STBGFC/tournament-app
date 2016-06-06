@@ -59,7 +59,7 @@ describe ('Tournament Tests', function() {
     });
 
     describe('ResultsController', function () {
-        var scope, rootScope, Result, stateParams;
+        var scope, rootScope, Result, stateParams, log;
         var qry = 'api/results?conditions=%7B%22competition.name%22:%22U8%22,%22competition.section%22:%22A%22%7D';
         var addedRes = {
             _id: '0987654321',
@@ -70,13 +70,14 @@ describe ('Tournament Tests', function() {
         };
 
         beforeEach(
-            inject(function(_Result_, _$httpBackend_, $rootScope, $controller) {
+            inject(function(_Result_, _$httpBackend_, $rootScope, $controller, _$log_) {
                 Result = _Result_;
                 $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
                 scope.tournament = tournamentData;
                 stateParams = {name:'U8', section:'A'};
                 rootScope = $rootScope;
+                log = _$log_;
                 $controller('ResultsController', {$scope: scope, $stateParams: stateParams, Result: Result});
             })
         );
@@ -146,6 +147,27 @@ describe ('Tournament Tests', function() {
                 expect(grps[0].table[i].name).not.toBe('Millwall');
                 expect(grps[0].table[i].name).not.toBe('Wolves');
             }
+        });
+
+        it('should log a warning when an invalid result arrives on the socket', function() {
+            $httpBackend
+                .whenGET(qry)
+                .respond(u8GroupResults);
+            $httpBackend.flush();
+
+            var grps = scope.competition.groups;
+
+            expect(grps[0].results.length).toBe(6);
+            expect(grps[0].table.length).toBe(4);
+            expect(grps[0].table[3].name).toBe('Derby County');
+
+            spyOn(log, 'warn');
+            rootScope.$broadcast('socket:result', {invalid: 'result'});
+
+            expect(log.warn).toHaveBeenCalledWith('invalid result broadcast message received: {"invalid":"result"}');
+            expect(grps[0].results.length).toBe(6);
+            expect(grps[0].table.length).toBe(4);
+            expect(grps[0].table[3].name).toBe('Derby County');
         });
 
         it('should calculate the table down to alphanumeric as the differentiator', function() {
