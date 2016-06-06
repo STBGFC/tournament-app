@@ -4,7 +4,7 @@
     angular
         .module('stbgfc.tournament', [
             'ngResource',
-            'ui.utils',
+            'uniquefilter',
             'ui.router',
             'btford.socket-io',
             'angularLocalStorage',

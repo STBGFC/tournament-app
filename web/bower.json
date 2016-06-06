@@ -7,21 +7,20 @@
     "angular-resource": "~1.5.5",
     "angular-cookies": "~1.5.5",
     "angular-route": "~1.5.5",
-    "angular-ui-utils": "~0.2.3",
     "angular-ui-router": "~0.3.1",
     "angular-socket-io": "~0.7.0",
     "angularLocalStorage": "~0.3.0",
     "angular-http-auth": "^1.2.1",
-    "angular-strap": "~2.2.1",
+    "angular-strap": "~2.3.8",
     "angular-animate": "~1.5.5",
-    "angular-motion": "~0.3.4",
-    "angular-gravatar": "~0.3.1",
+    "angular-motion": "~0.4.4",
+    "angular-gravatar": "~0.4.2",
     "angular-markdown-directive": "~0.3.1",
     "angular-jwt": "^0.0.9"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.5",
-    "angular-socket.io-mock": "~0.1.0"
+    "angular-socket.io-mock": "~1.1.0"
   },
   "appPath": "app",
   "moduleName": "tournamentApp",
