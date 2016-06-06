@@ -263,16 +263,16 @@ describe('In the tournament app,', function() {
             });
 
             /* something in this test is causing a memory leak on my machine.. */
-            xit('should return to the same group in the competition after updating a result', function() {
+            it('should return to the same group in the competition after updating a result', function() {
                 clickToCompetition('U11', 'A');
                 element(by.linkText('2')).click();
-                var lastGame = element.all(by.repeater('result in results').row(20));
+                var lastGame = element.all(by.repeater('result in results').row(13));
                 lastGame.first().$('a').click();
-                expect(element(by.css('h4.text-center')).getText()).toEqual('Age U11 | Section A | Group 2 | Match 1 | Pitch 1');
+                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 2 | Match 4 | Pitch 2');
                 subHomeGoalButton.click();
                 addAwayGoalButton.click();
                 saveResultButton.click();
-                expect(element(by.css('li.active'))).toBe(2);
+                expect(element(by.css('li.active')).getText()).toEqual('2');
             });
 
             it('should be allowed to edit and update a result including penalties', function () {
