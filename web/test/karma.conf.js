@@ -19,16 +19,15 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-ui-utils/ui-utils.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-socket-io/socket.js',
-      'bower_components/angularLocalStorage/src/angularLocalStorage.js',
+      'bower_components/angularLocalStorage/dist/angularLocalStorage.min.js',
       'bower_components/angular-http-auth/src/http-auth-interceptor.js',
       'bower_components/angular-strap/dist/angular-strap.js',
       'bower_components/angular-strap/dist/angular-strap.tpl.js',
