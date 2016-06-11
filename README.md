@@ -1,5 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/STBGFC/tournament-app.png?label=ready&title=Ready)](https://waffle.io/STBGFC/tournament-app)
 [![Build Status](https://travis-ci.org/STBGFC/tournament-app.svg)](https://travis-ci.org/STBGFC/tournament-app)
+[![Dependency Status](https://david-dm.org/STBGFC/tournament-app.svg)](https://david-dm.org/STBGFC/tournament-app)
+[![devDependency Status](https://david-dm.org/STBGFC/tournament-app/dev-status.svg)](https://david-dm.org/STBGFC/tournament-app#info=devDependencies)
 # tournament-app
 
 A simple Node/Express API server with an HTML5 application used to distribute
