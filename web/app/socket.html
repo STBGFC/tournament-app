@@ -19,14 +19,12 @@ io.on('news', function(data) {
 
 io.on('result', function(data) {
     console.log(data);
-    var result = data.result;
-    var scoreline = result.homeTeam + ' ' + result.homeGoals;
-    scoreline += (result.homePens ? '(' + result.homePens + ')-(' + result.awayPens + ')' : '-');
-    scoreline += result.awayGoals + ' ' + result.awayTeam;
     $('#content').prepend(
             '<p>' + new Date() + ': <strong>Result</strong>: ' +
-            data.compName + '/' + data.compSection + ' ' +
-            scoreline + '</strong></p><hr>'
+            data.competition.name + '/' + data.competition.section + ' ' +
+            data.homeTeam + ' <strong>' +
+            data.homeScore + ' - ' + data.awayScore + '</strong> ' +
+            data.awayTeam + '</p><hr>'
     );
 });
 </script>
