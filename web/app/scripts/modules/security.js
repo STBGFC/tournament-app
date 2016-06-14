@@ -21,7 +21,7 @@
             }
 
             loginModal = $modal({
-                template: 'views/modal-login.html',
+                templateUrl: 'views/modal-login.html',
                 controller: 'LoginController',
                 show: false,
                 persist: true
