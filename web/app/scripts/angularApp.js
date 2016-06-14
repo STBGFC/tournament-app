@@ -76,6 +76,8 @@
                 })
             ;
 
+            $urlRouterProvider.when('', '/');
+
         }])
 
         .run(function ($rootScope, $state, $stateParams, $log, broadcastSocket) {
