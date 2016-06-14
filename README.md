@@ -2,20 +2,23 @@
 [![Build Status](https://travis-ci.org/STBGFC/tournament-app.svg)](https://travis-ci.org/STBGFC/tournament-app)
 [![Dependency Status](https://david-dm.org/STBGFC/tournament-app.svg)](https://david-dm.org/STBGFC/tournament-app)
 [![devDependency Status](https://david-dm.org/STBGFC/tournament-app/dev-status.svg)](https://david-dm.org/STBGFC/tournament-app#info=devDependencies)
-# tournament-app
+# STBGFC Tournament App
 
-A simple Node/Express API server with an HTML5 application used to distribute
+A MEAN (Mongo, Express, Angular, Node) stack application used to distribute
 scores and update league tables during the football tournaments held at STBGFC.
 
-It includes a sockets based score update (and a 'videprinter' to ticker the
-score updates as they are received) giving a simulated real-time update for
-results and league tables.  The webapp can also display news and announcements
-broadcast by the organisers.
+If you wish to just use the application for your own tournaments, please see
+the [docker hub repo](https://hub.docker.com/r/stbgfc/tournament-app/) 
+description instead.  Docker is currently the easiest way
+to get up and running.
 
-If you wish to use the code, you can get a lot of front-end customisation done
-simply by changing the CSS in the file `branding.css` and supplying your own
-images and icons.  Most of the CSS in `structure.css` affects layouts and
-functional parts of the display.
+The remainder of this text is aimed at developers contributing to the project
+or wishing to customise it for their own use.
+
+## Project Structure
+
+The API (Node/Express application) is within the `app` directory off the
+project root.
 
 ## Server
 
@@ -50,6 +53,11 @@ generator](https://github.com/yeoman/generator-angular) version 0.11.1.
 
 Run `grunt build` for building production artifacts, including minified
 and CDNified resources. `grunt serve` for dev preview.
+
+You can get a lot of front-end customisation done simply by changing the CSS in
+the file `branding.css` and supplying your own images and icons.  Most of the
+CSS in `structure.css` affects layouts and functional parts of the display and 
+in most cases you won't need or want to modify it for branding.
 
 
 ### Testing
