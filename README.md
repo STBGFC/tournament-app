@@ -15,10 +15,21 @@ to get up and running.
 The remainder of this text is aimed at developers contributing to the project
 or wishing to customise it for their own use.
 
+## Pre-requisites
+
+After cloning the repo, ensure you have done a `npm install -g bower nodemon grunt-cli mocha`
+
 ## Project Structure
 
 The API (Node/Express application) is within the `app` directory off the
-project root.
+project root, the Angular front-end is in the `web` directory.  Run the
+usual `npm install` and `bower install` as appropriate inside of those to
+pull in the build and runtime dependencies.
+
+Inside the `scripts` directory, you can use the `testdb-seed.js` file to 
+populate a mongo database locally in order to get started.  Running 
+`grunt resetdb` from the `web` dir will also apply this script to a local
+mongo db named "tournament-auto-tests".
 
 ## Server
 
@@ -66,4 +77,11 @@ Running `grunt test` will run the unit tests with karma and the e2e tests with
 protractor.  For the e2e tests a backend API will need to be running (see
 above).  `grunt watch` will auto run tests as the code changes.
 
+## Contributing
 
+Any and all contributions will be gratefully received, whether it's a bug report,
+feature request, code or test improvement, documentation or suggestions.  There
+are a number of open issues and backlog requests you can take a look at (I use [waffle.io](https://waffle.io/STBGFC/tournament-app) to provide a Kanban board from 
+the github issues)
+
+Please get in touch if you're interested in helping out.
