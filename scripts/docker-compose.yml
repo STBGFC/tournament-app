@@ -1,0 +1,33 @@
+# 
+# Example docker-compose file - edit values as appropriate
+#
+version: '2'
+services:
+  tournament-app:
+    image: stbgfc/tournament-app
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - public
+    volumes:
+      - /opt/tournament-app/ssl:/etc/ssl/private
+    environment:
+      - SERVER_NAME=tournament.example.com
+  tournament-api:
+    image: stbgfc/tournament-api
+    ports:
+      - "3000:3000"
+    networks:
+      - public
+      - data
+    environment:
+      - STBGFC_MONGO_URI=mongodb://192.168.21.100:27017/tournamentApp
+      - JWT_SECRET_KEY
+      - JWT_EXPIRES_IN_MINUTES=600
+networks:
+  public:
+    driver: bridge
+  data:
+    driver: bridge
+
