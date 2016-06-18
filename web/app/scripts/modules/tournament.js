@@ -555,7 +555,7 @@
         .directive('showTab', function () {
             return {
                 link: function (scope, element) {
-                    element.click(function(e) {
+                    element.bind('click', function(e) {
                         e.preventDefault();
                         $(element).tab('show');
                     });
@@ -572,7 +572,7 @@
                     var toggleAccordion = function(e) {
                         e.preventDefault();
                     };
-                    element.click(toggleAccordion);
+                    element.bind('click', toggleAccordion);
                     $('#accordion')
                         .on('hidden.bs.collapse', toggleAccordion)
                         .on('shown.bs.collapse', toggleAccordion);
