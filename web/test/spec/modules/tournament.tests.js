@@ -265,9 +265,7 @@ describe ('Tournament Tests', function() {
                 scope = $rootScope.$new();
                 scope.tournament = tournamentData;
                 state = {
-                    go: function(a, b) {
-                        console.log('state.go called with ' + a + ' and ' + b);
-                    }
+                    go: function(a, b) {}
                 };
                 spyOn(state, 'go').and.callThrough();
                 stateParams = {id:'dead012345beef'};
@@ -338,11 +336,35 @@ describe ('Tournament Tests', function() {
             createController();
             $httpBackend.flush();
 
-            $httpBackend.expectPUT('api/results/dead012345beef').respond(201, '');
+            $httpBackend.expectPUT(resource).respond(201, '');
             scope.result._id = 'dead012345beef';
             scope.updateResult(scope.result);
             $httpBackend.flush();
             expect(state.go).toHaveBeenCalledWith('resultsGroup', {name: 'U10', section: 'A', group: 1});
+        });
+
+        it('should reset a result', function() {
+            $httpBackend.expectGET(resource).respond(u8GroupResults[0]);
+            createController();
+            $httpBackend.flush();
+
+            $httpBackend.expectDELETE(resource).respond({});
+            $httpBackend.expectPOST('api/results').respond(201, '');
+            scope.result._id = 'dead012345beef';
+            scope.resetResult(scope.result);
+            $httpBackend.flush();
+
+            expect(scope.result).toEqualData({
+                index: 1,
+                pitch: '5',
+                competition:{
+                    name: 'U8',
+                    section: 'A',
+                    group: '1'},
+                tag:'1',
+                homeTeam: 'Sheffield Wednesday',
+                awayTeam: 'Brentford'
+            });
         });
 
         it('should delete a result', function() {

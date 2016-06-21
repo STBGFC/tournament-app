@@ -384,6 +384,27 @@
                 });
             };
 
+            $scope.resetResult = function(res) {
+                var res2 = {
+                    competition: res.competition,
+                    homeTeam: res.homeTeam,
+                    awayTeam: res.awayTeam,
+                    index: res.index,
+                    tag: res.tag,
+                    pitch: res.pitch
+                };
+                res.$delete(function() {
+                    $scope.result = res2;
+                    new Result(res2).$save();
+                    if ('group' in res2.competition) {
+                        $state.go('resultsGroup', {name: res2.competition.name, section: res2.competition.section, group: res2.competition.group});
+                    }
+                    else {
+                        $state.go('results', {name: res2.competition.name, section: res2.competition.section});
+                    }
+                });
+            };
+
             $scope.deleteResult = function(result) {
                 $log.info('Deleting result: ' + JSON.stringify(result));
                 var params = {name: result.competition.name, section: result.competition.section};

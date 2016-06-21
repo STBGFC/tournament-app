@@ -18,6 +18,7 @@ describe('In the tournament app,', function() {
     var saveMatchButton = element.all(by.partialButtonText('SAVE MATCH')).first();
     var saveResultButton = element.all(by.partialButtonText('SAVE RESULT')).first();
     var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
+    var resetResultButton = element(by.partialButtonText('RESET RESULT'));
     var firstResult = element.all(by.repeater('result in results')).first();
     var bottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
     var homeTeamInput = element(by.model('result.homeTeam'));
@@ -225,6 +226,12 @@ describe('In the tournament app,', function() {
                 loginAndSucceed(email, pwd);
             });
 
+            it('should not be allowed to reset a result', function () {
+                clickToCompetition('U11', 'A');
+                firstResult.$('a').click();
+                expect(resetResultButton.isDisplayed()).toBeFalsy();
+            });
+
             it('should not be allowed to delete a result', function () {
                 clickToCompetition('U11', 'A');
                 firstResult.$('a').click();
@@ -301,6 +308,12 @@ describe('In the tournament app,', function() {
         beforeEach(function() {
             browser.get(homeUrl);
             loginAndSucceed(email, pwd);
+        });
+
+        it('should not be allowed to reset a result', function () {
+            clickToCompetition('U11', 'A');
+            firstResult.$('a').click();
+            expect(resetResultButton.isDisplayed()).toBeFalsy();
         });
 
         it('should not be allowed to delete a result', function () {
@@ -405,9 +418,23 @@ describe('In the tournament app,', function() {
             expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('12 5 Home Away');
         });
 
-        it('should be allowed to delete a result', function () {
+        it('should be allowed to reset a result', function () {
             clickToCompetition('U11', 'A');
             expect(firstResult.getText()).toContain('Arsenal 1 2 Liverpool');
+            firstResult.$('a').click();
+            resetResultButton.click().then(function() {
+                // cannot get it to see the updates directly
+                browser.get(homeUrl);
+                clickToCompetition('U11', 'A');
+                var newFirstResult = element.all(by.repeater('result in results')).first();
+                var newBottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
+                expect(newFirstResult.getText()).toContain('1 12 Arsenal Liverpool');
+            });
+        });
+
+        it('should be allowed to delete a result', function () {
+            clickToCompetition('U11', 'A');
+            expect(firstResult.getText()).toContain('1 12 Arsenal Liverpool');
             firstResult.$('a').click();
             deleteResultButton.click().then(function() {
                 // cannot get it to see the updates directly
