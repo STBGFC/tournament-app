@@ -2,7 +2,7 @@
 
 describe ('Tournament Tests', function() {
 
-    var $httpBackend;
+    var $httpBackend, createController;
     var customMatchers = {
         toEqualData: function () {
             return {
@@ -21,6 +21,11 @@ describe ('Tournament Tests', function() {
         jasmine.addMatchers(customMatchers);
     });
 
+    afterEach(function() {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+
     describe('TournamentController', function () {
         var rootScope, scope, Tournament;
 
@@ -30,25 +35,34 @@ describe ('Tournament Tests', function() {
                 $httpBackend = _$httpBackend_;
                 scope = $rootScope.$new();
                 rootScope = $rootScope;
-                $controller('TournamentController', {$scope: scope});
-
-                $httpBackend
-                    .whenGET('api/tournaments').respond([tournamentData]);
-                $httpBackend.flush();
+                createController = function() {
+                    return $controller('TournamentController', {$scope: scope, $state: {reload: function() {}}});
+                };
             })
         );
 
         it('should attach the tournament to the scope', function () {
+            $httpBackend.expectGET('api/tournaments').respond([tournamentData]);
+            createController();
+            $httpBackend.flush();
             expect(scope.tournament).toEqualData(tournamentData);
         });
 
         it('should attach one competition to the scope', function () {
+            $httpBackend.expectGET('api/tournaments').respond([tournamentData]);
+            createController();
+            $httpBackend.flush();
+            $httpBackend.expectPUT('api/tournaments/123').respond(201);
             scope.createCompetition({name: 'U11', section: 'All', groups: 2});
+            $httpBackend.flush();
             expect(scope.tournament.competitions.length).toBe(6);
             expect(scope.tournament.competitions[5].name).toBe('U11');
         });
 
         it('should add a new item when received on the socket', function() {
+            $httpBackend.expectGET('api/tournaments').respond([tournamentData]);
+            createController();
+            $httpBackend.flush();
             var newItem = {title: 'Socket News', body: 'Socket News Body', created: new Date('2015/5/19 12:26:32')};
             rootScope.$broadcast('socket:news',newItem);
             expect(scope.announcement).toEqualData(newItem);
@@ -78,35 +92,40 @@ describe ('Tournament Tests', function() {
                 stateParams = {name:'U8', section:'A'};
                 rootScope = $rootScope;
                 log = _$log_;
-                $controller('ResultsController', {$scope: scope, $stateParams: stateParams, Result: Result});
+                createController = function() {
+                    return $controller('ResultsController', {$scope: scope, $stateParams: stateParams, Result: Result});
+                };
             })
         );
 
         it('should setup a new result', function () {
+            $httpBackend.expectGET(qry).respond(u8GroupResults);
+            createController();
+            $httpBackend.flush();
             scope.createResult();
             expect(scope.newResult).toBeDefined();
             expect(scope.newResult.index).toBe(1000);
         });
 
         it('should save a new result in group 1', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond([newResultData]);
-            $httpBackend.whenPOST('/api/results').respond(newResultData);
+            $httpBackend.expectGET(qry).respond(u8GroupResults);
+            createController();
             $httpBackend.flush();
 
+            $httpBackend.expectPOST('api/results').respond(201, '');
             scope.newResult = newResultData;
             scope.saveResult(1);
+            $httpBackend.flush();
+
             var gresults = scope.competition.groups[0].results;
-            expect(gresults.length).toBe(1);
-            expect(gresults[0].homeTeam).toEqual('Foo');
+            expect(gresults.length).toBe(6);
+            expect(gresults[0].homeTeam).toEqual('Sheffield Wednesday');
             expect(scope.newResult).toEqual({});
         });
 
         it('should populate groups and results for the competition in scope', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond(u8GroupResults);
+            $httpBackend.whenGET(qry).respond(u8GroupResults);
+            createController();
             $httpBackend.flush();
             var grps = scope.competition.groups;
             expect(grps.length).toBe(4);
@@ -120,9 +139,8 @@ describe ('Tournament Tests', function() {
         });
 
         it('should update the results and tables when a new result is received on the socket', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond(u8GroupResults);
+            $httpBackend.whenGET(qry).respond(u8GroupResults);
+            createController();
             $httpBackend.flush();
 
             var grps = scope.competition.groups;
@@ -150,9 +168,8 @@ describe ('Tournament Tests', function() {
         });
 
         it('should log a warning when an invalid result arrives on the socket', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond(u8GroupResults);
+            $httpBackend.whenGET(qry).respond(u8GroupResults);
+            createController();
             $httpBackend.flush();
 
             var grps = scope.competition.groups;
@@ -171,9 +188,8 @@ describe ('Tournament Tests', function() {
         });
 
         it('should calculate the table down to alphanumeric as the differentiator', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond(u8GroupResults);
+            $httpBackend.whenGET(qry).respond(u8GroupResults);
+            createController();
             $httpBackend.flush();
 
             var grps = scope.competition.groups;
@@ -213,19 +229,22 @@ describe ('Tournament Tests', function() {
         });
 
         it('should POST the correct table order to the API when confirming table positions', function() {
-            $httpBackend
-                .whenGET(qry)
-                .respond(u8GroupResults);
-            $httpBackend.whenPOST('api/leaguetable/U8/A/1').respond();
+            $httpBackend.whenGET(qry).respond(u8GroupResults);
+            createController();
             $httpBackend.flush();
 
+            $httpBackend.expectPOST('api/leaguetables/U8/A/1').respond();
             scope.competition.currentGroup = 1;
             scope.confirmTablePositions();
+            $httpBackend.flush();
 
             // TODO: spyOn(Table, '$save'); // and expect correct POST body
         });
 
         it('should set a variable to use for highlighting a team\'s results', function() {
+            $httpBackend.whenGET(qry).respond(u8GroupResults);
+            createController();
+            $httpBackend.flush();
             scope.highlighted = '';
             scope.highlight('Foo');
             expect(scope.highlighted).toBe('Foo');
@@ -237,14 +256,12 @@ describe ('Tournament Tests', function() {
     });
 
     describe('ResultEditController', function () {
-        var scope, Result, state, stateParams;
+        var scope, Result, state, stateParams, resource;
 
         beforeEach(
             inject(function(_Result_, _$httpBackend_, $rootScope, $controller) {
                 Result = _Result_;
                 $httpBackend = _$httpBackend_;
-                $httpBackend.whenGET('api/results/dead012345beef')
-                    .respond(newResultData);
                 scope = $rootScope.$new();
                 scope.tournament = tournamentData;
                 state = {
@@ -254,11 +271,22 @@ describe ('Tournament Tests', function() {
                 };
                 spyOn(state, 'go').and.callThrough();
                 stateParams = {id:'dead012345beef'};
-                $controller('ResultEditController', {$scope: scope, $stateParams: stateParams, $state: state, Result: Result});
+
+                resource = 'api/results/dead012345beef';
+                createController = function() {
+                    return $controller('ResultEditController', {
+                        $scope: scope,
+                        $stateParams: stateParams,
+                        $state: state,
+                        Result: Result
+                    });
+                };
             })
         );
 
         it('should add or subtract goals from teams in a match', function() {
+            $httpBackend.expectGET(resource).respond(newResultData);
+            createController();
             $httpBackend.flush();
             expect(scope.result).toEqualData(newResultData);
 
@@ -286,6 +314,8 @@ describe ('Tournament Tests', function() {
         });
 
         it('should add or subtract penalties in knockout games', function() {
+            $httpBackend.expectGET(resource).respond(newResultData);
+            createController();
             $httpBackend.flush();
 
             scope.goalEntry = false;
@@ -304,23 +334,27 @@ describe ('Tournament Tests', function() {
         });
 
         it('should update an edited result', function() {
-            $httpBackend.whenPUT('api/results/dead012345beef')
-                    .respond();
+            $httpBackend.expectGET(resource).respond(newResultData);
+            createController();
             $httpBackend.flush();
 
+            $httpBackend.expectPUT('api/results/dead012345beef').respond(201, '');
             scope.result._id = 'dead012345beef';
             scope.updateResult(scope.result);
-            // TODO: expect(state.go).toHaveBeenCalledWith('resultsGroup', {name: 'U10', section: 'A', group: 1});
+            $httpBackend.flush();
+            expect(state.go).toHaveBeenCalledWith('resultsGroup', {name: 'U10', section: 'A', group: 1});
         });
 
         it('should delete a result', function() {
-            $httpBackend.whenDELETE('api/results/dead012345beef')
-                    .respond({});
+            $httpBackend.expectGET(resource).respond(newResultData);
+            createController();
             $httpBackend.flush();
 
+            $httpBackend.expectDELETE(resource).respond({});
             scope.result._id = 'dead012345beef';
             scope.deleteResult(scope.result);
-            // TODO: expect(state.go).toHaveBeenCalled();
+            $httpBackend.flush();
+            expect(state.go).toHaveBeenCalled();
         });
     });
 
@@ -336,7 +370,8 @@ describe ('Tournament Tests', function() {
                 $controller('NewsListController', {$scope: scope});
 
                 $httpBackend
-                    .whenGET('api/news').respond(newsItemData);
+                    .whenGET('api/news')
+                    .respond(newsItemData);
                 $httpBackend.flush();
             })
         );
@@ -355,6 +390,7 @@ describe ('Tournament Tests', function() {
     // ============================================================================================
 
     var tournamentData = {
+        _id: '123',
         name: 'Karma Tournament',
         description: 'Welcome to our Karma Tournament',
         current: true,
