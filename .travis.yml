@@ -13,6 +13,7 @@ addons:
 services:
   - mongodb
 before_script:
+  - mongo tournament-auto-tests scripts/testdb-seed.js
   - npm install
   - cd web
   - npm install -g bower grunt-cli
