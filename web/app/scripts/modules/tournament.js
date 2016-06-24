@@ -415,9 +415,7 @@
         })
 
         .controller('NewsListController', function (News, $scope) {
-            $scope.newsItems = News.query(function () {
-                $scope.latestNews = $scope.newsItems[$scope.newsItems.length - 1];
-            });
+            $scope.newsItems = News.query();
             $scope.searchBy = '';
         })
 

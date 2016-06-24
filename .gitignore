@@ -9,4 +9,4 @@ app/scripts/config.js
 *.swp
 .~lock*
 coverage
-
+*.log
