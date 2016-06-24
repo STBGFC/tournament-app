@@ -399,7 +399,6 @@ describe ('Tournament Tests', function() {
         );
 
         it('should attach a list of news items to the scope', function () {
-            expect(scope.latestNews).toEqualData(newsItemData[newsItemData.length-1]);
             expect(scope.newsItems[0].title).toEqual('News1');
             expect(scope.newsItems[0].body).toEqual('This is the body of the news.  Please take careful note of it :)');
         });
