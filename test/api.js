@@ -4,7 +4,11 @@ var assert = require('assert');
 
 describe('When testing the Tournament API', function() {
 
-    var latestBearerToken;
+    var latestBearerToken, server;
+
+    before(function() {
+        server = require('../server/app');
+    });
 
     var jwtDecoder = function (res) {
         latestBearerToken = res.body.token;
