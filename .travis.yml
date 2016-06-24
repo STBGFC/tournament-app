@@ -10,15 +10,15 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-      - mongodb-org-server
-      - mongodb
+services:
+  - mongodb
 before_script:
-  - 'npm install'
-  - 'cd web'
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
-  - 'npm install'
-  - 'cd ..'
+  - npm install
+  - cd web
+  - npm install -g bower grunt-cli
+  - bower install
+  - npm install
+  - cd ..
 script:
-  - 'npm test'
-  - 'cd web && grunt build karma'
+  - npm test
+  - cd web && grunt build karma
