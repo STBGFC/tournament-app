@@ -37,7 +37,7 @@
                 <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
                 <li ui-sref-active="active"><a ui-sref="newsList">News &amp; Social</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Information <span class="caret"></span></a>
                     <ul class="dropdown-menu" ng-controller="PageListController">
                         <li ng-repeat="page in pages">
@@ -49,7 +49,7 @@
             </ul>
 
             <ul ng-hide="loggedInUser()" class="nav navbar-nav navbar-right">
-                <li><a href="#" id="loginLink" ng-click="requestLogin()">Login</a></li>
+                <li><a id="loginLink" ng-click="requestLogin()">Login</a></li>
             </ul>
 
             <ul ng-show="loggedInUser()" class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a ng-show="userHasRole('editor')" ui-sref="admin.createnews">Admin</a></li>
-                        <li><a href="#" id="logoutLink" ng-click="logout()">Logout</a></li>
+                        <li><a id="logoutLink" ng-click="logout()">Logout</a></li>
                     </ul>
                 </li>
                 <li><img ng-cloak gravatar-src="'{{loggedInUser()}}'" gravatar-size="50" secure="true"></li>
