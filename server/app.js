@@ -26,19 +26,15 @@ else {
     console.log('Production config');
 }
 
-// mongoose setup
-mongoose.connect(mongoUri, function(err) {
-    if(err) {
-        console.log('mongo connection error', err);
-    } else {
-        console.log('mongo connection successful to ' + mongoUri);
-    }
+mongoose.connect(mongoUri);
 
+// CONNECTION EVENTS
+mongoose.connection.on('connected', function() {
+    console.log('Mongoose connected to ' + mongoUri);
     var acl = require('./api/acl')(app, mongoose.connection.db);
     var authCheck = require('./api/authentication')(app, acl.roleCheck);
     var tournamentApi = require('./api/tournament')(app, io, mongoose);
     app.use('/api', [authCheck, acl.middleware, tournamentApi]);
-
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {
@@ -46,7 +42,7 @@ mongoose.connect(mongoUri, function(err) {
         err.status = 404;
         next(err);
     });
-
+    
     // error handler
     app.use(function(err, req, res) {
         var e = (app.get('env') === 'development') ? err : {};
@@ -59,5 +55,36 @@ mongoose.connect(mongoUri, function(err) {
     });
 });
 
-module.exports = app;
+mongoose.connection.on('error', function(err) {
+    console.log('Mongoose connection error: ' + err);
+});
+mongoose.connection.on('disconnected', function() {
+    console.log('Mongoose disconnected');
+});
 
+var gracefulShutdown = function(msg, callback) {
+    mongoose.connection.close(function() {
+        console.log('Mongoose disconnected through ' + msg);
+        callback();
+    });
+};
+
+// nodemon restarts
+process.once('SIGUSR2', function() {
+    gracefulShutdown('nodemon restart', function() {
+        process.kill(process.pid, 'SIGUSR2');
+    });
+});
+// app termination
+process.on('SIGINT', function() {
+    gracefulShutdown('SIGINT app termination', function() {
+        process.exit(0);
+    });
+});
+process.on('SIGTERM', function() {
+    gracefulShutdown('SIGTERM app termination', function() {
+        process.exit(0);
+    });
+});
+
+module.exports = app;
