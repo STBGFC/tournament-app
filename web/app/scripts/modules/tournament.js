@@ -64,6 +64,8 @@
         })
 
         .controller('ResultsController', function (Result, Table, $scope, $state, $stateParams, $log) {
+
+            $scope.viewLoading = true;
             var _grp = $stateParams.group;
             if (_grp === '' || isNaN(_grp)) {
                 _grp = 1;
@@ -119,6 +121,7 @@
                     updateTable(competition.groups[j].results, competition.groups[j].table);
                 }
                 competition.results.sort(numericTagComparator);
+                $scope.viewLoading = false;
             });
 
             /*

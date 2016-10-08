@@ -3,7 +3,7 @@
 
     <h4 class="text-right"><span class="glyphicon glyphicon-fire"></span> <strong view-title>{{competition.name}}/{{competition.section}}</strong></h4>
 
-    <div class="panel panel-body">
+    <div class="panel panel-body" loading-spinner="viewLoading">
         <ul id="groupTabs" class="nav nav-tabs">
             <li ng-repeat="group in competition.groups" ng-class="{'active': $index == competition.currentGroup-1}">
                 <a show-tab="" href="#group{{$index + 1}}" ng-click="competition.currentGroup = $index+1" data-toggle="tab"><strong>{{$index + 1}}</strong></a>

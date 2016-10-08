@@ -6,6 +6,7 @@
             'stbgfc.tournament',
             'stbgfc.security',
             'viewtitle',
+            'loadingspinner',
             'ui.router',
             'ngAnimate'
         ])
