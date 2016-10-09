@@ -282,7 +282,7 @@ describe('When testing the Tournament API', function() {
         });
 
         it('can confirm league table positions', function(done) {
-            var table = {0: "Newcastle", 1: "Arsenal", 2: "Man. Utd.", 3: "Chelsea", 4: "Liverpool"};
+            var table = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E"};
             request
                 .post('/api/leaguetables/U11/A/2')
                 .set('Authorization', 'Bearer ' + latestBearerToken)
@@ -291,12 +291,15 @@ describe('When testing the Tournament API', function() {
                 .end(function(err, res) {
                     request
                         .get('/api/results?conditions=%7B%22competition.name%22:%22U11%22,%22competition.section%22:%22A%22%7D')
-                        .expect(function(res) { 
-                            assert.equal(res.body[21].homeTeam, table['3']);
-                            assert.equal(res.body[22].awayTeam, table['2']);
-                            assert.equal(res.body[23].homeTeam, table['1']);
-                            assert.equal(res.body[25].homeTeam, table['0']);
-                            console.log(res.body);
+                        .expect(function(res) {
+                            for (var i = 0; i < res.body.length; i++) {
+                                var r = res.body[i];
+                                if (r.homeTeamFrom == 'U11_A_G2_P1') { assert.equal(r.homeTeam, table['0']); }
+                                if (r.homeTeamFrom == 'U11_A_G2_P2') { assert.equal(r.homeTeam, table['1']); }
+                                if (r.homeTeamFrom == 'U11_A_G2_P3') { assert.equal(r.homeTeam, table['2']); }
+                                if (r.homeTeamFrom == 'U11_A_G2_P4') { assert.equal(r.homeTeam, table['3']); }
+                                if (r.homeTeamFrom == 'U11_A_G2_P5') { assert.equal(r.homeTeam, table['4']); }
+                            }
                         })
                         .expect(200, done);
                 });
