@@ -207,7 +207,7 @@ describe('When testing the Tournament API', function() {
                 .get('/api/results?conditions=%7B%22competition.name%22:%22U11%22,%22competition.section%22:%22A%22%7D')
                 .end(function(err, res) { 
                     if (err) return done(err);
-                    result = res.body[11]; 
+                    result = res.body[5];
                     result.homeGoals = 1;
                     result.awayGoals = 3;
 
@@ -296,6 +296,7 @@ describe('When testing the Tournament API', function() {
                             assert.equal(res.body[22].awayTeam, table['2']);
                             assert.equal(res.body[23].homeTeam, table['1']);
                             assert.equal(res.body[25].homeTeam, table['0']);
+                            console.log(res.body);
                         })
                         .expect(200, done);
                 });
