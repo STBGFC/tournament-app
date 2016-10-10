@@ -35,10 +35,13 @@ mongoose.connect(mongoUri);
 
 // CONNECTION EVENTS
 mongoose.connection.on('connected', function() {
+    mongoose.Promise = global.Promise;
     logger.debug('Mongoose connected to ' + mongoUri);
+
     var acl = require('./api/acl')(app, mongoose.connection.db);
     var authCheck = require('./api/authentication')(app, acl.roleCheck);
     var tournamentApi = require('./api/tournament')(app, io, mongoose);
+
     app.use('/api', [authCheck, acl.middleware, tournamentApi]);
 
     // catch 404 and forward to error handler
