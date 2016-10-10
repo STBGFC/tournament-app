@@ -47,11 +47,10 @@ you to specify the mongo URL and the node environment (i.e. `dev` or `prod`)
 
 ### Testing
 
-`npm test` will run the mocha test suite for the API using a backend invoked via
-the [supertest](https://www.npmjs.org/package/supertest) framework.  If you 
-know how to separate the outputs in the console, let me know!  The `npm test` 
-command will also cause the `tournament-auto-tests` database to be seeded with 
-the initial test data used by API and web e2e tests.
+`npm test` will run the mocha test suite for the API using a backend invoked
+via the [supertest](https://www.npmjs.org/package/supertest) framework.  The
+`npm test` command will also cause the `tournament-auto-tests` database to be
+seeded with the initial test data used by API and web e2e tests.
 
 
 ## Web App

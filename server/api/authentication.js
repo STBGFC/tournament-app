@@ -1,6 +1,9 @@
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var User = require('../models/User');
+var log4js = require('log4js');
+log4js.configure('server/log4js.conf.json');
+var logger = log4js.getLogger('app');
 
 module.exports = function(app, roleCheck) {
 
@@ -17,7 +20,7 @@ module.exports = function(app, roleCheck) {
     });
 
     app.post('/authenticate', function(req, res, next) {
-        console.log('Authn attempt for: ' + JSON.stringify(req.body.username));
+        logger.debug('Authn attempt for: ' + JSON.stringify(req.body.username));
 
         User.getAuthenticated(req.body.username, req.body.password, function(err, user, reason) {
             if (err) {
@@ -27,11 +30,11 @@ module.exports = function(app, roleCheck) {
             else if (user) {
                 roleCheck(user.username, function(err, roles) {
                     if (err) {
-                        console.log(err);
+                        logger.error(err);
                         roles = '';
                     }
 
-                    console.log('  ..success.  User has roles: ' + roles);
+                    logger.debug('  ..success.  User has roles: ' + roles);
 
                     var token = jwt.sign({ userId: user.username, userRoles: roles }, jwtSecret, {expiresIn: jwtExpiresAfter});
                     res.json({token: token});
@@ -42,17 +45,17 @@ module.exports = function(app, roleCheck) {
                 var reasons = User.failedLogin;
                 switch (reason) {
                     case reasons.NOT_FOUND:
-                        console.log('  ..user not found');
+                        logger.debug('  ..user not found');
                         res.status(401).send('Unknown username or password');
                         break;
                     case reasons.PASSWORD_INCORRECT:
-                        console.log('  ..incorrect password');
+                        logger.debug('  ..incorrect password');
                         res.status(401).send('Unknown username or password');
                         break;
                     case reasons.MAX_ATTEMPTS:
                         // send email or otherwise notify user that account is
                         // temporarily locked
-                        console.log('  ..max attempts exceeded, account locked');
+                        logger.debug('  ..max attempts exceeded, account locked');
                         break;
                 }
             }
@@ -64,7 +67,7 @@ module.exports = function(app, roleCheck) {
         var newUser = new User({username: req.body.username, password: req.body.password});
         newUser.save(function(err) {
             if (err) {
-                console.log(err);
+                logger.error(err);
                 res.sendStatus(500);
             }
             else {

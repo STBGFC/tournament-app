@@ -5,8 +5,8 @@
   "scripts": {
     "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
     "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development node server/app.js",
-    "pretest":"mongo tournament-auto-tests scripts/testdb-seed.js",
-    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development mocha -s 150ms ./test/api.js"
+    "pretest": "mongo tournament-auto-tests scripts/testdb-seed.js",
+    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test mocha -s 150ms ./test/api.js"
   },
   "dependencies": {
     "acl": "^0.4.9",
@@ -19,6 +19,7 @@
     "express-jwt": "^5.0.0",
     "express.io": "^1.1.13",
     "jsonwebtoken": "^7.0.0",
+    "log4js": "^0.6.38",
     "mongodb": "~2.2.5",
     "mongoose": "~4.6.0",
     "morgan": "~1.7.0",

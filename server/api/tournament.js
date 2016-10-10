@@ -9,6 +9,9 @@ var Feedback = require('../models/Feedback.js');
 // dummy model for posting confirmation of a final league table position
 var Leaguetable = require('mongoose').model('Leaguetable', new require('mongoose').Schema ({}));
 
+var log4js = require('log4js');
+log4js.configure('server/log4js.conf.json');
+var logger = log4js.getLogger('app');
 
 /*
  * ==========================================================================
@@ -34,7 +37,7 @@ module.exports = function(app, io, mongoose) {
      */
     baucis.rest(Leaguetable).post('/:competition/:section/:group', function(req, res, next) {
         var prefix = req.params.competition + '_' + req.params.section + '_G' + req.params.group + '_P';
-        console.log('Resolving stage 2 placeholders for ' + prefix + ' and team names ' + JSON.stringify(req.body));
+        logger.debug('Resolving stage 2 placeholders for ' + prefix + ' and team names ' + JSON.stringify(req.body));
 
         for (var k in req.body) {
             if (req.body.hasOwnProperty(k) && !isNaN(k)) {
@@ -49,10 +52,10 @@ module.exports = function(app, io, mongoose) {
     var updateStageTwo = function(source, target) {
         var cb = function(err, count) {
             if (err) {
-                console.log(err);
+                logger.error(err);
             }
         };
-        console.log('Updating ' + source + ' to ' + target);
+        logger.debug('Updating ' + source + ' to ' + target);
         Result.update({homeTeamFrom: source}, {$set: {homeTeam: target}}, {multi: true}, cb);
         Result.update({awayTeamFrom: source}, {$set: {awayTeam: target}}, {multi: true}, cb);
         Result.find(
@@ -60,7 +63,7 @@ module.exports = function(app, io, mongoose) {
             function(err, docs) {
                 for (var i = 0; i < docs.length; i++) {
                     io.sockets.emit('result', docs[i]);
-                    console.log('Emiting updated stage2 result ' + JSON.stringify(docs[i]));
+                    logger.debug('Emiting updated stage2 result ' + JSON.stringify(docs[i]));
                 }
             }
         );
@@ -76,7 +79,7 @@ module.exports = function(app, io, mongoose) {
 
         // search and replace stage2 tag
         if ('stage2Tag' in result && result.stage2Tag !== undefined) {
-            console.log('Searching for stage 2 target ' + result.stage2Tag);
+            logger.debug('Searching for stage 2 target ' + result.stage2Tag);
             var winner = result.homeTeam;
             if (result.awayPens > result.homePens || result.awayGoals > result.homeGoals) {
                 winner = result.awayTeam;
