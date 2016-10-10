@@ -9,9 +9,7 @@ var Feedback = require('../models/Feedback.js');
 // dummy model for posting confirmation of a final league table position
 var Leaguetable = require('mongoose').model('Leaguetable', new require('mongoose').Schema ({}));
 
-var log4js = require('log4js');
-log4js.configure('server/log4js.conf.json');
-var logger = log4js.getLogger('app');
+var logger = require('log4js').getLogger('app');
 
 /*
  * ==========================================================================

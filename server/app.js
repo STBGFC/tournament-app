@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var log4js = require('log4js');
+var logger = require('log4js').getLogger('app');
 var morgan = require('morgan');
 var app = express();
 var io = require('socket.io').listen(app.listen(process.env.NODE_PORT||3000, '0.0.0.0'));
@@ -12,14 +12,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.disable('x-powered-by');
 
-log4js.configure('server/log4js.conf.json');
-var logger = log4js.getLogger('app');
 
 // basic config
 if (app.get('env') === 'development') {
     logger.setLevel('DEBUG');
     logger.info('Dev config');
-    app.use(morgan('dev'));
+    app.use(morgan('dev', {stream: {write: function(str) { logger.debug(str) }}}));
     app.use(express.static(path.join(__dirname, '../web/app')));
     app.use('/bower_components', express.static(path.join(__dirname, '../web/bower_components')));
 }
