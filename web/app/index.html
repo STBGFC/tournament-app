@@ -49,12 +49,12 @@
             </ul>
 
             <ul ng-hide="loggedInUser()" class="nav navbar-nav navbar-right">
-                <li><a id="loginLink" ng-click="requestLogin()">Login</a></li>
+                <li><a id="loginLink" ng-click="requestLogin()" role="button">Login</a></li>
             </ul>
 
             <ul ng-show="loggedInUser()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a ng-cloak class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#" id="userMenu">
+                    <a ng-cloak class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="userMenu">
                         {{loggedInUser()}} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
