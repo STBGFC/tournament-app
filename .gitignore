@@ -10,3 +10,4 @@ app/scripts/config.js
 .~lock*
 coverage
 *.log
+.env
