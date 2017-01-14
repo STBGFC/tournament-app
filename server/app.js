@@ -27,6 +27,7 @@ else if (app.get('env') === 'test') {
 }
 else {
     logger.setLevel('WARN');
+    app.use(express.static(path.join(__dirname, '../web/dist')));
 }
 
 mongoose.connect(mongoUri);
