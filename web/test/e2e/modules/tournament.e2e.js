@@ -220,7 +220,6 @@ describe('In the tournament app,', function() {
             var subHomeGoalButton = element(by.id('subHomeGoal'));
             var addAwayGoalButton = element(by.id('addAwayGoal'));
             var subAwayGoalButton = element(by.id('subAwayGoal'));
-            var deleteResultButton = element(by.partialButtonText('DELETE RESULT'));
 
             beforeEach(function() {
                 loginAndSucceed(email, pwd);
