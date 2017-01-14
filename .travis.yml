@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "4"
   - "6"
+  - "7"
 env:
   - CXX=g++-4.8
 addons:
@@ -14,12 +14,8 @@ services:
   - mongodb
 before_script:
   - mongo tournament-auto-tests scripts/testdb-seed.js
-  - npm install
-  - cd web
   - npm install -g bower grunt-cli
-  - bower install
   - npm install
-  - cd ..
 script:
   - npm test
-  - cd web && grunt build karma
+  - cd web && grunt karma
