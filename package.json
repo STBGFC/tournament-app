@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "cd web; npm install; bower install; grunt clean build", 
     "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
     "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development node server/app.js",
     "pretest": "mongo tournament-auto-tests scripts/testdb-seed.js",
