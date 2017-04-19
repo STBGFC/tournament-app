@@ -2,7 +2,7 @@
   "name": "tournament-app",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.5.5",
+    "angular": "~1.5.11",
     "bootstrap": "^3.2.0",
     "angular-resource": "~1.5.5",
     "angular-cookies": "~1.5.5",
@@ -16,7 +16,8 @@
     "angular-motion": "~0.4.4",
     "angular-gravatar": "~0.4.2",
     "angular-markdown-directive": "~0.3.1",
-    "angular-jwt": "^0.0.9"
+    "angular-jwt": "^0.0.9",
+    "angular-sanitize": "~1.5.11"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.5",
