@@ -14,7 +14,6 @@ services:
   - mongodb
 before_script:
   - mongo tournament-auto-tests scripts/testdb-seed.js
-  - npm install -g bower grunt-cli
   - npm install
 script:
   - npm test
