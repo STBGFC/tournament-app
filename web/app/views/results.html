@@ -52,16 +52,24 @@
                         </section>
                         <form class="form-horizontal" ng-show="newResult.competition">
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label">Group</label>
-                                <div class="col-sm-2">
+                                <label class="col-sm-1 control-label">Group</label>
+                                <div class="col-sm-1">
                                     <span>{{competition.currentGroup}}</span>
                                 </div>
-                                <label class="col-sm-2 control-label" for="tag">Tag</label>
+                                <label class="col-sm-1 control-label">Day</label>
+                                <div class="col-sm-1">
+                                    <input id="tag" type="text" class="form-control" ng-model="newResult.day" placeholder="1">
+                                </div>
+                                <label class="col-sm-1 control-label">Time</label>
+                                <div class="col-sm-2">
+                                    <input id="tag" type="text" class="form-control" ng-model="newResult.dateTime" placeholder="">
+                                </div>
+                                <label class="col-sm-1 control-label" for="tag">Tag</label>
                                 <div class="col-sm-2">
                                     <input id="tag" type="text" class="form-control" ng-model="newResult.tag" placeholder="1">
                                 </div>
-                                <label class="col-sm-2 control-label" for="pitch">Pitch</label>
-                                <div class="col-sm-2">
+                                <label class="col-sm-1 control-label" for="pitch">Pitch</label>
+                                <div class="col-sm-1">
                                     <input id="pitch" type="text" class="form-control" ng-model="newResult.pitch" placeholder="5">
                                 </div>
                             </div>

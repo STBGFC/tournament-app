@@ -58,7 +58,12 @@ a.navbar-brand img {
     max-height: 46px;
 }
 
-th.points { background-color: #333; }
+th.points {
+    background-color: #333;
+}
+td.info-col {
+    width: 15px;
+}
 
 .videprinterHolder {
     font-weight: bold;
@@ -147,11 +152,14 @@ button.btn-goals {
 }
 
 @media print {
+    .no-print {
+        display: none;
+    }
     .table {
         page-break-after: always;
         page-break-inside: avoid;
     }
     body {
-        padding-top: 10px;  /* from 80 */
+        padding-top: 0px;  /* from 80 */
     }
 }

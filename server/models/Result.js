@@ -7,7 +7,8 @@ var ResultSchema = new mongoose.Schema({
         group: { type: Number, min: 1 }
     },
     tag: { type: String, required: true },
-    index: { type: Number, min: 1, required: true },
+    day: { type: Number, required: true },
+    dateTime: { type: Number, required: true },
     pitch: { type: String },
     homeTeam: { type: String, required: true },
     awayTeam: { type: String, required: true },

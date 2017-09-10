@@ -9,6 +9,7 @@ describe('In the tournament app,', function() {
     var logoutLink = element(by.id('logoutLink'));
     var pageAdminLink = element(by.partialLinkText('pages'));
     var feedbackAdminLink = element(by.partialLinkText('feedback'));
+    var scorecardAdminLink = element(by.partialLinkText('score cards'));
     var announcementsAdminLink = element(by.partialLinkText('announcement'));
     var competitionAdminLink = element(by.partialLinkText('competition'));
     var confirmTablePositionsButton = element.all(by.partialButtonText('CONFIRM TABLE POSITIONS')).first();
@@ -97,7 +98,7 @@ describe('In the tournament app,', function() {
             // cannot get it to see the updates directly
             browser.get(homeUrl);
             clickToCompetition('U11', 'A');
-            expect(element.all(by.repeater('result in results').row(rowNum)).getText()).toContain('PO1 1 Chelsea 5th Group 2');
+            expect(element.all(by.repeater('result in results').row(rowNum)).getText()).toContain('PO1 11:15 1 Chelsea 5th Group 2');
         });
     };
 
@@ -132,6 +133,8 @@ describe('In the tournament app,', function() {
     var addGroupGame = function(tag) {
         addResultButton.click();
         element.all(by.model('newResult.tag')).first().sendKeys(tag);
+        element.all(by.model('newResult.day')).first().sendKeys('1');
+        element.all(by.model('newResult.dateTime')).first().sendKeys('44100000');
         element.all(by.model('newResult.pitch')).first().sendKeys('5');
         element.all(by.model('newResult.homeTeam')).first().sendKeys('Home');
         element.all(by.model('newResult.awayTeam')).first().sendKeys('Away');
@@ -256,7 +259,7 @@ describe('In the tournament app,', function() {
                 expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
                 expect(firstResult.getText()).toContain('Arsenal 2 1 Liverpool');
                 firstResult.$('a').click();
-                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 1 | Match 1 | Pitch 1');
+                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 1 | Time 08:30 | Match 1 | Pitch 1');
                 expect(homeTeamInput.isDisplayed()).toBeFalsy();
                 expect(awayTeamInput.isDisplayed()).toBeFalsy();
                 expect(score.getText()).toEqual('2 - 1');
@@ -274,7 +277,7 @@ describe('In the tournament app,', function() {
                 element(by.linkText('2')).click();
                 var lastGame = element.all(by.repeater('result in results').row(13));
                 lastGame.first().$('a').click();
-                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 2 | Match 4 | Pitch 2');
+                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 2 | Time 09:15 | Match 4 | Pitch 2');
                 subHomeGoalButton.click();
                 addAwayGoalButton.click();
                 saveResultButton.click();
@@ -345,7 +348,7 @@ describe('In the tournament app,', function() {
             element.all(by.model('result.pitch')).first().sendKeys('2');
             saveResultButton.click();
             clickToCompetition('U11', 'A');
-            expect(firstResult.getText()).toContain('1 12 Arsenal');
+            expect(firstResult.getText()).toContain('1 08:30 12 Arsenal');
         });
 
         it('should be allowed to view and filter feedback', function () {
@@ -360,7 +363,7 @@ describe('In the tournament app,', function() {
             clickToCompetition('U11', 'A');
             addGroupGame(11);
             expect(element.all(by.repeater('result in results')).count()).toBe(30); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('11 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('11 12:15 5 Home Away');
         });
 
     });
@@ -414,7 +417,7 @@ describe('In the tournament app,', function() {
             clickToCompetition('U11', 'A');
             addGroupGame(12);
             expect(element.all(by.repeater('result in results')).count()).toBe(31); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('12 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('11 12:15 5 Home Away');
         });
 
         it('should be allowed to reset a result', function () {
@@ -427,13 +430,13 @@ describe('In the tournament app,', function() {
                 clickToCompetition('U11', 'A');
                 var newFirstResult = element.all(by.repeater('result in results')).first();
                 var newBottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
-                expect(newFirstResult.getText()).toContain('1 12 Arsenal Liverpool');
+                expect(newFirstResult.getText()).toContain('1 08:30 12 Arsenal Liverpool');
             });
         });
 
         it('should be allowed to delete a result', function () {
             clickToCompetition('U11', 'A');
-            expect(firstResult.getText()).toContain('1 12 Arsenal Liverpool');
+            expect(firstResult.getText()).toContain('1 08:30 12 Arsenal Liverpool');
             firstResult.$('a').click();
             deleteResultButton.click().then(function() {
                 // cannot get it to see the updates directly
@@ -453,6 +456,14 @@ describe('In the tournament app,', function() {
             expect(items.count()).toBe(2);
             element.all(by.partialLinkText('delete')).first().click();
             expect(items.count()).toBe(1);
+        });
+
+        it('can select score card views and change the day selector', function () {
+            clickToAdmin(email);
+            scorecardAdminLink.click();
+            expect(element.all(by.repeater('r in results')).count()).toBe(3);
+            element(by.partialLinkText('2')).click();
+            expect(element.all(by.repeater('r in results')).count()).toBe(4);
         });
 
     });

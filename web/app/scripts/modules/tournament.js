@@ -394,6 +394,8 @@
                     awayTeam: res.awayTeam,
                     index: res.index,
                     tag: res.tag,
+                    day: res.day,
+                    dateTime: res.dateTime,
                     pitch: res.pitch
                 };
                 res.$delete(function() {
@@ -499,7 +501,10 @@
         })
 
         .controller('ScoreCardController', function(Result, $scope, $window) {
-            var results = Result.query(function() {
+            var results = Result.query({
+                conditions:'{"homeGoals":null}'
+            }, function() {
+                $scope.dayToView = 1;
                 $scope.results = results;
                 $scope.searchBy = results[0];
             });

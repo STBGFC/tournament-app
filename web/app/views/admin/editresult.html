@@ -3,24 +3,27 @@
     <div class="panel panel-body">
 
         <div class="text-center">
-        <form id="matchlabel" class="form-inline">
-            <p>
-                <span class="text-muted">Age</span>
-                <strong>{{result.competition.name}}</strong> |
-                <span class="text-muted">Section</span>
-                <strong>{{result.competition.section}}</strong> |
-                <span ng-show="result.competition.group">
-                    <span class="text-muted">Group</span>
-                    <strong>{{result.competition.group}}</strong> |
-                </span>
-                <span class="text-muted">Match</span>
-                <strong ng-hide="userHasRole('editor')">{{result.tag}}</strong>
-                <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.tag"> |
-                <span class="text-muted">Pitch</span>
-                <strong ng-hide="userHasRole('editor')">{{result.pitch}}</strong>
-                <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.pitch">
-            </p>
-        </form>
+            <form id="matchlabel" class="form-inline">
+                <p>
+                    <span class="text-muted">Age</span>
+                    <strong>{{result.competition.name}}</strong> |
+                    <span class="text-muted">Section</span>
+                    <strong>{{result.competition.section}}</strong> |
+                    <span ng-show="result.competition.group">
+                        <span class="text-muted">Group</span>
+                        <strong>{{result.competition.group}}</strong> |
+                    </span>
+                    <span class="text-muted">Time</span>
+                    <strong ng-hide="userHasRole('editor')">{{result.dateTime | date:'HH:mm'}}</strong>
+                    <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.dateTime"> |
+                    <span class="text-muted">Match</span>
+                    <strong ng-hide="userHasRole('editor')">{{result.tag}}</strong>
+                    <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.tag"> |
+                    <span class="text-muted">Pitch</span>
+                    <strong ng-hide="userHasRole('editor')">{{result.pitch}}</strong>
+                    <input ng-show="userHasRole('editor')" class="borderless input-sm inline-block" ng-model="result.pitch">
+                </p>
+            </form>
         </div>
 
         <div class="row">

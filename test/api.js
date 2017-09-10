@@ -35,6 +35,8 @@ describe('When testing the Tournament API', function() {
         },
         pitch: '11',
         tag: 'TST',
+        day: 1,
+        dateTime: 45100000,
         index: 50
     };
 
@@ -276,7 +278,7 @@ describe('When testing the Tournament API', function() {
                 .expect(function(res) {
                     assert.equal(res.body.tag, newResult.tag);
                     assert.equal(res.body.pitch, newResult.pitch);
-                    assert.equal(res.body.index, newResult.index);
+                    assert.equal(res.body.dateTime, newResult.dateTime);
                 })
                 .expect(201, done)
         });
