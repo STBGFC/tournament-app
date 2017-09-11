@@ -108,10 +108,6 @@ describe('When testing the Tournament API', function() {
             checkCreate('/api/tournaments', {}, 401, done);
         });
 
-        it('can read tournament data', function(done) {
-            checkRead('/api/tournaments', 200, done);
-        });
-
         it('cannot update tournament data', function(done) {
             checkUpdate('/api/tournaments', {}, 401, done);
         });
@@ -122,6 +118,10 @@ describe('When testing the Tournament API', function() {
 
         it('cannot create results', function(done) {
             checkCreate('/api/results', newResult, 401, done);
+        });
+
+        it('can read tournament data', function(done) {
+            checkRead('/api/tournaments', 200, done);
         });
 
         it('can read results', function(done) {
