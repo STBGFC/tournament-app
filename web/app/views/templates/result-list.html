@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="result in results | orderBy: 'pitch' | orderBy: 'dateTime'">
+        <tr ng-repeat="result in results | orderBy: pitchNumber | orderBy: 'dateTime'">
             <td class="text-center text-muted info-col">{{result.tag}}</td>
             <td class="text-center text-muted info-col">{{result.dateTime | date:'HH:mm' : '+0100'}}</td>
             <td class="text-center text-muted info-col">{{result.pitch}}</td>

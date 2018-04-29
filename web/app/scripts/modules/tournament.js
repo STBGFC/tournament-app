@@ -222,7 +222,9 @@
                 if (b.versus.length > 0) {
                     var c = 0;
                     for (var g = 0; g < a.versus.length; g++) {
-                        c += (b.versus[g].name === a.name ? b.versus[g].res : 0);
+                        if (b.versus[g] !== undefined) {
+                            c += (b.versus[g].name === a.name ? b.versus[g].res : 0);
+                        }
                     }
                     if (c !== 0) {
                         return c;
@@ -344,6 +346,15 @@
                     $scope.highlighted = '';
                 }
             };
+
+            $scope.pitchNumber = function(result) {
+                // return a numeric pitch number if possible
+                if (isNaN(result.pitch)) {
+                    return result.pitch;
+                } else {
+                    return parseInt(result.pitch);
+                }
+            }
         })
 
         .controller('ResultEditController', function($scope, $state, $stateParams, Result, $log) {
