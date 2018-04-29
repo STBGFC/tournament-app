@@ -7,28 +7,27 @@
     "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
     "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development node server/app.js",
     "pretest": "mongo tournament-auto-tests scripts/testdb-seed.js",
-    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test mocha -s 150ms ./test/api.js"
+    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test mocha --exit -s 150ms ./test/api.js"
   },
   "dependencies": {
-    "acl": "^0.4.10",
-    "baucis": "^1.1.1",
+    "acl": "^0.4.11",
+    "baucis": "^1.6.8",
     "bcrypt": "^1.0.3",
-    "body-parser": "^1.15.1",
+    "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "debug": "^2.6.0",
-    "express": "~4.15.2",
-    "express-jwt": "^5.0.0",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "express.io": "^1.1.13",
-    "jsonwebtoken": "^7.2.1",
-    "log4js": "^1.1.0",
-    "mongodb": "~2.2.19",
+    "jsonwebtoken": "^8.2.1",
+    "log4js": "^2.5.3",
     "mongoose": "4.7.6",
-    "morgan": "^1.7.0",
-    "serve-favicon": "^2.3.2",
+    "morgan": "^1.9.0",
+    "serve-favicon": "^2.5.0",
     "socket.io": "~1.7.4"
   },
   "devDependencies": {
-    "mocha": "^3.2.0",
+    "mocha": "^5.1.1",
     "supertest": "^3.0.0"
   },
   "engines": {

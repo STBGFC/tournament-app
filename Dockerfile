@@ -1,4 +1,4 @@
-FROM node:4-onbuild
+FROM node:8-onbuild
 MAINTAINER STBGFC <admin@stbgfc.co.uk>
 
 RUN apt-get update && apt-get upgrade -y

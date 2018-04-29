@@ -15,18 +15,18 @@ app.disable('x-powered-by');
 
 // basic config
 if (app.get('env') === 'development') {
-    logger.setLevel('DEBUG');
+    logger.level = 'DEBUG';
     logger.info('Dev config');
     app.use(morgan('dev', {stream: {write: function(str) { logger.debug(str) }}}));
     app.use(express.static(path.join(__dirname, '../web/app')));
     app.use('/bower_components', express.static(path.join(__dirname, '../web/bower_components')));
 }
 else if (app.get('env') === 'test') {
-    logger.setLevel('INFO');
+    logger.level ='INFO';
     app.use(express.static(path.join(__dirname, '../web/dist')));
 }
 else {
-    logger.setLevel('WARN');
+    logger.level = 'WARN';
     app.use(express.static(path.join(__dirname, '../web/dist')));
 }
 

@@ -98,7 +98,7 @@ describe('In the tournament app,', function() {
             // cannot get it to see the updates directly
             browser.get(homeUrl);
             clickToCompetition('U11', 'A');
-            expect(element.all(by.repeater('result in results').row(rowNum)).getText()).toContain('PO1 11:15 1 Chelsea 5th Group 2');
+            expect(element.all(by.repeater('result in results').row(rowNum)).getText()).toContain('PO1 12:15 1 Chelsea 5th Group 2');
         });
     };
 
@@ -259,7 +259,7 @@ describe('In the tournament app,', function() {
                 expect(bottomOfGroup.getText()).toContain('Liverpool 4 1 0 3 4 8 3');
                 expect(firstResult.getText()).toContain('Arsenal 2 1 Liverpool');
                 firstResult.$('a').click();
-                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 1 | Time 08:30 | Match 1 | Pitch 1');
+                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 1 | Time 09:30 | Match 1 | Pitch 1');
                 expect(homeTeamInput.isDisplayed()).toBeFalsy();
                 expect(awayTeamInput.isDisplayed()).toBeFalsy();
                 expect(score.getText()).toEqual('2 - 1');
@@ -277,7 +277,7 @@ describe('In the tournament app,', function() {
                 element(by.linkText('2')).click();
                 var lastGame = element.all(by.repeater('result in results').row(13));
                 lastGame.first().$('a').click();
-                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 2 | Time 09:15 | Match 4 | Pitch 2');
+                expect(element(by.id('matchlabel')).getText()).toEqual('Age U11 | Section A | Group 2 | Time 10:15 | Match 4 | Pitch 2');
                 subHomeGoalButton.click();
                 addAwayGoalButton.click();
                 saveResultButton.click();
@@ -348,7 +348,7 @@ describe('In the tournament app,', function() {
             element.all(by.model('result.pitch')).first().sendKeys('2');
             saveResultButton.click();
             clickToCompetition('U11', 'A');
-            expect(firstResult.getText()).toContain('1 08:30 12 Arsenal');
+            expect(firstResult.getText()).toContain('1 09:30 12 Arsenal');
         });
 
         it('should be allowed to view and filter feedback', function () {
@@ -363,7 +363,7 @@ describe('In the tournament app,', function() {
             clickToCompetition('U11', 'A');
             addGroupGame(11);
             expect(element.all(by.repeater('result in results')).count()).toBe(30); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('11 12:15 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(10)).getText()).toContain('11 13:15 5 Home Away');
         });
 
     });
@@ -417,7 +417,7 @@ describe('In the tournament app,', function() {
             clickToCompetition('U11', 'A');
             addGroupGame(12);
             expect(element.all(by.repeater('result in results')).count()).toBe(31); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('11 12:15 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('11 13:15 5 Home Away');
         });
 
         it('should be allowed to reset a result', function () {
@@ -430,13 +430,13 @@ describe('In the tournament app,', function() {
                 clickToCompetition('U11', 'A');
                 var newFirstResult = element.all(by.repeater('result in results')).first();
                 var newBottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
-                expect(newFirstResult.getText()).toContain('1 08:30 12 Arsenal Liverpool');
+                expect(newFirstResult.getText()).toContain('1 09:30 12 Arsenal Liverpool');
             });
         });
 
         it('should be allowed to delete a result', function () {
             clickToCompetition('U11', 'A');
-            expect(firstResult.getText()).toContain('1 08:30 12 Arsenal Liverpool');
+            expect(firstResult.getText()).toContain('1 09:30 12 Arsenal Liverpool');
             firstResult.$('a').click();
             deleteResultButton.click().then(function() {
                 // cannot get it to see the updates directly

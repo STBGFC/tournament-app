@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 var request = require('supertest')('http://localhost:3000');
 var assert = require('assert');
+var mongoose = require('mongoose');
 
 describe('When testing the Tournament API', function() {
 
@@ -8,6 +9,13 @@ describe('When testing the Tournament API', function() {
 
     before(function() {
         server = require('../server/app');
+    });
+
+    after(function(done) {
+        mongoose.models = {};
+        mongoose.modelSchemas = {};
+        mongoose.connection.close();
+        done();
     });
 
     var jwtDecoder = function (res) {
