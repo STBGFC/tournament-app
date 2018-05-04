@@ -7,7 +7,7 @@
     "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
     "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development node server/app.js",
     "pretest": "mongo tournament-auto-tests scripts/testdb-seed.js",
-    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test mocha --exit -s 150ms ./test/api.js"
+    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test PORT=3001 mocha --exit -s 150ms ./test/api.js"
   },
   "dependencies": {
     "acl": "^0.4.11",

@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var request = require('supertest')('http://localhost:3000');
+var request = require('supertest')('http://localhost:' + process.env.PORT||3000);
 var assert = require('assert');
 var mongoose = require('mongoose');
 
