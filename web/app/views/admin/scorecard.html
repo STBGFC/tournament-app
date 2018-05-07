@@ -8,7 +8,7 @@
     <button type="button" class="btn btn-default" onclick="window.print()">Print</button>
 </h2>
 
-<div ng-repeat="r in results | filter: {day: dayToView} : true | unique: 'pitch' | orderBy: 'pitch'">
+<div ng-repeat="r in results | unique: 'pitch' | filter: {day: dayToView}: true | orderBy: 'pitch'">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="result in results | filter: {homeGoals: '!', pitch: r.pitch} : true | orderBy: 'tag' | orderBy: 'dateTime'">
+            <tr ng-repeat="result in results | filter: {day: dayToView, homeGoals: '!', pitch: r.pitch} : true | orderBy: 'tag' | orderBy: 'dateTime'">
                 <td class="text-right">
                     {{result.competition.name}} / {{result.competition.section}}
                     <span ng-show="{{result.competition.group}}">/ G{{result.competition.group}}</span>
