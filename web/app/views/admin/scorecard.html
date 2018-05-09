@@ -8,7 +8,7 @@
     <button type="button" class="btn btn-default" onclick="window.print()">Print</button>
 </h2>
 
-<div ng-repeat="r in results | unique: 'pitch' | filter: {day: dayToView}: true | orderBy: 'pitch'">
+<div ng-repeat="r in results | filter: {day: dayToView}: true | unique: 'pitch' | orderBy: 'pitch'">
     <table class="table table-bordered">
         <thead>
             <tr>
