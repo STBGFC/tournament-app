@@ -2,7 +2,7 @@
 
 describe('In the tournament app,', function() {
 
-    var homeUrl = 'http://localhost:3000/';
+    var homeUrl = 'http://localhost:' + process.env.PORT||3000;
     var loginDlg = element(by.id('login'));
     var loginLink = element(by.id('loginLink'));
     var userMenu = element(by.id('userMenu'));
