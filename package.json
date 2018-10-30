@@ -1,35 +1,94 @@
 {
   "name": "tournament-app",
-  "version": "0.0.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "cd web; npm install -g bower grunt-cli; npm install; bower install; grunt clean build",
-    "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
-    "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development node server/app.js",
-    "pretest": "mongo tournament-auto-tests scripts/testdb-seed.js",
-    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test PORT=3001 mocha --exit -s 150ms ./test/api.js"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "pretest:server": "mongo tournament-auto-tests server/test/testdb-seed.js",
+    "start:server": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development PORT=3000 node server/app/app.js",
+    "test:server": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test PORT=3001 mocha --exit -s 150ms server/test/api.js",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit",
+    "watch:unit": "vue-cli-service test:unit --watch"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.7",
+    "@fortawesome/free-solid-svg-icons": "^5.4.2",
+    "@fortawesome/vue-fontawesome": "^0.1.1",
     "acl": "^0.4.11",
     "baucis": "^1.6.8",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
+    "bootstrap-vue": "^2.0.0-rc.11",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
+    "i": "^0.3.6",
     "jsonwebtoken": "^8.5.1",
+    "leaguesort": "^1.1.0",
     "log4js": "^4.1.0",
     "mongoose": "4.7.6",
     "morgan": "^1.9.1",
-    "serve-favicon": "^2.5.0",
-    "socket.io": "^2.2.0"
+    "npm": "^6.4.1",
+    "socket.io": "^2.2.0",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^3.0.0",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-e2e-cypress": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-plugin-unit-mocha": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "chai": "^4.1.2",
+    "lint-staged": "^7.2.2",
+    "node-sass": "^4.9.0",
     "mocha": "^6.1.4",
-    "supertest": "^4.0.2"
+    "sass-loader": "^7.0.1",
+    "supertest": "^4.0.2",
+    "vue-template-compiler": "^2.5.17"
   },
-  "engines": {
-    "node": "8.16.0"
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }

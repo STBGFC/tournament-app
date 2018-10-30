@@ -3,32 +3,26 @@
 [![devDependency Status](https://david-dm.org/STBGFC/tournament-app/dev-status.svg)](https://david-dm.org/STBGFC/tournament-app#info=devDependencies)
 # STBGFC Tournament App
 
-A MEAN (Mongo, Express, Angular, Node) stack application used to distribute
+An api and SPA built using Vue.js, Node, Express and Mongodb used to distribute
 scores and update league tables during the football tournaments held at STBGFC.
-
-If you wish to just use the application for your own tournaments, please see
-the [docker hub repo](https://hub.docker.com/r/stbgfc/tournament-app/) 
-description instead.  Docker is currently the easiest way
-to get up and running.
 
 The remainder of this text is aimed at developers contributing to the project
 or wishing to customise it for their own use.
 
 ## Pre-requisites
 
-After cloning the repo, ensure you have done a `npm install -g bower nodemon grunt-cli mocha`
+After cloning the repo, ensure you have done a `npm install -g vue-cli mocha`
 
 ## Project Structure
 
-The API (Node/Express application) is within the `app` directory off the
-project root, the Angular front-end is in the `web` directory.  Run the
-usual `npm install` and `bower install` as appropriate inside of those to
-pull in the build and runtime dependencies.
+The API (Node/Express application) is within the `server` directory off the
+project root, the Vue.js front-end is in the `src` directory.  Run
+`npm install` to pull in the build and runtime dependencies.
 
-Inside the `scripts` directory, you can use the `testdb-seed.js` file to 
+Inside the `server/test` directory, you can use the `testdb-seed.js` file to 
 populate a mongo database locally in order to get started.  Running 
-`grunt resetdb` from the `web` dir will also apply this script to a local
-mongo db named "tournament-auto-tests".
+`npm run pretest:server` will also apply this script to a local mongo db named 
+"tournament-auto-tests".
 
 ## Server
 
@@ -37,7 +31,7 @@ mongo db named "tournament-auto-tests".
 The API is an [Express](https://www.npmjs.org/package/express) application that
 creates a RESTful interface to the data stored in a MongoDB.
 
-To run the server up quickly, `npm start` should work, but the secret key will
+To run the server up quickly, `npm start:server`, but note the secret key will
 be insecure.  This method will create (if needed), and pre-seed a test database
 that can be used with the api tests or the e2e web tests.  If you want to start
 up with a different database, or you're running in production, use the provided
