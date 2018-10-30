@@ -64,12 +64,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-/* todo: replace common values with scss variables */
-.team-highlight {
-  font-weight: bold;
-  background-color: rgba(255, 255, 0, 0.4);
-}
+<style lang="scss" scoped>
 p.noresults {
   background-color: #333;
   color: whitesmoke;

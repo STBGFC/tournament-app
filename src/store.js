@@ -9,7 +9,7 @@ export default new Vuex.Store({
       name: 'Sandhurst 2019',
       siteUrl: 'https://a.b.c/foo',
       club: 'STBGFC',
-      description: 'Welcome to our tourney'
+      description: 'Welcome to the Sandhurst Town Boys & Girls FC Summer Tournament.'
     },
     highlighted: ''
   },

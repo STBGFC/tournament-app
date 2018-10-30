@@ -41,6 +41,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.jumbotron p {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 200;
+}
 @media screen and (max-width: 767px) {
   .jumbotron { background-size: 60px auto; }
 }

@@ -59,6 +59,10 @@ export default {
 </script>
 
 <style lang="scss">
+.team-highlight {
+  font-weight: bold;
+  background-color: rgba(255, 255, 0, 0.8);
+}
 .nav-tabs { border-bottom: 0px; }
 .nav-link.active {
   background-color: #333 !important;
