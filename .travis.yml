@@ -9,5 +9,5 @@ before_script:
   - mongo tournament-auto-tests scripts/testdb-seed.js
   - npm install
 script:
-  - npm test
-  - cd web && grunt karma
+  - npm run test:server
+  - npm run test:unit

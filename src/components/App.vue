@@ -5,48 +5,39 @@
 
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-        <b-navbar-brand href="#">
-          <img src="img/badge-icon.png"/>
-          NavBar
+        <b-navbar-brand to="/">
+          <img src="../assets/badge-icon.png"/> {{tournament.name}} 
         </b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
 
           <b-navbar-nav>
-            <b-nav-item href="#">Link</b-nav-item>
-            <b-nav-item href="#" disabled>Disabled</b-nav-item>
+            <b-nav-item to="/competition/U11/A">Competition</b-nav-item>
+            <b-nav-item to="/about">About</b-nav-item>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
 
             <b-nav-form>
-              <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Search"/>
-              <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+              <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Team Search"/>
+              <b-button size="sm" class="my-2 my-sm-0" type="submit">Go</b-button>
             </b-nav-form>
 
-            <b-nav-item-dropdown text="Lang" right>
-              <b-dropdown-item href="#">EN</b-dropdown-item>
-              <b-dropdown-item href="#">ES</b-dropdown-item>
-              <b-dropdown-item href="#">RU</b-dropdown-item>
-              <b-dropdown-item href="#">FA</b-dropdown-item>
-            </b-nav-item-dropdown>
-
-            <b-nav-item-dropdown right>
-              <!-- Using button-content slot -->
-              <template slot="button-content">
-                <em>User</em>
-              </template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item href="#">Signout</b-dropdown-item>
-            </b-nav-item-dropdown>
+            <b-nav-item-dropdown text="Competitions" right>
+                <b-dropdown-item href="#">A</b-dropdown-item>
+                <b-dropdown-item href="#">B</b-dropdown-item>
+                <b-dropdown-item href="#">C</b-dropdown-item>
+                <b-dropdown-item href="#">D</b-dropdown-item>
+              </b-nav-item-dropdown>
           </b-navbar-nav>
 
         </b-collapse>
       </b-navbar>
 
-
-      <router-view/>
+      <transition name="slide-right">
+        <router-view/>
+      </transition>
 
     </div>
 
@@ -65,18 +56,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'app',
-  // todo: pull from vuex store
-  data: function() {
-    return {
-      tournament: {
-        name: 'STBGFC May Tournament',
-        siteUrl: 'https://a.b.c/foo',
-        club: 'STBGFC'
-      }
-    }
-  }
+  computed: mapState([
+    'tournament'
+  ])
 }
 </script>
 
@@ -89,6 +75,9 @@ body {
 h1 {
     margin-top: 0;
 }
+#app {
+  height: 100%;
+}  
 #wrap {
   min-height: 100%;
   height: auto !important;
@@ -119,19 +108,12 @@ h1 {
   border-radius: 0;
   margin-bottom: 0;
 }
-.navbar-custom { background-color: #000; }
-.navbar-right { margin-right: 0; }
-.navbar-text { font-weight: bold; }
 a.navbar-brand img {
-  margin-top: -13px;
+  margin-top: -1px;
 }
 a.navbar-brand img {
   max-height: 46px;
 }
-.centered-pills { text-align:center; }
-.centered-pills ul.nav-pills { display:inline-block; }
-.centered-pills li { display:inline; }
-.centered-pills a { float:left; }
 
 @media print {
   body {

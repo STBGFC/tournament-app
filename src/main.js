@@ -13,11 +13,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add([faClock, faTag, faMap, faFutbol])
 Vue.component('fa-icon', FontAwesomeIcon)
 
-import App from '@/App.vue'
+import App from '@/components/App.vue'
 import router from '@/router'
 import store from '@/store'
 
-//import '@/assets/branding.css'
+import '@/assets/branding.css'
 
 //Vue.config.productionTip = false
 

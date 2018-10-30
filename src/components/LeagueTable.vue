@@ -38,24 +38,26 @@ export default {
   props: {
     pResults: Array
   },
-  data: function() {
-    return {
-      highlighted: '',
-      results: this.pResults
+  computed: {
+    tableEntries() {
+      return leaguesort.calculateTable(this.results)
+    },
+    highlighted() {
+      return this.$store.state.highlighted
     }
   },
-  computed: {
-    tableEntries: function() {
-      return leaguesort.calculateTable(this.results)
+  data: function() {
+    return {
+      results: this.pResults
     }
   },
   methods: {
     highlight: function(teamName) {
       if (this.highlighted !== teamName) {
-        this.highlighted = teamName;
+        this.$store.commit('highlight', teamName);
       }
       else {
-        this.highlighted = '';
+        this.$store.commit('highlight', '');
       }
     }
   }

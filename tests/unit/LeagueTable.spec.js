@@ -4,9 +4,13 @@ import LeagueTable from '@/components/LeagueTable.vue'
 
 describe('LeagueTable.vue', () => {
   const league = [
-    {__v:0,day:1,dateTime:30600000,duration:'8m',pitch:'1',competition:{name:'U11', section:'A', group:'1'},tag:'1', homeTeam:'Arsenal', awayTeam:'Liverpool', homeGoals:2, awayGoals:1, homeScore:'2', awayScore: '1'},
-    {__v:0,day:1,dateTime:30600000,duration:'8m',pitch:'2',competition:{name:'U11', section:'A', group:'1'},tag:'2', homeTeam:'Chelsea', awayTeam:'Man. Utd.', homeGoals:0, awayGoals:1, homeScore:'0', awayScore: '1'},
+    {__v:0,day:1,dateTime:30600000,duration:'8m',pitch:'1',competition:{name:'U11', section:'A', group:'1'},tag:'1', homeTeam:'Arsenal', awayTeam:'Liverpool', homeGoals:2, awayGoals:1},
+    {__v:0,day:1,dateTime:30600000,duration:'8m',pitch:'2',competition:{name:'U11', section:'A', group:'1'},tag:'2', homeTeam:'Chelsea', awayTeam:'Man. Utd.', homeGoals:0, awayGoals:1},
   ]
+  
+  const mockStore = {
+    state: { highlighted: '' }
+  }
   
   it('renders an info message when passed an empty array', () => {
     const wrapper = shallowMount(LeagueTable, {
@@ -17,7 +21,8 @@ describe('LeagueTable.vue', () => {
 
   it('renders a league table when passed a non-empty array', () => {
     const wrapper = shallowMount(LeagueTable, {
-      propsData: { pResults: league }
+      propsData: { pResults: league },
+      mocks: { $store: mockStore }
     })
     
     const entries = wrapper.find('tbody').findAll('tr')
