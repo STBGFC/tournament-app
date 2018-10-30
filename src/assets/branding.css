@@ -66,9 +66,6 @@ a:focus {
 }
 
 .panel-body {
-    margin: 12px 0;
-    padding: 6px;
-    background-color: #fff;
     background-color: rgba(255,255,255,0.9);
 }
 
@@ -137,7 +134,6 @@ a:focus {
 }
 
 #footer {
-    padding-top: 10px;
     color: #ccc;
     background-color: #333;
     background-color: rgba(48,48,48,0.75);
