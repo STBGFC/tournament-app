@@ -46,7 +46,7 @@
         <p class="text-center">
           <small>
             <a :href="tournament.siteUrl">{{ tournament.club }}</a>
-            | &copy;2013-18 Darren Davison
+            | &copy;2013-2019 Darren Davison
           </small>
         </p>
       </div>
@@ -104,10 +104,6 @@ h1 {
 .bg-dark {
   background-color: #333 !important;
 }
-.navbar {
-  border-radius: 0;
-  margin-bottom: 0;
-}
 a.navbar-brand img {
   margin-top: -1px;
 }
@@ -126,12 +122,5 @@ a.navbar-brand img {
     }
     padding-top: 0px;
   }
-}
-@media screen and (max-width: 767px) {
-  .jumbotron { background-size: 60px auto; }
-}
-
-@media screen and (min-width: 768px) {
-  .jumbotron { background-size: 85px auto; }
 }
 </style>

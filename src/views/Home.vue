@@ -39,3 +39,13 @@ export default {
   ])
 }
 </script>
+
+<style lang="scss" scoped>
+@media screen and (max-width: 767px) {
+  .jumbotron { background-size: 60px auto; }
+}
+
+@media screen and (min-width: 768px) {
+  .jumbotron { background-size: 85px auto; }
+}
+</style>
