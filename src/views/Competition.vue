@@ -59,21 +59,36 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/assets/_vars.scss";
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    background-color: $emphasis-colour;
+    border-color: $emphasis-colour;
+}
+.points {
+    color: $emphasis-colour;
+    background-color: #ddd;
+    width: 22px;
+    font-weight: bold;
+}
 .team-highlight {
   font-weight: bold;
-  background-color: rgba(255, 255, 0, 0.8);
+  color: $team-highlight-fg-colour;
+  text-transform: uppercase;
 }
 .nav-tabs { 
   border-bottom: 1px; 
   margin-bottom: -1px;
 }
 .nav-link.active {
-  background-color: #333 !important;
-  color: whitesmoke !important;
+  background-color: $contrast-bg-colour !important;
+  color: $contrast-fg-colour !important;
   border: 0px !important;
 }
 .panel-body {
     padding: 10px;
-    background-color: rgba(196, 196, 255, 0.1);
+    background-color: $panel-bg-colour;
 }
 </style>

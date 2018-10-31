@@ -67,7 +67,8 @@ export default {
 </script>
 
 <style lang="scss">
-/* todo: replace common values with scss variables */
+@import "@/assets/_vars.scss";
+
 html, body { height: 100%; }
 body {
   padding-top: 80px;
@@ -75,6 +76,12 @@ body {
 h1 {
     margin-top: 0;
 }
+a,
+a:hover,
+a:focus {
+    color: $emphasis-colour;
+}
+
 #app {
   height: 100%;
 }  
@@ -87,6 +94,11 @@ h1 {
 #footer {
   height: 40px;
 }
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: $emphasis-colour;
+    color: $primary-bg-colour;
+}
 .container .credit {
   margin: 10px 0;
 }
@@ -94,20 +106,19 @@ h1 {
   margin-bottom: 0;
 }
 .table thead tr {
-  background-color: #333;
-  color: whitesmoke;
+  background-color: $contrast-bg-colour;
+  color: $contrast-fg-colour;
 }
 .table thead > tr > th {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid $primary-bg-colour;
 }
 
 .bg-dark {
-  background-color: #333 !important;
+  background-color: $contrast-bg-colour !important;
 }
+
 a.navbar-brand img {
   margin-top: -1px;
-}
-a.navbar-brand img {
   max-height: 46px;
 }
 

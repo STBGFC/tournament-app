@@ -54,3 +54,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "@/assets/_vars.scss";
+
+.points {
+  font-weight: bold;
+  color: $emphasis-colour;
+}
+td.info-col {
+    width: 15px;
+}
+</style>

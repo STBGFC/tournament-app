@@ -41,10 +41,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/_vars.scss";
+
 .jumbotron p {
     margin-bottom: 15px;
     font-size: 1.5rem;
     font-weight: 200;
+}
+blockquote > footer {
+    color: $primary-bg-colour;
 }
 @media screen and (max-width: 767px) {
   .jumbotron { background-size: 60px auto; }

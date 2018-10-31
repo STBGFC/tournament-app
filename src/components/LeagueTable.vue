@@ -65,15 +65,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/_vars.scss";
+
 p.noresults {
-  background-color: #333;
-  color: whitesmoke;
+  background-color: $contrast-bg-colour;
+  color: $contrast-fg-colour;
   padding: 3px 8px;
 }
 th {
-  border-top: 1px solid #333;
-}
-th.points {
-  background-color: #333;
+  border-top: 1px solid $contrast-bg-colour;
+  .points {
+    background-color: $contrast-bg-colour;
+  }
 }
 </style>

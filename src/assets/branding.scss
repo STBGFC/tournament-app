@@ -8,6 +8,8 @@
  */
 
 /* */
+@import "@/assets/_vars.scss";
+
 body {
   font-family: 'Roboto Condensed', sans-serif;
   background: url(./bg4b.jpg) no-repeat fixed;
@@ -16,61 +18,29 @@ body {
   -o-background-size: cover;
   background-size: cover;
 } 
+
 blockquote {
     font-family: Arial, sans-serif;
     font-weight: normal;
     font-style: italic;
-    border-left: 5px solid #a00;
+    border-left: 5px solid $emphasis-colour;
     padding: 15px;
-}
-blockquote > footer {
-    color: white;
-}
-
-a,
-a:hover,
-a:focus {
-    color: #a00;
-}
-
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
-    background-color: #a00;
-    color: white;
 }
 
 #selected-competition > h4 {
-    color: whitesmoke;
+    color: $contrast-fg-colour;
 }
 
 .panel-default > .panel-heading {
-    background-color: #eee;
     background-color: rgba(239,239,239,0.9);
 }
 
-.panel-body {
-    background-color: rgba(255,255,255,0.9);
-}
-
-.list-group-item.active,
-.list-group-item.active:hover,
-.list-group-item.active:focus {
-    background-color: #a00;
-    border-color: #a00;
-}
-.points {
-    color: #a00;
-    background-color: #ddd;
-    width: 22px;
-    font-weight: bold;
-}
 .container .jumbotron {
     background-image: url("./badge-icon.png");
     background-position: top right;
     background-repeat: no-repeat;
-    background-color: #333;
     background-color: transparent;
-    color: white;
+    color: $primary-bg-colour;
     border-radius: 0;
     padding: 20px 15px;
 }
@@ -80,15 +50,8 @@ a:focus {
 
 @media screen and (min-width: 768px) {
     div#selected-competition>h4 { 
-        color: #333;
+        color: $contrast-bg-colour;
     }
-}
-.tp {
-    background-color: #fff;
-    background-color: rgba(255,255,255,0);
-}
-.table-condensed {
-    background-color: white;
 }
 
 .form-control:focus {
@@ -102,12 +65,11 @@ a:focus {
 
 #footer {
     color: #ccc;
-    background-color: #333;
     background-color: rgba(48,48,48,0.75);
 }
 #footer a {
-    color: whitesmoke;
-    border-bottom: 1px dotted whitesmoke;
+    color: $contrast-fg-colour;
+    border-bottom: 1px dotted $contrast-fg-colour;
     text-decoration: none;
 }
 

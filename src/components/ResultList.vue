@@ -30,7 +30,6 @@ export default {
   },
   data: function() {
     return {
-      highlighted: '', // TODO: link with LeagueTable property
       results: this.pResults
     }
   },
@@ -38,13 +37,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.points {
-  font-weight: bold;
-  color: blueviolet;
-}
-td.info-col {
-    width: 15px;
-}
-</style>
