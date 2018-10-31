@@ -42,6 +42,7 @@ export default {
 <style lang="scss">
 .points {
   font-weight: bold;
+  color: blueviolet;
 }
 td.info-col {
     width: 15px;

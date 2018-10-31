@@ -70,6 +70,9 @@ p.noresults {
   color: whitesmoke;
   padding: 3px 8px;
 }
+th {
+  border-top: 1px solid #333;
+}
 th.points {
   background-color: #333;
 }

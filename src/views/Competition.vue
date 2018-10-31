@@ -3,7 +3,7 @@
     
     <h4 class="text-right"><fa-icon icon="futbol"/> <strong>{{competition.name}}/{{competition.section}}</strong></h4>
 
-    <div class="panel-body">
+    <div class="panel-body shadow p-3 mb-5">
       <b-tabs>
         <b-tab title="1" active>
           <div class="row">
@@ -13,7 +13,7 @@
 
             <div class="col">
               <section ng-show="group.results.length > 0">
-                <h4 class="text-center">Group 1 Results</h4>
+                <h4 class="text-center"><fa-icon icon="running"/> Group 1 Results</h4>
                 <result-list :p-results = "results" />               
               </section>
             </div>
@@ -63,7 +63,10 @@ export default {
   font-weight: bold;
   background-color: rgba(255, 255, 0, 0.8);
 }
-.nav-tabs { border-bottom: 0px; }
+.nav-tabs { 
+  border-bottom: 1px; 
+  margin-bottom: -1px;
+}
 .nav-link.active {
   background-color: #333 !important;
   color: whitesmoke !important;
@@ -71,8 +74,6 @@ export default {
 }
 .panel-body {
     padding: 10px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    background-color: rgba(0,0,255,0.1);
+    background-color: rgba(196, 196, 255, 0.1);
 }
 </style>

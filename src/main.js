@@ -8,16 +8,16 @@ Vue.use(Navbar)
 Vue.use(Tabs)
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faClock, faTag, faMap, faFutbol } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faTag, faMap, faFutbol, faRunning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add([faClock, faTag, faMap, faFutbol])
+library.add([faClock, faTag, faMap, faFutbol, faRunning])
 Vue.component('fa-icon', FontAwesomeIcon)
 
 import App from '@/components/App.vue'
 import router from '@/router'
 import store from '@/store'
 
-import '@/assets/branding.css'
+//import '@/assets/branding.css'
 
 //Vue.config.productionTip = false
 
