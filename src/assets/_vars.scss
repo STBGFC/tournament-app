@@ -2,6 +2,12 @@
  * variables imported into all components 
  */
 
+// main font stack, used everywhere
+$font-stack: 'Roboto Condensed', sans-serif;
+
+// alt font stack used in jumbotron blockquote and select places
+$alt-font-stack: arial, sans-serif;
+
 // font colour
 $emphasis-colour: #a00;
 

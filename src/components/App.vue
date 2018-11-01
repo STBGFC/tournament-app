@@ -69,8 +69,11 @@ export default {
 <style lang="scss">
 @import "@/assets/_vars.scss";
 
-html, body { height: 100%; }
+html, body { 
+  height: 100%; 
+}
 body {
+  font-family: $font-stack;
   padding-top: 80px;
 }
 h1 {
