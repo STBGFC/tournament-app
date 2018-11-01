@@ -1,9 +1,7 @@
 <template>
     <tr>
         <td class="text-center text-muted info-col">{{result.tag}}</td>
-        <!-- TODO: filter time format -->
-        <!-- <td class="text-center text-muted info-col">{{result.dateTime | date:'HH:mm' : '+0100'}}</td> -->
-        <td class="text-center text-muted info-col">{{result.dateTime}}</td>
+        <td class="text-center text-muted info-col">{{time(result.dateTime)}}</td>
         <td class="text-center text-muted info-col">{{result.pitch}}</td>
         <td class="text-right" :class="{'team-highlight': highlighted === result.homeTeam}" @click="highlight(result.homeTeam)">{{result.homeTeam}}</td>
         <td class="text-center points">{{homeScore}}</td>
@@ -13,6 +11,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'result',
   props: ['pResult'],
@@ -50,6 +50,9 @@ export default {
       else {
         this.$store.commit('highlight', '');
       }
+    },
+    time: function(dateTime) {
+      return moment(dateTime).format('hh:mm')
     }
   }
 }
