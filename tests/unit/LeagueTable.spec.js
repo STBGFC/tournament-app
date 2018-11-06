@@ -14,14 +14,14 @@ describe('LeagueTable.vue', () => {
   
   it('renders an info message when passed an empty array', () => {
     const wrapper = shallowMount(LeagueTable, {
-      propsData: { pResults: [] }
+      propsData: { results: [] }
     })
     expect(wrapper.text()).to.include("No fixtures have been created in this group yet")
   })
 
   it('renders a league table when passed a non-empty array', () => {
     const wrapper = shallowMount(LeagueTable, {
-      propsData: { pResults: league },
+      propsData: { results: league },
       mocks: { $store: mockStore }
     })
     
