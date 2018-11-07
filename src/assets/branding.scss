@@ -11,65 +11,40 @@
 @import "@/assets/_vars.scss";
 
 body {
-  background: url(./bg4b.jpg) no-repeat fixed;
+  background: url(./bg.jpg) no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 } 
 
-blockquote {
-    font-family: Arial, sans-serif;
-    font-weight: normal;
-    font-style: italic;
-    border-left: 5px solid $emphasis-colour;
-    padding: 15px;
-}
+a.navbar-brand {
+  background: url(./badge-icon.png) no-repeat fixed right;
+} 
 
 #selected-competition > h4 {
-    color: $contrast-fg-colour;
+  color: $contrast-fg-colour;
 }
 
 .panel-default > .panel-heading {
-    background-color: rgba(239,239,239,0.9);
+  background-color: rgba(239,239,239,0.9);
 }
-
 .container .jumbotron {
-    background-image: url("./badge-icon.png");
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    color: $primary-bg-colour;
-    border-radius: 0;
-    padding: 20px 15px;
-}
-.jumbotron p {
-    color: silver;
+  background-image: url("./badge-icon.png");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-color: transparent;
 }
 
 @media screen and (min-width: 768px) {
-    div#selected-competition>h4 { 
-        color: $contrast-bg-colour;
-    }
+  div#selected-competition>h4 { 
+    color: $contrast-bg-colour;
+  }
 }
 
 .form-control:focus {
-    border-color: #888;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(170, 0, 0, .6);
-}
-
-#competitions {
-    margin-bottom: 5px;
-}
-
-#footer {
-    color: #ccc;
-    background-color: rgba(48,48,48,0.75);
-}
-#footer a {
-    color: $contrast-fg-colour;
-    border-bottom: 1px dotted $contrast-fg-colour;
-    text-decoration: none;
+  border-color: #888;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(170, 0, 0, .6);
 }
 
 /* */

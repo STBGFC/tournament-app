@@ -6,7 +6,7 @@
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
         <b-navbar-brand to="/">
-          <img src="../assets/badge-icon.png"/> {{tournament.name}} 
+          {{tournament.name}} 
         </b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
@@ -92,11 +92,19 @@ a:focus {
   min-height: 100%;
   height: auto !important;
   margin: 0 auto -40px;
-  padding: 0 0 40px;
+  padding: 0 0 $footer-height;
 }
 #footer {
-  height: 40px;
+  height: $footer-height;
+  color: #ccc;
+  background-color: rgba(48,48,48,0.75);
+  a {
+    color: $contrast-fg-colour;
+    border-bottom: 1px dotted $contrast-fg-colour;
+    text-decoration: none;
+  }
 }
+
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
     background-color: $emphasis-colour;

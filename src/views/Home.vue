@@ -42,15 +42,40 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/_vars.scss";
 
-.jumbotron {
-    background-color: $emphasis-colour;
-    p {
-      margin-bottom: 15px;
-      font-size: 1.5rem;
-      font-weight: 200;
-    }
+.container .jumbotron {
+  background-color: $emphasis-colour;
+  color: $primary-bg-colour;
+  border-radius: 0;
+  padding: 20px 15px;
+  p {
+    color: silver;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 200;
+  }
 }
+
 blockquote > footer {
-    color: $primary-bg-colour;
+  color: $primary-bg-colour;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  font-style: italic;
+  border-left: 5px solid $emphasis-colour;
+  padding: 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .jumbotron { 
+    background-size: 60px auto; 
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .jumbotron { 
+    background-size: 85px auto; 
+  }
+  div#selected-competition>h4 { 
+    color: #333;
+  }
 }
 </style>
