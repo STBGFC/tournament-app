@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <!-- TODO: results needs to be ordered by pitchNumber, then dateTime -->
-      <result v-for="result in results" :key="result.tag" :pResult="result"/>
+      <result v-for="result in results" :key="result.tag" :result="result"/>
     </tbody>
   </table>
 </template>
@@ -26,14 +26,7 @@ export default {
     Result
   },
   props: {
-    pResults: Array
-  },
-  data: function() {
-    return {
-      results: this.pResults
-    }
-  },
-  methods: {
+    results: Array
   }
 }
 </script>

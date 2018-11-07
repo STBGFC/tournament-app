@@ -15,12 +15,7 @@ import moment from 'moment'
 
 export default {
   name: 'result',
-  props: ['pResult'],
-  data: function() {
-    return {
-      result: this.pResult
-    }
-  },
+  props: ['result'],
   computed: {
     highlighted() {
       return this.$store.state.highlighted
