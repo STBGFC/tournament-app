@@ -17,7 +17,7 @@ import App from '@/components/App.vue'
 import router from '@/router'
 import store from '@/store'
 
-//import '@/assets/branding.scss'
+//import '@/assets/branding.scss';
 
 //Vue.config.productionTip = false
 

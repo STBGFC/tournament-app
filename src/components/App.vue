@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/_vars.scss";
+@import '@/assets/_vars.scss';
 
 html, body { 
   height: 100%; 
@@ -75,6 +75,7 @@ html, body {
 body {
   font-family: $font-stack;
   padding-top: 80px;
+  background-color: $primary-bg-colour;
 }
 h1 {
     margin-top: 0;
@@ -107,8 +108,8 @@ a:focus {
 
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus {
-    background-color: $emphasis-colour;
-    color: $primary-bg-colour;
+  background-color: $emphasis-colour;
+  color: $primary-bg-colour;
 }
 .container .credit {
   margin: 10px 0;
