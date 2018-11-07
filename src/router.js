@@ -15,9 +15,10 @@ export default new Router({
       component: Home
     },
     {
-      path: '/competition/:competition/:section',
+      path: '/competition/:compName/:compSection',
       name: 'competition',
-      component: Competition
+      component: Competition,
+      props: true
     },
     {
       path: '/about',

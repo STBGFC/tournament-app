@@ -1,21 +1,19 @@
 <template>
   <div class="container" id="selected-competition">
     
-    <h4 class="text-right"><fa-icon icon="futbol"/> <strong>{{competition.name}}/{{competition.section}}</strong></h4>
+    <h4 class="text-right"><fa-icon icon="futbol"/> <strong>{{compName}}/{{compSection}}</strong></h4>
 
-    <div class="panel-body shadow p-3 mb-5">
+    <div class="panel-body shadow p-3 mb-5 rounded">
       <b-tabs>
         <b-tab title="1" active>
           <div class="row">
             <div class="col">
-              <league-table :p-results = "results" />
+              <league-table :results = "results" />
             </div>
 
             <div class="col">
-              <section ng-show="group.results.length > 0">
-                <h4 class="text-center"><fa-icon icon="running"/> Group 1 Results</h4>
-                <result-list :p-results = "results" />               
-              </section>
+              <h4 class="text-center"><fa-icon icon="running"/> Group 1 Results</h4>
+              <result-list :results = "results" />     
             </div>
           </div>        
         </b-tab>
@@ -38,21 +36,20 @@ export default {
     LeagueTable,
     ResultList
   },
+  props: {
+    compName: String, 
+    compSection: String
+  },
   computed: mapState([
     'tournament', 'highlighted'
   ]),
   data: function() {
+    let competition = {
+      name: this.compName,
+      section: this.compSection
+    }
     return {
-      competition: {
-        name: "U11",
-        section: "A"
-      },
-      results: [
-        {__v:0,day:1,dateTime:30600000,duration:'8m',pitch:'1',competition:{name:'U11', section:'A', group:'1'},tag:'1', homeTeam:'Arsenal', awayTeam:'Liverpool', homeGoals:2, awayGoals:1},
-        {__v:0,day:1,dateTime:30600000,duration:'8m',pitch:'2',competition:{name:'U11', section:'A', group:'1'},tag:'2', homeTeam:'Chelsea', awayTeam:'Man. Utd.', homeGoals:1, awayGoals:1, homePens:1, awayPens:2},
-        {__v:0,day:1,dateTime:32400000,duration:'8m',pitch:'1',competition:{name:'U11', section:'A', group:'1'},tag:'3', homeTeam:'Newcastle', awayTeam:'Arsenal'},
-        {__v:0,day:1,dateTime:32400000,duration:'8m',pitch:'2',competition:{name:'U11', section:'A', group:'1'},tag:'4', homeTeam:'Liverpool', awayTeam:'Chelsea'},
-      ]
+      results: this.$store.getters.resultsFor(competition)
     }
   }
 }
@@ -60,6 +57,10 @@ export default {
 
 <style lang="scss">
 @import "@/assets/_vars.scss";
+
+#competitions {
+  margin-bottom: 5px;
+}
 
 .list-group-item.active,
 .list-group-item.active:hover,
