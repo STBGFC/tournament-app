@@ -16,7 +16,7 @@ describe('LeagueTable.vue', () => {
     const wrapper = shallowMount(LeagueTable, {
       propsData: { results: [] }
     })
-    expect(wrapper.text()).to.include("No fixtures have been created in this group yet")
+    expect(wrapper.text()).to.include("No fixtures have been played in this group yet")
   })
 
   it('renders a league table when passed a non-empty array', () => {

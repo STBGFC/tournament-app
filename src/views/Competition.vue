@@ -1,24 +1,21 @@
 <template>
   <div class="container" id="selected-competition">
     
-    <h4 class="text-right"><fa-icon icon="futbol"/> <strong>{{compName}}/{{compSection}}</strong></h4>
+    <h4 class="text-right"><fa-icon icon="futbol"/> <strong>{{competition.name}}/{{competition.section}}</strong></h4>
 
     <div class="panel-body shadow p-3 mb-5 rounded">
       <b-tabs>
-        <b-tab title="1" active>
+        <b-tab v-for="(group, index) in competition.groups" :key="group" :title="''+(index+1)">
           <div class="row">
             <div class="col">
-              <league-table :results = "results" />
+              <league-table :results = "results.filter( result => result.competition.group == group )" />
             </div>
 
             <div class="col">
-              <h4 class="text-center"><fa-icon icon="running"/> Group 1 Results</h4>
-              <result-list :results = "results" />     
+              <h4 class="text-center"><fa-icon icon="running"/> Group {{index+1}} Results</h4>
+              <result-list :results = "results.filter( result => result.competition.group == group )" />     
             </div>
           </div>        
-        </b-tab>
-        <b-tab title="2" >
-          <br>I'm the second tab content
         </b-tab>
       </b-tabs>
     </div>
@@ -43,14 +40,13 @@ export default {
   computed: mapState([
     'tournament', 'highlighted'
   ]),
-  data: function() {
-    let competition = {
-      name: this.compName,
-      section: this.compSection
-    }
-    return {
-      results: this.$store.getters.resultsFor(competition)
-    }
+  created() {
+    this.competition = this.tournament.competitions.find(
+      competition =>
+      competition.name === this.compName &&
+      competition.section === this.compSection
+    )
+    this.results = this.$store.getters.resultsFor(this.competition)
   }
 }
 </script>

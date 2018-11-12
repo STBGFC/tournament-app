@@ -15,7 +15,7 @@
     <tbody v-if="tableEntries == undefined || tableEntries.length === 0">
       <tr>
         <td colspan="8">
-          No fixtures have been created in this group yet.
+          No fixtures have been played in this group yet.
         </td>
       </tr>
     </tbody>
