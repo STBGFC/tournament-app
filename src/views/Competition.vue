@@ -3,7 +3,7 @@
     
     <h4 class="text-right"><fa-icon icon="futbol"/> <strong>{{competition.name}}/{{competition.section}}</strong></h4>
 
-    <div class="panel-body shadow p-3 mb-5 rounded">
+    <div class="panel-body shadow p-3 mb-3 rounded">
       <b-tabs>
         <b-tab v-for="(group, index) in competition.groups" :key="group" :title="''+(index+1)">
           <div class="row">
@@ -18,6 +18,13 @@
           </div>        
         </b-tab>
       </b-tabs>
+    </div>
+
+    <div v-if="koResults.length > 0" class="panel-body shadow p-3 mb-3 rounded">
+      <div class="col">
+        <h4 class="text-center"><fa-icon icon="bell"/> Knockout Section</h4>
+        <result-list :results = "koResults" />     
+      </div>
     </div>
   </div>
 </template>
@@ -47,6 +54,7 @@ export default {
       competition.section === this.compSection
     )
     this.results = this.$store.getters.resultsFor(this.competition)
+    this.koResults = this.results.filter( result => result.competition.group == undefined )
   }
 }
 </script>
