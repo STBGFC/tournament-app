@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
 import Competition from '@/views/Competition.vue'
+import PageNotFound from '@/views/PageNotFound.vue'
 
 Vue.use(Router)
 
@@ -21,9 +22,14 @@ export default new Router({
       props: true
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      path: '/admin',
+      name: 'admin',
+      component: () => import(/* webpackChunkName: "admin" */ '@/views/admin/Home.vue')
+    },
+    {
+      path: '*',
+      name: '404',
+      component: PageNotFound
     }
   ]
 })
