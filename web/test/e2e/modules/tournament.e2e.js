@@ -417,7 +417,7 @@ describe('In the tournament app,', function() {
             clickToCompetition('U11', 'A');
             addGroupGame(12);
             expect(element.all(by.repeater('result in results')).count()).toBe(31); // includes 2 groups and KO section
-            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('11 13:15 5 Home Away');
+            expect(element.all(by.repeater('result in results').row(11)).getText()).toContain('12 13:15 5 Home Away');
         });
 
         it('should be allowed to reset a result', function () {
@@ -431,6 +431,7 @@ describe('In the tournament app,', function() {
                 var newFirstResult = element.all(by.repeater('result in results')).first();
                 var newBottomOfGroup = element.all(by.repeater('entry in group.table').row(4));
                 expect(newFirstResult.getText()).toContain('1 09:30 12 Arsenal Liverpool');
+                expect(newBottomOfGroup.getText()).toContain('Liverpool 3 1 0 2 3 6 3');
             });
         });
 
