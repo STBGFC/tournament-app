@@ -12,23 +12,22 @@
   "dependencies": {
     "acl": "^0.4.11",
     "baucis": "^1.6.8",
-    "bcrypt": "^1.0.3",
-    "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
-    "debug": "^3.1.0",
-    "express": "^4.16.3",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "debug": "^3.2.6",
+    "express": "^4.16.4",
     "express-jwt": "^5.3.1",
-    "express.io": "^1.1.13",
-    "jsonwebtoken": "^8.2.1",
-    "log4js": "^2.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "log4js": "^4.1.0",
     "mongoose": "4.7.6",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "serve-favicon": "^2.5.0",
-    "socket.io": "~1.7.4"
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "mocha": "^5.1.1",
-    "supertest": "^3.0.0"
+    "mocha": "^5.2.0",
+    "supertest": "^3.4.2"
   },
   "engines": {
     "node": "8.11.1"
