@@ -124,6 +124,7 @@ describe('In the tournament app,', function() {
         browser.wait(protractor.ExpectedConditions.invisibilityOf(newsAlert), 5000);
         expect(newsAlert.isDisplayed()).toBeFalsy();
         element(by.linkText('News & Social')).click();
+        element(by.linkText('Announcements')).click();
         var newsItems = element.all(by.repeater('item in newsItems'));
         expect(newsItems.count()).toBeGreaterThan(1);
         element(by.model('searchBy')).sendKeys(email);
@@ -173,6 +174,7 @@ describe('In the tournament app,', function() {
 
         it('should open the announcements page and filter announcements', function () {
             element(by.linkText('News & Social')).click();
+            element(by.linkText('Announcements')).click();
             expect(browser.getTitle()).toEqual('News - Tournament App');
             var newsItems = element.all(by.repeater('item in newsItems'));
             expect(newsItems.count()).toBeGreaterThan(1);

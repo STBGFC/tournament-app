@@ -1,11 +1,38 @@
 <!-- list of news items -->
 <div class="container" id="allnews">
     <view-title>News</view-title>
-    <div class="row">
 
-        <div class="col-md-6">
-            <div class="panel panel-body">
-                <h3>Tournament Announcements</h3>
+    <div class="panel panel-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">Tweets</a></li>
+            <li role="presentation"><a href="#announcements" aria-controls="announcements" role="tab" data-toggle="tab">Announcements</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="twitter">
+                <p class="noresults"></p>
+                <h1>Join the conversation!</h1>
+
+                <a href="https://twitter.com/intent/tweet?screen_name=STBGFC&ref_src=twsrc%5Etfw" 
+                    class="twitter-mention-button"
+                    data-size="large"
+                    data-show-count="true">
+                    Tweet to @STBGFC
+                </a>
+                <a class="twitter-timeline"
+                    href="https://twitter.com/stbgfc"
+                    data-link-color="#a32"
+                    data-tweet-limit="5"
+                    data-chrome="noscrollbar noheader">
+                    #stbgfc Tweets
+                </a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>                
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="announcements">
+                <p class="noresults"></p>
+                <h1>Tournament Announcements</h1>
+                
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
@@ -37,22 +64,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  
+    </div>             
 
-        <div class="col-md-6">
-            <div class="panel panel-body">
-                <h3>
-                    Join the conversation!
-                    <a href="https://twitter.com/intent/tweet?screen_name=STBGFC&ref_src=twsrc%5Etfw" class="twitter-mention-button" data-show-count="false">Tweet to @STBGFC</a>
-                </h3>
-                <a class="twitter-timeline"
-                   href="https://twitter.com/stbgfc"
-                   data-link-color="#a32"
-                   data-tweet-limit="5"
-                   data-chrome="noscrollbar noheader">#stbgfc Tweets</a>
-                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
-        </div>
-
-    </div>
 </div>
