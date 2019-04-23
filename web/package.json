@@ -39,8 +39,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "webdriver:start": "webdriver-manager start",
-    "webdriver:stop": "webdriver-manager shutdown",
     "test": "grunt karma; PORT=3000 grunt protractor:e2e",
     "postinstall": "bower install; grunt build"
   }
