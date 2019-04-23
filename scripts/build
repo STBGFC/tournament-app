@@ -9,7 +9,7 @@ builddir=$(dirname "$(readlink -f "$0")")
 base=$(dirname $builddir)
 
 info() {
-    printf "${yellow}$1${normal}\n"
+    printf "\n\n${yellow}$1${normal}\n"
 }
 
 oops() {
@@ -30,7 +30,7 @@ while getopts ":pm:" opt; do
     esac
 done
 
-[[ "$modules" == "" ]] && oops "Nothing to build (specify with -m" 5
+[[ "$modules" == "" ]] && oops "Nothing to build (specify with -m)" 5
 
 
 # ----------------------------------------------------------------------------
@@ -38,12 +38,10 @@ done
 # ----------------------------------------------------------------------------
 api() {
     cd $base
-    info "Starting npm update for API..."
-    npm update || oops "The NPM update failed" 2
     info "Starting tests for API..."
     npm test || oops "API testing failed" 3
     info "Starting docker build for API..."
-    docker build -f ${base}/Dockerfile -t stbgfc/tournament-api ${base}
+    docker build -f ${base}/Dockerfile -t stbgfc/tournament-api ${base} || oops "Docker build failed" 4
     [[ $publish ]] && docker push stbgfc/tournament-api
 }
 
@@ -52,14 +50,12 @@ api() {
 # ----------------------------------------------------------------------------
 app() {
     cd $base/web
-    info "Starting lib updates for APP..."
-    npm update || oops "NPM update failed" 2
-    bower update || oops "Bower update failed" 2
+    info "Starting tests for web..."
     grunt clean karma || oops "Karma testing failed" 3
     info "Starting web build..."
     grunt build
     info "Starting docker build for APP..."
-    docker build -f ${base}/web/Dockerfile -t stbgfc/tournament-app ${base}/web
+    docker build -f ${base}/web/Dockerfile -t stbgfc/tournament-app ${base}/web || oops "Docker build failed" 4
     [[ $publish ]] && docker push stbgfc/tournament-app
 }
 

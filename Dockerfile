@@ -1,5 +1,5 @@
-FROM node:8-onbuild
-MAINTAINER STBGFC <admin@stbgfc.co.uk>
+FROM node:8
+LABEL author="STBGFC <admin@stbgfc.co.uk>"
 
 RUN apt-get update && apt-get upgrade -y
 WORKDIR /opt

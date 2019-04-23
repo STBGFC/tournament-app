@@ -1,5 +1,5 @@
 FROM nginx:stable
-MAINTAINER STBGFC <admin@stbgfc.co.uk>
+LABEL author="STBGFC <admin@stbgfc.co.uk>"
 
 # build
 COPY dist /opt/tournament-app
