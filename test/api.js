@@ -128,6 +128,14 @@ describe('When testing the Tournament API', function() {
             checkCreate('/api/results', newResult, 401, done);
         });
 
+        it('cannot update results', function(done) {
+            checkUpdate('/api/results', {}, 401, done);
+        });
+
+        it('cannot delete results', function(done) {
+            checkDelete('/api/results', {}, 401, done);
+        });
+
         it('can read tournament data', function(done) {
             checkRead('/api/tournaments', 200, done);
         });
@@ -142,14 +150,6 @@ describe('When testing the Tournament API', function() {
                 200,
                 done
             );
-        });
-
-        it('cannot update results', function(done) {
-            checkUpdate('/api/results', {}, 401, done);
-        });
-
-        it('cannot delete results', function(done) {
-            checkDelete('/api/results', {}, 401, done);
         });
 
         it('cannot create news', function(done) {
