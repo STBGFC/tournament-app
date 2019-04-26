@@ -343,6 +343,8 @@ describe('When using the Tournament API', function() {
 
     describe('an administrator', function() {
 
+        var tourney = {name: 'Test Tournament', competitions: [{name: 'comp1', section: 'sect1', groups: 1}]};
+
         before(function() {
             latestBearerToken = '';
         });
@@ -351,7 +353,32 @@ describe('When using the Tournament API', function() {
             authenticator('admin@admin.org', 'admin', ['admin', 'editor', 'referee'], done);
         });
 
-        // TODO.. admin functions (create comp, delete feedback, create page)
+        it('can create tournament data', function(done) {
+            checkCreate('/api/tournaments', tourney, 201, done);
+        });
+
+        it('can create an info page', function(done) {
+            var page = {
+                title: 'page test', body: 'page body'
+            };
+            request
+                .post('/api/pages')
+                .set('Authorization', 'Bearer ' + latestBearerToken)
+                .send(page)
+                .expect(200)
+                .end(function(err, res) {
+                    request
+                        .get('/api/pages')
+                        .expect(function(res) {
+                            var latestPage = res.body[res.body.length - 1];
+                            assert.equal(latestPage.title, page.title);
+                            assert.equal(latestPage.body, page.body);
+                        })
+                        .expect(200, done);
+                });
+        });
+
+        // TODO.. create comp, delete feedback
     });
 
 });
