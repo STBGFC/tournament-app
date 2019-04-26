@@ -3,7 +3,7 @@ var request = require('supertest')('http://localhost:' + process.env.PORT||3000)
 var assert = require('assert');
 var mongoose = require('mongoose');
 
-describe('When testing the Tournament API', function() {
+describe('When using the Tournament API', function() {
 
     var latestBearerToken, server;
 
@@ -319,7 +319,26 @@ describe('When testing the Tournament API', function() {
             checkRead('/api/feedbacks', 200, done);
         });
 
-        // TODO.. editor functions (announcement)
+        it('can create an announcement', function(done) {
+            var newsItem = {
+                title: 'editor test', body: 'this is an editor announcement'
+            };
+            request
+                .post('/api/news')
+                .set('Authorization', 'Bearer ' + latestBearerToken)
+                .send(newsItem)
+                .expect(200)
+                .end(function(err, res) {
+                    request
+                        .get('/api/news')
+                        .expect(function(res) {
+                            var latestNews = res.body[res.body.length - 1];
+                            assert.equal(latestNews.title, newsItem.title);
+                            assert.equal(latestNews.body, newsItem.body);
+                        })
+                        .expect(200, done);
+                });
+        });
     });
 
     describe('an administrator', function() {
