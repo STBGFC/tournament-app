@@ -357,6 +357,10 @@ describe('When using the Tournament API', function() {
             checkCreate('/api/tournaments', tourney, 201, done);
         });
 
+        it('can delete feedback', function(done) {
+            checkDelete('/api/feedbacks', {}, 200, done);
+        });
+
         it('can create an info page', function(done) {
             var page = {
                 title: 'page test', body: 'page body'
@@ -378,7 +382,6 @@ describe('When using the Tournament API', function() {
                 });
         });
 
-        // TODO.. create comp, delete feedback
     });
 
 });
