@@ -30,7 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "leaguesort": "^1.1.0",
     "log4js": "^4.1.0",
-    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.25",
     "mongoose": "4.7.6",
     "morgan": "^1.9.1",
     "npm": "^6.9.0",

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 export default {
   name: 'result',
@@ -47,7 +47,7 @@ export default {
       }
     },
     time: function(dateTime) {
-      return moment(dateTime).format('hh:mm')
+      return moment(dateTime).tz('UTC').format('hh:mm')
     }
   }
 }
