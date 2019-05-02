@@ -6,7 +6,7 @@ node_js:
 services:
   - mongodb
 before_script:
-  - mongo tournament-auto-tests scripts/testdb-seed.js
+  - mongo tournament-auto-tests server/test/testdb-seed.js
   - npm install
 script:
   - npm run test:server
