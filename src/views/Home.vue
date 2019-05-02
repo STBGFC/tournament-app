@@ -10,19 +10,13 @@
             </blockquote>
         </div>
 
-
-        <!-- <div id="competitions">
-            <div class="btn-group" ng-repeat="comp in tournament.competitions | unique: 'name'">
+        <div id="competitions">
+            <div class="btn-group" v-for="comp in tournament.competitions" :key="comp.name">
                 <button type="button" class="btn btn-lg btn-default btn-agegroup dropdown-toggle" data-toggle="dropdown">
-                    {{ comp.name }} <span class="small glyphicon glyphicon-triangle-bottom"></span>
+                    {{ comp.name }}
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="comp2 in tournament.competitions | filter: {name: comp.name}: true">
-                        <a ui-sref="results({ name: comp2.name, section: comp2.section })">{{comp2.section}}</a>
-                    </li>
-                </ul>
             </div>
-        </div> -->
+        </div>
         
     </div>
 </div>

@@ -25,10 +25,10 @@
             </b-nav-form>
 
             <b-nav-item-dropdown text="Competitions" right>
-                <b-dropdown-item href="#">A</b-dropdown-item>
-                <b-dropdown-item href="#">B</b-dropdown-item>
-                <b-dropdown-item href="#">C</b-dropdown-item>
-                <b-dropdown-item href="#">D</b-dropdown-item>
+              <b-dropdown-item href="#">A</b-dropdown-item>
+              <b-dropdown-item href="#">B</b-dropdown-item>
+              <b-dropdown-item href="#">C</b-dropdown-item>
+              <b-dropdown-item href="#">D</b-dropdown-item>
               </b-nav-item-dropdown>
           </b-navbar-nav>
 
