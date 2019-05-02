@@ -5,6 +5,6 @@ describe('About view', () => {
     cy.visit('/')
     cy.contains("About").click()
     cy.url().should('include', '/about')
-    cy.contains('div', 'Foo')
+    cy.contains('h2', 'PAGE NOT FOUND!')
   })
 })
