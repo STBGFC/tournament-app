@@ -1,12 +1,16 @@
 // https://docs.cypress.io/guides/guides/plugins-guide.html
-/* eslint-disable import/no-extraneous-dependencies global-require */
-const webpack = require('@cypress/webpack-preprocessor')
 
 module.exports = (on, config) => {
-  on('file:preprocessor', webpack({
-    webpackOptions: require('@vue/cli-service/webpack.config'),
-    watchOptions: {}
-  }))
+  
+  /* eslint-disable no-unused-vars */
+  on('before:browser:launch', (browser = {}, args) => {
+    // remove the annoying --start-maximized arg to chrome
+    let idx = args.indexOf('--start-maximized')
+    if (idx > -1) {
+      args.splice(idx, 1)
+    }
+    return args
+  })
 
   return Object.assign({}, config, {
     fixturesFolder: 'tests/e2e/fixtures',
