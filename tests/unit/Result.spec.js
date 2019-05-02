@@ -18,7 +18,7 @@ describe('Result.vue', () => {
       }
     })
     
-    expect(wrapper.find('tr').text()).to.equal('108:301Arsenal21Liverpool')   
+    expect(wrapper.find('tr').text()).to.equal('109:301Arsenal21Liverpool')   
   })
 
   it('renders a result with penalties when passed via props', () => {
@@ -31,7 +31,7 @@ describe('Result.vue', () => {
       }
     })
     
-    expect(wrapper.find('tr').text()).to.equal('208:302Chelsea1(0)(1)1Man. Utd.')
+    expect(wrapper.find('tr').text()).to.equal('209:302Chelsea1(0)(1)1Man. Utd.')
   })
 
   it('renders an unplayed result when passed via props', () => {
@@ -44,7 +44,7 @@ describe('Result.vue', () => {
       }
     })
     
-    expect(wrapper.find('tr').text()).to.equal('309:001NewcastleArsenal') 
+    expect(wrapper.find('tr').text()).to.equal('310:001NewcastleArsenal') 
   })
 
 })
