@@ -1,0 +1,26 @@
+{
+    "__v": 0, 
+    "club" : "STBGFC", 
+    "competitions" : [
+      { "name" : "U8", "section" : "All", "groups" : 4 }, 
+      { "name" : "U9", "section" : "All", "groups" : 4 }, 
+      { "name" : "U10", "section" : "A", "groups" : 2 }, 
+      { "name" : "U10", "section" : "B", "groups" : 2 }, 
+      { "name" : "U11", "section" : "A", "groups" : 2 }, 
+      { "name" : "U11", "section" : "B", "groups" : 2 }, 
+      { "name" : "U12", "section" : "A", "groups" : 2 }, 
+      { "name" : "U12", "section" : "B", "groups" : 2 }, 
+      { "name" : "U13", "section" : "All", "groups" : 2 }, 
+      { "name" : "U14", "section" : "All", "groups" : 2 }, 
+      { "name" : "U15", "section" : "Groups", "groups" : 4 }, 
+      { "name" : "U15", "section" : "Champions League", "groups" : 2 }, 
+      { "name" : "U15", "section" : "Europa League", "groups" : 2 }, 
+      { "name" : "U17", "section" : "Groups", "groups" : 4 }, 
+      { "name" : "U17", "section" : "Champions League", "groups" : 2 }, 
+      { "name" : "U17", "section" : "Europa League", "groups" : 2 }
+    ], 
+    "description" : "Welcome to the Sandhurst Town Boys & Girls FC Summer Tournament.", 
+    "name" : "Sandhurst 2019", 
+    "siteUrl" : "https://www.stbgfc.co.uk" 
+  }
+  
