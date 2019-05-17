@@ -62,7 +62,10 @@ export default {
   name: 'app',
   computed: mapState([
     'tournament'
-  ])
+  ]),
+  async created () {
+    await this.$store.dispatch('fetchTournament')
+  }
 }
 </script>
 

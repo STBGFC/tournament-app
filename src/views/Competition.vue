@@ -53,6 +53,9 @@ export default {
       competition.name === this.compName &&
       competition.section === this.compSection
     )
+    // TODO: async/await? Correct lifecycle?
+    this.$store.dispatch('fetchResults')
+    // TODO: pass to api - don't want getters
     this.results = this.$store.getters.resultsFor(this.competition)
     this.koResults = this.results.filter( result => result.competition.group == undefined )
   }
