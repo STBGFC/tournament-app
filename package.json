@@ -1,35 +1,31 @@
 {
-  "name": "tournament-app",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "postinstall": "cd web; npm install -g bower grunt-cli; npm install; bower install; grunt clean build",
-    "prestart": "mongo tournament-auto-tests scripts/testdb-seed.js",
-    "start": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=development node server/app.js",
-    "pretest": "mongo tournament-auto-tests scripts/testdb-seed.js",
-    "test": "JWT_EXPIRES_IN_MINUTES=600 JWT_SECRET_KEY=sdfgsdfg STBGFC_MONGO_URI=mongodb://localhost/tournament-auto-tests NODE_ENV=test PORT=3001 mocha --exit -s 150ms ./test/api.js"
-  },
-  "dependencies": {
-    "acl": "^0.4.11",
-    "baucis": "^1.6.8",
-    "bcrypt": "^3.0.6",
-    "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.4",
-    "debug": "^4.1.1",
-    "express": "^4.16.4",
-    "express-jwt": "^5.3.1",
-    "jsonwebtoken": "^8.5.1",
-    "log4js": "^4.1.0",
-    "mongoose": "4.7.6",
-    "morgan": "^1.9.1",
-    "serve-favicon": "^2.5.0",
-    "socket.io": "^2.2.0"
-  },
-  "devDependencies": {
-    "mocha": "^6.1.4",
-    "supertest": "^4.0.2"
-  },
-  "engines": {
-    "node": "8.16.0"
-  }
+	"name": "tournament-app",
+	"version": "22.05",
+	"scripts": {
+		"dev": "svelte-kit dev --host",
+		"build": "svelte-kit build",
+		"preview": "svelte-kit preview",
+		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+		"format": "prettier --write --plugin-search-dir=. ."
+	},
+	"devDependencies": {
+		"@sveltejs/kit": "next",
+		"eslint": "^7.22.0",
+		"eslint-config-prettier": "^8.1.0",
+		"eslint-plugin-svelte3": "^3.2.0",
+		"prettier": "~2.2.1",
+		"prettier-plugin-svelte": "^2.2.0",
+		"sass": "^1.35.1",
+		"svelte": "^3.34.0",
+		"svelte-preprocess": "^4.7.3"
+	},
+	"type": "module",
+	"dependencies": {
+		"@smui/button": "^4.2.0",
+		"@smui/card": "^4.2.0",
+		"@smui/icon-button": "^4.2.0",
+		"@smui/list": "^4.2.0",
+		"@smui/top-app-bar": "^4.2.0",
+		"svelte-material-ui": "^4.2.0"
+	}
 }

@@ -11,3 +11,6 @@ app/scripts/config.js
 coverage
 *.log
 .env
+.DS_Store
+/.svelte-kit
+/package

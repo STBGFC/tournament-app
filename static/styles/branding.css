@@ -1,0 +1,116 @@
+/*
+ * custom branding for STBGFC sites
+ */
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    background: url(../images/bg4b.jpg) no-repeat fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+blockquote {
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    color: white;
+    border-color: #a00;
+    border-left-width: 4px;
+}
+blockquote > footer {
+    font-style: italic;
+    color: white;
+}
+
+a,
+a:hover,
+a:focus {
+    color: #a00;
+}
+
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #a00;
+    color: white;
+}
+
+#selected-competition > h4 {
+    color: whitesmoke;
+}
+
+.panel-default > .panel-heading {
+    background-color: #eee;
+    background-color: rgba(239,239,239,0.9);
+}
+
+.panel-body {
+    margin: 12px 0;
+    padding: 6px;
+    background-color: #fff;
+    background-color: rgba(255,255,255,0.9);
+}
+
+.team-highlight {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: blue;
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    background-color: #a00;
+    border-color: #a00;
+}
+.points {
+    color: #a00;
+    background-color: #ddd;
+    width: 22px;
+    font-weight: bold;
+}
+.container .jumbotron {
+    background-image: url("../images/badge-icon.png");
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-color: #333;
+    background-color: transparent;
+    color: white;
+    border-radius: 0;
+    padding: 20px 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .jumbotron { background-size: 60px auto; }
+
+    .navbar-nav .dropdown-menu>li>a {
+        background-color: transparent;
+        color: #888;
+    }
+    .navbar-nav .dropdown-menu>li>a:hover,
+    .navbar-nav .dropdown-menu>li>a:focus {
+        background-color: transparent;
+        color: white;
+    }
+}
+@media screen and (min-width: 768px) {
+    .jumbotron { background-size: 85px auto; }
+    div#selected-competition>h4 { 
+        color: #333;
+    }
+}
+.tp {
+    background-color: #fff;
+    background-color: rgba(255,255,255,0);
+}
+.table-condensed {
+    background-color: white;
+}
+
+.form-control:focus {
+    border-color: #888;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(170, 0, 0, .6);
+}
+
+#competitions {
+    margin-bottom: 5px;
+}
