@@ -9,17 +9,16 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    color: white;
 }
 blockquote {
     font-family: Arial, sans-serif;
     font-weight: normal;
-    color: white;
     border-color: #a00;
     border-left-width: 4px;
 }
 blockquote > footer {
     font-style: italic;
-    color: white;
 }
 
 a,

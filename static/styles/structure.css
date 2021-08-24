@@ -12,6 +12,10 @@ h2.points {
     padding: 4px 0;
 }
 
+div.paper-container {
+    margin: 20px;
+}
+
 .btn-agegroup {
     width: 113px;
     margin: 10px 5px 0 0;

@@ -1,4 +1,5 @@
 <script>
+    import Button, { Label } from '@smui/button';
 	let tournament = { name: 'Sandhurst 2021', description: 'foo bar', competitions: [] };
 </script>
 
@@ -14,10 +15,8 @@
 
 <div id="competitions">
 	{#each tournament.competitions as comp}
-		<div class="btn-group">
-			<button>
-				{comp.name}
-			</button>
-		</div>
+		<Button variant="raised">
+			<Label>hello</Label>
+		</Button>
 	{/each}
 </div>
