@@ -3,7 +3,7 @@
  */
 
 body {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif !important;
     background: url(../images/bg4b.jpg) no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -27,10 +27,34 @@ a:focus {
     color: #a00;
 }
 
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:focus {
-    background-color: #a00;
-    color: white;
+.text-center { 
+    text-align: center;
+}
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+
+table, .table { 
+    border-width: 0;
+}
+.table thead tr {
+    color: #aaa;
+}
+.table th {
+    font-weight: normal;
+}
+.table>tbody>tr>td, .table>thead>tr>th {
+    border-width: 0;
+    padding: 8px;
+    line-height: 1.4;
+}
+.points {
+    color: #a00;
+    width: 22px;
+    font-weight: bold;
 }
 
 #selected-competition > h4 {
@@ -40,13 +64,6 @@ a:focus {
 .panel-default > .panel-heading {
     background-color: #eee;
     background-color: rgba(239,239,239,0.9);
-}
-
-.panel-body {
-    margin: 12px 0;
-    padding: 6px;
-    background-color: #fff;
-    background-color: rgba(255,255,255,0.9);
 }
 
 .team-highlight {
@@ -60,12 +77,6 @@ a:focus {
 .list-group-item.active:focus {
     background-color: #a00;
     border-color: #a00;
-}
-.points {
-    color: #a00;
-    background-color: #ddd;
-    width: 22px;
-    font-weight: bold;
 }
 .container .jumbotron {
     background-image: url("../images/badge-icon.png");

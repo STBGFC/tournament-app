@@ -1,13 +1,11 @@
 <script>
     import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
     import IconButton from '@smui/icon-button';
-
-    let tournament = {
-        title: "Sandhurst 2021"
-    };
+    import { tournament } from '$lib/db';
 </script>
 
 <svelte:head>
+	<title>{$tournament.name}</title>
 </svelte:head>
 
 <div class="flexy">
@@ -16,10 +14,10 @@
             <Row>
                 <Section>
                     <IconButton class="material-icons">menu</IconButton>
-                    <Title>{tournament.title}</Title>
+                    <Title>{$tournament.name}</Title>
                 </Section>
                 <Section align="end" toolbar>
-                    <IconButton class="material-icons" aria-label="Home">home</IconButton>
+                    <a href="/"><IconButton class="material-icons" aria-label="Home">home</IconButton></a>
                     <!-- <IconButton class="material-icons" aria-label="Print this page">print</IconButton> -->
                     <IconButton class="material-icons" aria-label="Bookmark this page">login</IconButton>
                 </Section>
@@ -30,4 +28,3 @@
     <slot/>
 
 </div>
-

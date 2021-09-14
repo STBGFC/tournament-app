@@ -2,18 +2,12 @@
  * Tournament app structural CSS
  */
 
-html, body { height: 100%; margin: 0 }
-
 h1 {
     margin-top: 0;
 }
 h2.points {
     margin-top: 2px;
     padding: 4px 0;
-}
-
-div.paper-container {
-    margin: 20px;
 }
 
 .btn-agegroup {
