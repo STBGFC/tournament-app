@@ -3,16 +3,16 @@ import { readable, writable } from 'svelte/store';
 let _tournament = {
     club : "STBGFC", 
     competitions : [
-        {name : "U8",section : "All", groups : 4 }, 
-        { name : "U9",section : "All", groups : 4 }, 
-        { name : "U10", section : "A", groups : 2 }, 
-        { name : "U10", section : "B", groups : 2 }, 
+        { name : "U8",  section : "All", groups : 4 }, 
+        { name : "U9",  section : "All", groups : 4 }, 
+        { name : "U10", section : "Boys A", groups : 2 }, 
+        { name : "U10", section : "Girls", groups : 2 }, 
         { name : "U11", section : "A", groups : 2 }, 
         { name : "U11", section : "B", groups : 2 }, 
         { name : "U12", section : "A", groups : 2 }, 
         { name : "U12", section : "B", groups : 2 }, 
         { name : "U13", section : "All", groups : 2 }, 
-        { name : "U14",section : "All", groups : 2 }, 
+        { name : "U14", section : "All", groups : 2 }, 
         { name : "U15", section : "Groups", groups : 4 }, 
         { name : "U15", section : "Champions League", groups : 2 }, 
         { name : "U15", section : "Europa League",groups : 2 }, 
@@ -20,7 +20,7 @@ let _tournament = {
         { name : "U17", section : "Champions League", groups : 2 }, 
         { name : "U17", section : "Europa League", groups : 2 }
     ], 
-    description : "Welcome to the Sandhurst Town Boys & Girls FC Summer Tournament.", 
+    description : "Welcome to the 2021 Sandhurst Town Boys & Girls FC Summer Tournament. We hope you enjoy it and encourage you to provide feedback to help us improve!", 
     name : "Sandhurst 2021", 
     siteUrl : "https://www.stbgfc.co.uk" 
 };

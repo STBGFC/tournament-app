@@ -5,6 +5,5 @@
 			"$lib/*": ["src/lib/*"]
 		}
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"],
-	"exclude": ["node_modules", ".nuxt", "dist"]
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"]
 }

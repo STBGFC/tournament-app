@@ -1,45 +1,49 @@
 <script>
-	import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import Button, { Label } from '@smui/button';
 	import { tournament } from '$lib/db';
-import { component_subscribe } from 'svelte/internal';
-
-	export const title = 'Welcome';
-
+	import List, {
+		Item,
+		Graphic,
+		Meta,
+		Text,
+		PrimaryText,
+		SecondaryText,
+	} from '@smui/list';
+	import { goto } from '$app/navigation';
 </script>
 
-<blockquote>
-	<h1>{$tournament.name}</h1>
-	<p>{$tournament.description}</p>
-	<footer>Select a competition below to view results and fixtures</footer>
-</blockquote>
+<h1>{$tournament.name}</h1>
+<p>{$tournament.description}</p>
+<p><em>Select a competition below to view results and fixtures</em></p>
 
-<div id="competitions">
-	<LayoutGrid>
-	{#each $tournament.competitions as comp}
-		<Cell span={2}>
-			<div class="button-cell">
-				<a href="/app/competition/{comp.name}/{comp.section}">
-					<Button variant="raised">
-						<Label>{comp.name} / {comp.section}</Label>
-					</Button>
-				</a>
-			</div>	
-		</Cell>		
-	{/each}
-	</LayoutGrid>
+<div>
+	<List
+	  class="competition-list"
+	  twoLine
+	  avatarList
+	  singleSelection
+	>
+		{#each $tournament.competitions as comp}	
+		<Item
+		  on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}
+		  disabled={false}
+		>
+		
+        <Graphic
+          style="background-image: url(https://place-hold.it/40x40/a00/fff/ccc?text={comp.name}&fontsize=14);"
+        />
+        <Text>
+			<PrimaryText>{comp.name}</PrimaryText>
+			<SecondaryText>{comp.section}</SecondaryText>
+        </Text>
+        <Meta class="material-icons">sports_soccer</Meta>
+      	</Item>
+		{/each}
+	</List>
 </div>
 
 <style>
-	#competitions {
-		width: 70%;
-	}
-
-	.button-cell {
-		height: 60px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: var(--mdc-theme-on-secondary, #fff);
+	* :global(.competition-list) {
+		width: 100%;
+		border: 1px solid var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.9));
 	}
 </style>
