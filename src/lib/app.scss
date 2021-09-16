@@ -1,6 +1,10 @@
 /*
  * custom branding for STBGFC sites
  */
+
+@use '@material/typography/index' as typography;
+@use '@material/typography/mdc-typography';
+
 :root {
     --mdc-theme-primary: #a00;
     --mdc-theme-secondary: #fff;
@@ -61,10 +65,14 @@ blockquote > footer {
     font-style: italic;
 }
 
+h1 {
+    @include typography.typography('headline1');
+}
+
 a,
 a:hover,
 a:focus {
-    color: #a00;
+    color: var( --mdc-theme-primary);
 }
 
 .text-center { 
@@ -92,18 +100,13 @@ table, .table {
     line-height: 1.4;
 }
 .points {
-    color: #a00;
+    color: var( --mdc-theme-primary);
     width: 22px;
     font-weight: bold;
 }
 
 #selected-competition > h4 {
-    color: whitesmoke;
-}
-
-.panel-default > .panel-heading {
-    background-color: #eee;
-    background-color: rgba(239,239,239,0.9);
+    color: var( --mdc-theme-on-primary);
 }
 
 .team-highlight {
@@ -112,22 +115,6 @@ table, .table {
     color: blue;
 }
 
-.list-group-item.active,
-.list-group-item.active:hover,
-.list-group-item.active:focus {
-    background-color: #a00;
-    border-color: #a00;
-}
-.container .jumbotron {
-    background-image: url("../images/badge-icon.png");
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-color: #333;
-    background-color: transparent;
-    color: white;
-    border-radius: 0;
-    padding: 20px 15px;
-}
 
 .tp {
     background-color: #fff;

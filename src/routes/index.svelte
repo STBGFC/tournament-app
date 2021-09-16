@@ -11,9 +11,13 @@
 	import { goto } from '$app/navigation';
 </script>
 
-<h1>{$tournament.name}</h1>
-<p>{$tournament.description}</p>
-<p><em>Select a competition below to view results and fixtures</em></p>
+<div class="jumbotron">
+	<h1 class="mdc-typography--headline2">{$tournament.name}</h1>
+	<blockquote>
+		<p>{$tournament.description}</p>
+		<p><em>Select a competition below to view results and fixtures</em></p>
+	</blockquote>
+</div>
 
 <div>
 	<List
@@ -42,6 +46,16 @@
 </div>
 
 <style>
+	.jumbotron {
+		background-image: url("/images/badge-icon.png");
+		background-size: 8rem;
+		background-position: top right;
+		background-repeat: no-repeat;
+		/* color: var(--mdc-theme-text-secondary-on-dark); */
+		padding: 20px 15px;
+		max-width: 70%;
+	}
+
 	* :global(.competition-list) {
 		width: 100%;
 		border: 1px solid var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.9));
