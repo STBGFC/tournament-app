@@ -48,12 +48,26 @@
 <style>
 	.jumbotron {
 		background-image: url("/images/badge-icon.png");
-		background-size: 8rem;
+		background-size: 6rem;
 		background-position: top right;
 		background-repeat: no-repeat;
 		/* color: var(--mdc-theme-text-secondary-on-dark); */
-		padding: 20px 15px;
-		max-width: 70%;
+		max-width: 80%;
+	}
+	
+	@media (max-width: 767px) {
+		.jumbotron {
+			background-size: 4rem;
+			max-width: 100%;
+		}
+	}
+
+	blockquote {
+		font-weight: normal;
+    	font-style: italic;
+		padding-left: 12px;
+		border-left: 5px solid var( --mdc-theme-primary);
+		margin: 10px;
 	}
 
 	* :global(.competition-list) {
