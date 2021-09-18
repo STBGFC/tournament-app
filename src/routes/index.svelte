@@ -8,44 +8,53 @@
 		PrimaryText,
 		SecondaryText,
 	} from '@smui/list';
+    import Paper, { Content } from '@smui/paper';
 	import { goto } from '$app/navigation';
 </script>
+
 
 <div class="jumbotron">
 	<h1>{$tournament.name}</h1>
 	<blockquote>
 		<p>{$tournament.description}</p>
-		<p><em>Select a competition below to view results and fixtures</em></p>
+		<p style="font-size: smaller"><em>Select a competition below to view results and fixtures</em></p>
 	</blockquote>
 </div>
 
-<div class="list-container">
-	<List
-	  class="competition-list"
-	  twoLine
-	  avatarList
-	  singleSelection
-	>
-		{#each $tournament.competitions as comp}	
-		<Item
-		  on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}
-		  disabled={false}
-		>
-		
-        <Graphic
-          style="background-image: url(https://place-hold.it/40x40/a00/fff/ccc?text={comp.name}&fontsize=14);"
-        />
-        <Text>
-			<PrimaryText>{comp.name}</PrimaryText>
-			<SecondaryText>{comp.section}</SecondaryText>
-        </Text>
-        <Meta class="material-icons">sports_soccer</Meta>
-      	</Item>
-		{/each}
-	</List>
-</div>
+<Paper class="paper" elevation={4}>
+	<Content>    
+		<div class="list-container">
+			<List
+				class="competition-list"
+				twoLine
+				avatarList
+				singleSelection
+				>
+				{#each $tournament.competitions as comp}	
+				<Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>						
+					<Graphic style="background-image: url(https://place-hold.it/40x40/a00/fff/ccc?text={comp.name}&fontsize=14);" />
+					<Text>
+						<PrimaryText>{comp.name}</PrimaryText>
+						<SecondaryText>{comp.section}</SecondaryText>
+					</Text>
+					<Meta class="material-icons">sports_soccer</Meta>
+				</Item>
+				{/each}
+			</List>
+		</div>
+	</Content>
+</Paper>
+
 
 <style>
+	.jumbotron {
+		background-image: url("/images/badge-icon.png");
+		background-size: 7rem;
+		background-position: top right;
+		background-repeat: no-repeat;
+		max-width: 80%;
+		margin-top: 30px;
+	}
 	.list-container {
 		width: 100%;
 		border: 1px solid var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.9));
@@ -53,30 +62,23 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
-	.jumbotron {
-		background-image: url("/images/badge-icon.png");
-		background-size: 6rem;
-		background-position: top right;
-		background-repeat: no-repeat;
-		/* color: var(--mdc-theme-text-secondary-on-dark); */
-		max-width: 70%;
-	}
 	
-	@media (max-width: 767px) {
+	@media (max-width: 600px) {
 		.jumbotron {
-			background-size: 4rem;
+			background-size: 5rem;
 			max-width: 100%;
 		}
 	}
 
 	blockquote {
-		font-weight: normal;
-    	font-style: italic;
+		font: normal italic larger Arial;
+		line-height: 1.5em;
 		padding-left: 12px;
 		border-left: 5px solid var( --mdc-theme-primary);
 		margin: 10px;
+		max-width: 75%;
 	}
-
+	
 	* :global(.competition-list) {
 		width: 100%;
 	}

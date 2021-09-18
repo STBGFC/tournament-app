@@ -1,7 +1,6 @@
 <script>
     import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
     import IconButton from '@smui/icon-button';
-    import Paper, { Content } from '@smui/paper';
     import { tournament } from '$lib/db';
     import '$lib/app.scss';
 </script>
@@ -26,27 +25,17 @@
             </Row>
         </TopAppBar>
     </main>
-    <div class="paper-container">
-        <Paper class="paper" elevation={4}>
-            <Content>                
-                <slot/>
-            </Content>
-        </Paper>
-    </div>
 
-    <p class="footer">&copy; Darren Davison &amp; <a href="{ $tournament.siteUrl }">{ $tournament.club }</a> 2021</p>
+    <section id="slot">
+        <slot/>
+    </section>
+
+    <section id="footer">
+        <p>&copy; Darren Davison &amp; <a href="{ $tournament.siteUrl }">{ $tournament.club }</a> 2021</p>
+    </section>
 </div>
 
 <style>
-    .paper-container {
-        margin-top: 44px;
-        padding: 26px 10px;
-        min-width: 80%;
-        flex-basis: 0;
-        flex-grow: 1;
-        overflow: none;
-    }
-
     .flex-layout {
         flex-direction: column;
         min-height: 100vh;
@@ -54,24 +43,26 @@
         flex-wrap: wrap;
         flex-direction: column;
         justify-content: space-between;
+        color: var(--mdc-theme-on-primary);
     }
 
-    * :global(.paper) {
-        margin: 0 auto;
-        max-width: 1024px;
-        background-color: rgba(255,255,255,0.97);
+    #slot {
+        padding-top: 55px;
+        margin: 10px auto;
+        min-width: 80%;
+        max-width: 1200px;
     }
-
-    .footer {
+    
+    #footer {
         padding: 1.2rem 0;
         margin: 0;
         text-align: center;
-        color: white;
+        color: var(--mdc-theme-on-primary);
         font-size: smaller;
-        background-color: rgba(48,48,48,.35);
+        background-color: var(--mdc-theme-text-icon-on-light);
     }
     
-    .footer a {
+    #footer a {
         color: #f5f5f5;
         border-bottom: 1px dotted #f5f5f5;
         text-decoration: none;

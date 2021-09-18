@@ -4,6 +4,7 @@
     import Tab, { Label } from '@smui/tab';
     import TabBar from '@smui/tab-bar';
     import LayoutGrid, { Cell } from '@smui/layout-grid';
+    import Paper, { Content } from '@smui/paper';
     import { tournament, results } from '$lib/db';
     import { page } from "$app/stores";
 
@@ -37,23 +38,46 @@
 
 </script>
 
+<svelte:head>
+	<title>{name} : {section} Section</title>
+</svelte:head>
+
+
 <h4>{name} : {section} Section</h4>
 
-<TabBar tabs={groups} let:tab bind:active>
-    <Tab {tab} minWidth>
-        <Label>Grp {tab}</Label>
-    </Tab>
-</TabBar>
+<Paper class="paper" elevation={4}>
+    <Content>              
 
-<LayoutGrid>
-    <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-        <LeagueTable bind:results={groupResults}/>
-    </Cell>
-    <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-        <ResultList bind:results={groupResults}/>
-    </Cell>
-    <Cell span={12}>
-        <h4>KO Matches</h4>        
-        <ResultList bind:results={koResults}/>
-    </Cell>
-</LayoutGrid>
+        <TabBar tabs={groups} let:tab bind:active>
+            <Tab {tab} minWidth>
+                <Label>Grp {tab}</Label>
+            </Tab>
+        </TabBar>
+        
+        <LayoutGrid>
+            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+                <LeagueTable bind:results={groupResults}/>
+            </Cell>
+            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+                <ResultList bind:results={groupResults}/>
+            </Cell>
+        </LayoutGrid>
+
+    </Content>
+</Paper>
+
+{#if koResults.length > 0}
+<Paper class="paper" elevation={4}>
+    <Content>              
+        
+        <LayoutGrid>
+            <Cell span={12}>
+                <h5>KO Matches</h5>        
+                <ResultList bind:results={koResults}/>
+            </Cell>
+        </LayoutGrid>
+        
+    </Content>
+</Paper>
+{/if}
+
