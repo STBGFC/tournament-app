@@ -49,12 +49,12 @@
     #slot {
         padding-top: 55px;
         margin: 10px auto;
-        min-width: 80%;
         max-width: 1200px;
+        width: 100%;
     }
     
     #footer {
-        padding: 1.2rem 0;
+        padding: 0.5em 0;
         margin: 0;
         text-align: center;
         color: var(--mdc-theme-on-primary);

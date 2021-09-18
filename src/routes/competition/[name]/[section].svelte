@@ -1,6 +1,7 @@
 <script>
     import ResultList from "$lib/ResultList.svelte";
     import LeagueTable from "$lib/LeagueTable.svelte";
+	import AgeFab from '$lib/AgeFab.svelte';
     import Tab, { Label } from '@smui/tab';
     import TabBar from '@smui/tab-bar';
     import LayoutGrid, { Cell } from '@smui/layout-grid';
@@ -43,11 +44,12 @@
 </svelte:head>
 
 
-<h4>{name} : {section} Section</h4>
-
 <Paper class="paper" elevation={4}>
     <Content>              
-
+        <h4>
+            <AgeFab {name}/>
+            '{section}' Section
+        </h4>
         <TabBar tabs={groups} let:tab bind:active>
             <Tab {tab} minWidth>
                 <Label>Grp {tab}</Label>

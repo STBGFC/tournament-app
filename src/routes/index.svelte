@@ -1,8 +1,8 @@
 <script>
+	import AgeFab from '$lib/AgeFab.svelte';
 	import { tournament } from '$lib/db';
 	import List, {
 		Item,
-		Graphic,
 		Meta,
 		Text,
 		PrimaryText,
@@ -31,8 +31,8 @@
 				singleSelection
 				>
 				{#each $tournament.competitions as comp}	
-				<Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>						
-					<Graphic style="background-image: url(https://place-hold.it/40x40/a00/fff/ccc?text={comp.name}&fontsize=14);" />
+				<Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
+					<AgeFab name={comp.name}/>
 					<Text>
 						<PrimaryText>{comp.name}</PrimaryText>
 						<SecondaryText>{comp.section}</SecondaryText>
