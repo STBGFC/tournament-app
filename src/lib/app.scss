@@ -7,8 +7,8 @@
 
 :root {
     --mdc-theme-primary: #a00;
-    --mdc-theme-secondary: #fff;
-    --mdc-theme-background: #ddd;
+    --mdc-theme-secondary: #000;
+    --mdc-theme-background: #aaa;
     --mdc-theme-surface: #fff;
     --mdc-theme-error: #e00;
     --mdc-theme-on-primary: whitesmoke;
@@ -42,14 +42,14 @@
     --mdc-layout-grid-gutter-phone: 16px;
     --mdc-layout-grid-column-width-phone: 72px;
 
-    --mdc-typography-font-family: 'Roboto Condensed';
+    --mdc-typography-font-family: 'Roboto';
 }
 
 html, body { 
     height: 100%; 
     margin: 0; 
-    font-family: 'Roboto Condensed', sans-serif !important;
-    background: url(/images/background.jpg) no-repeat fixed;
+    font-family: 'Roboto', sans-serif !important;
+    // background: url(/images/background.jpg) no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -57,7 +57,7 @@ html, body {
 }
 
 h1 {
-    @include typography.typography('headline1');
+    @include typography.typography('headline2');
 }
 h2 {
     @include typography.typography('headline3');
@@ -88,15 +88,17 @@ a:focus {
 table, .table { 
     border-width: 0;
 }
-.table thead tr {
-    color: #aaa;
+.table thead tr, .text-muted {
+    color: var(--mdc-theme-background);
+    font-size: smaller;
+    width: 100%;
 }
 .table th {
     font-weight: normal;
 }
 .table>tbody>tr>td, .table>thead>tr>th {
     border-width: 0;
-    padding: 8px;
+    padding: 6px 12px 0 0;
     line-height: 1.4;
 }
 .points {
@@ -115,11 +117,27 @@ table, .table {
     color: blue;
 }
 
-.tp {
-    background-color: #fff;
-    background-color: rgba(255,255,255,0);
+@media (max-width: 464px) {
+    html, body {
+        font-size: small;
+    }
+    .table { 
+        width: 100%;
+    }
 }
 
+@media (min-width: 384px) {
+    .table>tbody>tr>td, .table>thead>tr>th {
+        padding: 12px 16px 0 0;
+        line-height: 1.4;
+    }
+}
+@media (min-width: 768px) {
+    .table>tbody>tr>td, .table>thead>tr>th {
+        padding: 16px 16px 0 0;
+        line-height: 1.4;
+    }
+}
 @media print {
     .no-print {
         display: none;

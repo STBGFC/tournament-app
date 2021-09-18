@@ -36,9 +36,8 @@
 
 </script>
 
-<h1>{name} / {section}</h1>
+<h4>{name} / {section}</h4>
 
-<div>
 <TabBar tabs={groups} let:tab bind:active>
     <Tab {tab} minWidth>
         <Label>Grp {tab}</Label>
@@ -47,7 +46,7 @@
 
 <LeagueTable bind:results={groupResults}/>
 <ResultList bind:results={groupResults}/>
-</div>
 
-<h2>KO Section</h2>
+<h4>KO Section</h4>
+
 <ResultList bind:results={koResults}/>

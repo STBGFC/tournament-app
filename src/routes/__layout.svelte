@@ -27,7 +27,7 @@
         </TopAppBar>
     </main>
     <div class="paper-container">
-        <Paper class="paper" elevation={14}>
+        <Paper class="paper" elevation={8}>
             <Content>                
                 <slot/>
             </Content>
