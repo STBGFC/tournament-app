@@ -27,7 +27,7 @@
         </TopAppBar>
     </main>
     <div class="paper-container">
-        <Paper class="paper" elevation={8}>
+        <Paper class="paper" elevation={4}>
             <Content>                
                 <slot/>
             </Content>
@@ -39,8 +39,8 @@
 
 <style>
     .paper-container {
-        margin-top: 48px;
-        padding: 36px 18px;
+        margin-top: 44px;
+        padding: 26px 10px;
         min-width: 80%;
         flex-basis: 0;
         flex-grow: 1;

@@ -3,6 +3,7 @@
     import LeagueTable from "$lib/LeagueTable.svelte";
     import Tab, { Label } from '@smui/tab';
     import TabBar from '@smui/tab-bar';
+    import LayoutGrid, { Cell } from '@smui/layout-grid';
     import { tournament, results } from '$lib/db';
     import { page } from "$app/stores";
 
@@ -36,7 +37,7 @@
 
 </script>
 
-<h4>{name} / {section}</h4>
+<h4>{name} : {section} Section</h4>
 
 <TabBar tabs={groups} let:tab bind:active>
     <Tab {tab} minWidth>
@@ -44,9 +45,15 @@
     </Tab>
 </TabBar>
 
-<LeagueTable bind:results={groupResults}/>
-<ResultList bind:results={groupResults}/>
-
-<h4>KO Section</h4>
-
-<ResultList bind:results={koResults}/>
+<LayoutGrid>
+    <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+        <LeagueTable bind:results={groupResults}/>
+    </Cell>
+    <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+        <ResultList bind:results={groupResults}/>
+    </Cell>
+    <Cell span={12}>
+        <h4>KO Matches</h4>        
+        <ResultList bind:results={koResults}/>
+    </Cell>
+</LayoutGrid>
