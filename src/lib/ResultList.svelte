@@ -1,5 +1,6 @@
 <script>
     import moment from 'moment-timezone';
+    import { highlight } from '$lib/db';
     
     let time = function(dateTime) {
       return moment(dateTime).tz('Europe/London').format('HH:mm')
@@ -39,17 +40,17 @@
         <!-- TODO: results needs to be ordered by pitchNumber, then dateTime -->
         {#each results as result}
         <tr>
-            <td class="text-center text-muted info-col" style="width:15px">{result.tag}</td>
+            <td class="text-center text-muted info-col" style="width:20px">{result.tag}</td>
             <!--  :class="{'team-highlight': highlighted === result.homeTeam}" @click="highlight(result.homeTeam)" -->
-            <td on:click={() => result.homeGoals += 1} class="text-right">{result.homeTeam}</td>
+            <td on:click={() => {result.homeGoals += 1; $highlight = result.homeTeam}} class="text-right {$highlight == result.homeTeam ? 'team-highlight' : ''}">{result.homeTeam}</td>
             {#if homeScore(result) == ''}
-            <td colspan="2" class="text-center text-muted" style="width:30px">{time(result.dateTime)}<br/>pitch {result.pitch}</td>
+            <td colspan="2" class="text-center text-muted" style="width:40px">{time(result.dateTime)}<br/>pitch {result.pitch}</td>
             {:else}
-            <td class="text-center points" style="width:15px">{homeScore(result)}</td>
-            <td class="text-center points" style="width:15px">{awayScore(result)}</td>
+            <td class="text-right points" style="width:15px">{homeScore(result)}</td>
+            <td class="text-left points" style="width:15px">{awayScore(result)}</td>
             {/if}
             <!--  :class="{'team-highlight': highlighted === result.homeTeam}" @click="highlight(result.homeTeam)" -->
-            <td on:click={() => result.awayGoals += 1} class="text-left">{result.awayTeam}</td>
+            <td on:click={() => {result.awayGoals += 1; $highlight = result.awayTeam}} class="text-left {$highlight == result.awayTeam ? 'team-highlight' : ''}">{result.awayTeam}</td>
         </tr>
         {/each}
     </tbody>

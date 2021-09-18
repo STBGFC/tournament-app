@@ -1,5 +1,6 @@
 <script>
     import leaguesort from "leaguesort";
+    import { highlight } from '$lib/db';
 
     export let results = [];
 
@@ -23,8 +24,8 @@
     </thead>
     <tbody>
         {#each tableEntries as entry}
-        <tr> <!--  :key="entry.name" @click="highlight(entry.name)" :class="{'team-highlight': highlighted === entry.name}" -->
-            <td class="text-left">{entry.name}</td>
+        <tr>
+            <td class="text-left {$highlight == entry.name ? 'team-highlight' : ''}">{entry.name}</td>
             <td class="text-right">{entry.played}</td>
             <td class="text-right">{entry.won}</td>
             <td class="text-right">{entry.drawn}</td>

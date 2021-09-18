@@ -119,3 +119,4 @@ let _results = [
 // TODO: change to readable
 export const results = writable(_results);
 export const tournament = readable(_tournament);
+export const highlight = writable('');
