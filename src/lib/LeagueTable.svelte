@@ -1,6 +1,7 @@
 <script>
-    import leaguesort from "leaguesort";
     import { highlight } from '$lib/db';
+    
+    import leaguesort from "leaguesort";
 
     export let results = [];
 

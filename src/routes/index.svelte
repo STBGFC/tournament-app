@@ -1,6 +1,9 @@
 <script>
 	import AgeFab from '$lib/AgeFab.svelte';
 	import { tournament } from '$lib/db';
+	
+	import { goto } from '$app/navigation';
+
 	import List, {
 		Item,
 		Meta,
@@ -9,7 +12,6 @@
 		SecondaryText,
 	} from '@smui/list';
     import Paper, { Content } from '@smui/paper';
-	import { goto } from '$app/navigation';
 </script>
 
 

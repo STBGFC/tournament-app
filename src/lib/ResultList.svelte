@@ -1,6 +1,7 @@
 <script>
-    import moment from 'moment-timezone';
     import { highlight } from '$lib/db';
+    
+    import moment from 'moment-timezone';
     
     let time = (dateTime) => moment(dateTime).tz('Europe/London').format('HH:mm');
 

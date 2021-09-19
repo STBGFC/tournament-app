@@ -20,6 +20,10 @@ let _tournament = {
         { name : "U17", section : "Champions League", groups : 2 }, 
         { name : "U17", section : "Europa League", groups : 2 }
     ], 
+    pages: [
+        { title: "Schedule", content: "Blah" },
+        { title: "Tournament Rules", content: "Blah blah" }
+    ],
     description : "Welcome to the 2021 Sandhurst Town Boys & Girls FC Summer Tournament. We hope you enjoy it and encourage you to provide feedback to help us improve!", 
     name : "Sandhurst 2021", 
     siteUrl : "https://www.stbgfc.co.uk" 

@@ -46,6 +46,12 @@
     --mdc-typography-font-family: 'Roboto';
 }
 
+/* shim for smui drawer items with h/coded colour */
+.mdc-drawer .mdc-deprecated-list-item--activated,
+.mdc-drawer .mdc-deprecated-list-item--activated .mdc-deprecated-list-item__graphic {
+    color: var(--mdc-theme-primary);
+}
+
 html, body { 
     height: 100%; 
     margin: 0; 

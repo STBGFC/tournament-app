@@ -1,20 +1,26 @@
 <script>
-    import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
-    import IconButton from '@smui/icon-button';
     import { tournament } from '$lib/db';
     import '$lib/app.scss';
+    import MenuDrawer from '$lib/MenuDrawer.svelte';
+
+    import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
+    import IconButton from '@smui/icon-button';
+
+    let drawerOpen = false;
 </script>
 
 <svelte:head>
 	<title>{$tournament.name}</title>
 </svelte:head>
 
+<MenuDrawer bind:open={drawerOpen} tournament={$tournament}/>
+
 <div class="flex-layout">
     <main>
         <TopAppBar variant="standard" dense>
             <Row>
                 <Section>
-                    <IconButton class="material-icons">menu</IconButton>
+                    <IconButton class="material-icons" on:click={() => (drawerOpen = !drawerOpen)}>menu</IconButton>
                     <Title>{$tournament.name}</Title>
                 </Section>
                 <Section align="end" toolbar>
@@ -33,6 +39,7 @@
     <section id="footer">
         <p>&copy; Darren Davison &amp; <a href="{ $tournament.siteUrl }">{ $tournament.club }</a> 2021</p>
     </section>
+
 </div>
 
 <style>
