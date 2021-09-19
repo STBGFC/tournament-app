@@ -2,11 +2,9 @@
     import moment from 'moment-timezone';
     import { highlight } from '$lib/db';
     
-    let time = function(dateTime) {
-      return moment(dateTime).tz('Europe/London').format('HH:mm')
-    }
+    let time = (dateTime) => moment(dateTime).tz('Europe/London').format('HH:mm');
 
-    let homeScore = function(r) {
+    let homeScore = (r) => {
       if ('homeGoals' in r && r.homeGoals >= 0) {
         return r.homeGoals + (r.awayPens || r.homePens ? '(' + r.homePens + ')' : '');
       } else {
@@ -14,7 +12,7 @@
       }
     }
 
-    let awayScore = function(r) {
+    let awayScore = (r) => {
       if ('awayGoals' in r && r.awayGoals >= 0) {
         return (r.awayPens || r.homePens ? '(' + r.awayPens + ')' : '') + r.awayGoals;
       } else {

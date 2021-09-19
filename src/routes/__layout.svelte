@@ -47,7 +47,7 @@
     }
 
     #slot {
-        padding-top: 55px;
+        padding-top: 38px;
         margin: 10px auto;
         max-width: 1200px;
         width: 100%;
