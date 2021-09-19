@@ -23,8 +23,8 @@
 
 <Drawer variant="modal" fixed={false} bind:open>
     <Header>
-        <Title>{tournament.name}</Title>
-        <Subtitle>It's the best fake mail app drawer.</Subtitle>
+        <Title><img style="float: left; width: 50px; padding: 9px 9px 0 0" src="/images/badge-icon.png" alt="{tournament.club}">{tournament.name}</Title>
+        <Subtitle>{tournament.club}</Subtitle>
     </Header>
     <Content>
         <List>
