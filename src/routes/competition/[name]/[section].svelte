@@ -9,7 +9,6 @@
     import Tab, { Label } from '@smui/tab';
     import TabBar from '@smui/tab-bar';
     import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import Paper, { Content } from '@smui/paper';
 
     import moment from "moment";
 
@@ -83,26 +82,22 @@
         {/if}
     </div>
 </div>
-
-<Paper class="paper" elevation={4}>
-    <Content>   
-        <TabBar tabs={groups} let:tab bind:active>
-            <Tab {tab} minWidth>
-                <Label>Grp {tab}</Label>
-            </Tab>
-        </TabBar>
-        
-        <LayoutGrid>
-            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-                <LeagueTable bind:results={groupResults}/>
-            </Cell>
-            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-                <ResultList bind:results={groupResults}/>
-            </Cell>
-        </LayoutGrid>
-
-    </Content>
-</Paper>
+<div class="section-body">    
+    <TabBar tabs={groups} let:tab bind:active>
+        <Tab {tab} minWidth>
+            <Label>Grp {tab}</Label>
+        </Tab>
+    </TabBar>
+    
+    <LayoutGrid>
+        <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+            <LeagueTable bind:results={groupResults}/>
+        </Cell>
+        <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+            <ResultList bind:results={groupResults}/>
+        </Cell>
+    </LayoutGrid>
+</div>
 
 {#if koResults.length > 0}
 <div class="section-head">
@@ -110,17 +105,13 @@
         <h5>KO Matches</h5>        
     </div>
 </div>
-<Paper class="paper" elevation={4}>
-    <Content>              
-        
-        <LayoutGrid>
-            <Cell span={12}>
-                <ResultList bind:results={koResults}/>
-            </Cell>
-        </LayoutGrid>
-        
-    </Content>
-</Paper>
+<div class="section-body">        
+    <LayoutGrid>
+        <Cell span={12}>
+            <ResultList bind:results={koResults}/>
+        </Cell>
+    </LayoutGrid>
+</div>
 {/if}
 
 <style>
@@ -145,6 +136,11 @@
         border-bottom: 1px dotted #f5f5f5;
         text-decoration: none;
         text-transform: uppercase;
+    }
+
+    .section-body {
+        color: var(--mdc-theme-on-surface, #333);
+        background-color: var(--mdc-theme-background, white);
     }
 
     ul, li {

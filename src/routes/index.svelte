@@ -11,7 +11,6 @@
 		PrimaryText,
 		SecondaryText,
 	} from '@smui/list';
-    import Paper, { Content } from '@smui/paper';
 </script>
 
 
@@ -22,30 +21,26 @@
 		<p style="font-size: smaller"><em>Select a competition below to view results and fixtures</em></p>
 	</blockquote>
 </div>
-
-<Paper class="paper" elevation={4}>
-	<Content>    
-		<div class="list-container">
-			<List
-				class="competition-list"
-				twoLine
-				avatarList
-				singleSelection
-				>
-				{#each $tournament.competitions as comp}	
-				<Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
-					<AgeFab name={comp.name}/>
-					<Text>
-						<PrimaryText>{comp.name}</PrimaryText>
-						<SecondaryText>{comp.section}</SecondaryText>
-					</Text>
-					<Meta class="material-icons">sports_soccer</Meta>
-				</Item>
-				{/each}
-			</List>
-		</div>
-	</Content>
-</Paper>
+   
+<div class="list-container">
+	<List
+		class="competition-list"
+		twoLine
+		avatarList
+		singleSelection
+		>
+		{#each $tournament.competitions as comp}	
+		<Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
+			<AgeFab name={comp.name}/>
+			<Text>
+				<PrimaryText>{comp.name}</PrimaryText>
+				<SecondaryText>{comp.section}</SecondaryText>
+			</Text>
+			<Meta class="material-icons">sports_soccer</Meta>
+		</Item>
+		{/each}
+	</List>
+</div>
 
 
 <style>
@@ -58,11 +53,11 @@
 		margin-top: 30px;
 	}
 	.list-container {
-		width: 100%;
-		border: 1px solid var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.9));
 		height: 400px;
 		overflow-y: auto;
 		overflow-x: hidden;
+        color: var(--mdc-theme-on-surface, #333);
+        background-color: var(--mdc-theme-background, white);
 	}
 	
 	@media (max-width: 600px) {
@@ -82,6 +77,6 @@
 	}
 	
 	* :global(.competition-list) {
-		width: 100%;
+		width: 100%;		
 	}
 </style>

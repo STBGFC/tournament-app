@@ -2,13 +2,24 @@
     import { tournament } from '$lib/db';
     import '$lib/app.scss';
     import MenuDrawer from '$lib/MenuDrawer.svelte';
+    import PageTransition from '$lib/PageTransition.svelte';
 
     import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
     import IconButton from '@smui/icon-button';
 
     let drawerOpen = false;
+    export let routeKey;
 </script>
 
+<script context="module">
+    export const load = async ({ page }) => ({
+        props: {
+            routeKey: page.path,
+        },
+    })
+</script>
+
+  
 <svelte:head>
 	<title>{$tournament.name}</title>
 </svelte:head>
@@ -32,9 +43,11 @@
         </TopAppBar>
     </main>
 
+    <PageTransition refresh={routeKey}>
     <section id="slot">
         <slot/>
     </section>
+    </PageTransition>
 
     <section id="footer">
         <p>&copy; Darren Davison &amp; <a href="{ $tournament.siteUrl }">{ $tournament.club }</a> 2021</p>
@@ -51,6 +64,7 @@
         flex-direction: column;
         justify-content: space-between;
         color: var(--mdc-theme-on-primary);
+        overflow: hidden;
     }
 
     #slot {
@@ -61,7 +75,7 @@
     }
     
     #footer {
-        padding: 0.5em 0;
+        padding: 2.9em 0;
         margin: 0;
         text-align: center;
         color: var(--mdc-theme-on-primary);

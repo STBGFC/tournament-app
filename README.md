@@ -10,7 +10,8 @@ Notes.
 1. parameterise google map link (MenuDrawer.svelte), background image, badge and colors for external build
 1. iframe the map within app
 1. build for PWA / native
-1. pages display (markup)
+1. pages display (markdown)
+1. transitions between routes
 
 ## FIXME
 1. Fix links to other comps in section header (work once and not again after), same with pages
