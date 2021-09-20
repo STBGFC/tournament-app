@@ -56,7 +56,7 @@
 </svelte:head>
 
  
-<div id="section-head">
+<div class="section-head">
     <AgeFab {name}/>
     <div class="content">
         <h4>{section} Section</h4>
@@ -105,12 +105,16 @@
 </Paper>
 
 {#if koResults.length > 0}
+<div class="section-head">
+    <div class="content">
+        <h5>KO Matches</h5>        
+    </div>
+</div>
 <Paper class="paper" elevation={4}>
     <Content>              
         
         <LayoutGrid>
             <Cell span={12}>
-                <h5>KO Matches</h5>        
                 <ResultList bind:results={koResults}/>
             </Cell>
         </LayoutGrid>
@@ -120,21 +124,23 @@
 {/if}
 
 <style>
-    #section-head {
+    .section-head {
         padding: 40px 15px;
+        color: whitesmoke;        
+        color: var(--mdc-theme-on-primary);        
         background-color: #333;
-        color: whitesmoke;
+        background-color: var(--mdc-theme-text-icon-on-light);
     }
 
     * :global(.mdc-fab) {
         float: left;
     }
 
-    #section-head .content {
+    .section-head .content {
         margin-left: 90px;
     }
 
-    #section-head .content a {
+    .section-head .content a {
         color: #f5f5f5;
         border-bottom: 1px dotted #f5f5f5;
         text-decoration: none;

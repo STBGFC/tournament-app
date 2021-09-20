@@ -26,7 +26,7 @@
     --mdc-theme-text-secondary-on-light: rgba(0, 0, 0, 0.54);
     --mdc-theme-text-hint-on-light: rgba(0, 0, 0, 0.38);
     --mdc-theme-text-disabled-on-light: rgba(0, 0, 0, 0.38);
-    --mdc-theme-text-icon-on-light: rgba(0, 0, 0, 0.38);
+    --mdc-theme-text-icon-on-light: rgba(0, 0, 0, 0.68);
     --mdc-theme-text-primary-on-dark: #fff;
     --mdc-theme-text-secondary-on-dark: hsla(0, 0%, 100%, 0.7);
     --mdc-theme-text-hint-on-dark: hsla(0, 0%, 100%, 0.5);
@@ -103,11 +103,6 @@ a:focus {
 }
 .text-left {
     text-align: left;
-}
-
-.paper {
-    margin-bottom: 20px;
-    background-color: rgb(255, 255, 255, 0.95);
 }
 
 table, .table { 

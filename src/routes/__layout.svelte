@@ -66,7 +66,6 @@
         text-align: center;
         color: var(--mdc-theme-on-primary);
         font-size: smaller;
-        background-color: var(--mdc-theme-text-icon-on-light);
     }
     
     #footer a {
