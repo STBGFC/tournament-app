@@ -7,6 +7,7 @@
     import { page } from "$app/stores";
 
     import Tab, { Label } from '@smui/tab';
+    import Button from "@smui/button";
     import TabBar from '@smui/tab-bar';
     import LayoutGrid, { Cell } from '@smui/layout-grid';
 
@@ -74,9 +75,10 @@
         
         {#if otherComps.length > 0}
         <p>
-            Other sections for this age group: |
+            Other sections for this age group:<br>
+            
             {#each otherComps as {section}}
-            <a href="/competition/{name}/{section}">{section}</a> |&nbsp;
+            <Button href="/competition/{name}/{section}">{section}</Button>
             {/each}
         </p>
         {/if}
@@ -85,7 +87,7 @@
 <div class="section-body">    
     <TabBar tabs={groups} let:tab bind:active>
         <Tab {tab} minWidth>
-            <Label>Grp {tab}</Label>
+            <Label>GRP {tab}</Label>
         </Tab>
     </TabBar>
     
@@ -115,32 +117,8 @@
 {/if}
 
 <style>
-    .section-head {
-        padding: 40px 15px;
-        color: whitesmoke;        
-        color: var(--mdc-theme-on-primary);        
-        background-color: #333;
-        background-color: var(--mdc-theme-text-icon-on-light);
-    }
-
     * :global(.mdc-fab) {
         float: left;
-    }
-
-    .section-head .content {
-        margin-left: 90px;
-    }
-
-    .section-head .content a {
-        color: #f5f5f5;
-        border-bottom: 1px dotted #f5f5f5;
-        text-decoration: none;
-        text-transform: uppercase;
-    }
-
-    .section-body {
-        color: var(--mdc-theme-on-surface, #333);
-        background-color: var(--mdc-theme-background, white);
     }
 
     ul, li {

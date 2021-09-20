@@ -11,8 +11,7 @@ Notes.
 1. iframe the map within app
 1. build for PWA / native
 1. pages display (markdown)
-1. transitions between routes
 
 ## FIXME
-1. Fix links to other comps in section header (work once and not again after), same with pages
 1. team highlighting from leaguetable and ability to cancel it
+1. Force sections to appear at top and not be auto-margined when insufficient content to fill screen
