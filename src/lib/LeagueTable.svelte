@@ -9,7 +9,6 @@
 
 </script>
 
-{#if tableEntries?.length > 0}
 <table class="table tp">
     <thead>
         <tr>
@@ -24,6 +23,7 @@
         </tr>
     </thead>
     <tbody>
+        {#if tableEntries?.length > 0}
         {#each tableEntries as entry}
         <tr>
             <td class="text-left {$highlight == entry.name ? 'team-highlight' : ''}">{entry.name}</td>
@@ -36,9 +36,13 @@
             <td class="text-right points">{entry.points}</td>
         </tr>
         {/each}
+        {:else}
+        <tr>
+            <td colspan="8">League table will appear as results become known</td>
+        </tr>
+        {/if}
     </tbody>
 </table>
-{/if}
 
 <style>
 </style>

@@ -42,17 +42,17 @@
             </Row>
         </TopAppBar>
     </main>
-
+    
     <PageTransition refresh={routeKey}>
-    <section id="slot">
-        <slot/>
-    </section>
+        <section id="slot">
+            <slot/>
+        </section>
     </PageTransition>
-
+        
     <section id="footer">
         <p>&copy; Darren Davison &amp; <a href="{ $tournament.siteUrl }">{ $tournament.club }</a> 2021</p>
     </section>
-
+    
 </div>
 
 <style>
@@ -72,6 +72,7 @@
         margin: 10px auto;
         max-width: 1200px;
         width: 100%;
+        min-height: 81vh;
     }
     
     #footer {
