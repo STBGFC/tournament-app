@@ -10,8 +10,7 @@
     } from '@smui/drawer';
     import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
 
-    export let open = false;
-    export let tournament;
+    export let tournament, pages, open = false;
     let active = 'Inbox';
 
     function setActive(value, location) {
@@ -53,7 +52,7 @@
 
             <Separator />
             <Subheader>Tournament Information</Subheader>
-            {#each tournament.pages as page}
+            {#each pages as page}
             <Item
                 href="javascript:void(0)"
                 on:click={() => setActive(page.title, `/pages/${page.title}`)}

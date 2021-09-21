@@ -1,8 +1,34 @@
 <script>
+    import AgeFab from '$lib/AgeFab.svelte';
+    import { pages } from '$lib/db';
     import { page } from "$app/stores";
 
+    import marked from 'marked';
+
     const { title } = $page.params;
+    let body = '';
+
+    $pages.forEach( p => { if ( p.title === title ) body = p.body });
 
 </script>
 
-<h1>{title}</h1>
+<div class="section-head">
+    <AgeFab name="info"/>
+    <div class="content">
+	    <h4>{title}</h4>
+    </div>
+</div>
+
+<div class="section-body">
+    {@html marked(body)};
+</div>
+
+<style>
+    * :global(.mdc-fab) {
+        float: left;
+    }
+
+    .section-body {
+        padding: 10px;
+    }
+</style>

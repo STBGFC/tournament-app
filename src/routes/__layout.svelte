@@ -1,5 +1,5 @@
 <script>
-    import { tournament } from '$lib/db';
+    import { tournament, pages } from '$lib/db';
     import '$lib/app.scss';
     import MenuDrawer from '$lib/MenuDrawer.svelte';
     import PageTransition from '$lib/PageTransition.svelte';
@@ -24,7 +24,7 @@
 	<title>{$tournament.name}</title>
 </svelte:head>
 
-<MenuDrawer bind:open={drawerOpen} tournament={$tournament}/>
+<MenuDrawer bind:open={drawerOpen} tournament={$tournament}, pages={$pages}/>
 
 <div class="flex-layout">
     <main>

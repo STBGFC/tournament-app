@@ -6,7 +6,7 @@
 </script>
   
 {#key refresh}
-    <div out:fly={{ x: -85, duration: 200 }} in:fly={{ x: 85, duration: 280, delay: 250 }}>
+    <div out:fly={{ x: -85, duration: 200 }} in:fly={{ x: 505, duration: 200, delay: 50 }}>
         <slot />
     </div>
 {/key}

@@ -20,10 +20,6 @@ let _tournament = {
         { name : "U17", section : "Champions League", groups : 2 }, 
         { name : "U17", section : "Europa League", groups : 2 }
     ], 
-    pages: [
-        { title: "Schedule", content: "Blah" },
-        { title: "Tournament Rules", content: "Blah blah" }
-    ],
     description : "Welcome to the 2021 Sandhurst Town Boys & Girls FC Summer Tournament. We hope you enjoy it and encourage you to provide feedback to help us improve!", 
     name : "Sandhurst 2021", 
     siteUrl : "https://www.stbgfc.co.uk" 
@@ -115,12 +111,23 @@ let _results = [
     {__v:0,day:2,dateTime:47700000,duration:"8m",pitch:"7",competition:{name:"U15", section:"Europa League"},tag:"FIN", homeTeam:"Winner SF1", awayTeam:"Winner SF2", homeTeamFrom:"U15_EuropaLeague_SF1", awayTeamFrom:"U15_EuropaLeague_SF2", stage2Tag:"U15_EuropaLeague_FNL"}
 ];
 
+let _news = [
+    { title: "Announcement", body: "Blah" },
+    { title: "Another Announcement", body: "Blah blah" }
+]
+
+let _pages = [
+    { title: "Schedule", body: "Times in brackets is the registration start time (1 hour prior to the first game kicking off)\n\n### Saturday Morning\n\n- U9 Boys (07:30)\n- U11 Boys (07:30)\n- U13 Boys (07:30)\n- U14 Boys (07:30)\n\n### Saturday Afternoon\n\n- U10 Boys (12:00)\n- U15 Boys (12:00)\n\n### Sunday Morning\n\n- U12 Boys (07:30)\n- U10 Girls (07:30)\n- U12 Girls (07:30)\n\n### Sunday Afternoon\n\n- U8 (12:00)\n- U17/18 Boys (11:00)\n- U9 Girls (11:00)\n- U17/18 Girls (12:00)\n- U13 Girls (11:00)\n- U11 Girls (14:30)\n- U15 Girls (14:30)\n" },
+    { title: "Tournament Rules", body: "Blah blah" }
+]
 
 // --------------------------------------------------------------------------
 // EXPORTED STORE VARS
 // --------------------------------------------------------------------------
 
 // TODO: change to readable
+export const news = writable(_news);
+export const pages = writable(_pages);
 export const results = writable(_results);
 export const tournament = readable(_tournament);
 export const highlight = writable('');
