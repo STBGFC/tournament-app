@@ -26,7 +26,8 @@
         {#if tableEntries?.length > 0}
         {#each tableEntries as entry}
         <tr>
-            <td class="text-left {$highlight == entry.name ? 'team-highlight' : ''}">{entry.name}</td>
+            <td on:click={() => { $highlight = ($highlight == entry.name ? '' : entry.name) }}
+                class="text-left {$highlight == entry.name ? 'team-highlight' : ''}">{entry.name}</td>
             <td class="text-right">{entry.played}</td>
             <td class="text-right">{entry.won}</td>
             <td class="text-right">{entry.drawn}</td>

@@ -40,7 +40,7 @@
         {#each results as result}
         <tr>
             <td class="text-center text-muted info-col" style="width:20px">{result.tag}</td>
-            <td on:click={() => {result.homeGoals += 1; $highlight = result.homeTeam}} class="text-right {$highlight == result.homeTeam ? 'team-highlight' : ''}">{result.homeTeam}</td>
+            <td on:click={() => { $highlight = ($highlight == result.homeTeam ? '' : result.homeTeam) }} class="text-right {$highlight == result.homeTeam ? 'team-highlight' : ''}">{result.homeTeam}</td>
             
             {#if homeScore(result) == ''}
             <td colspan="2" class="text-center text-muted" style="width:40px">{time(result.dateTime)}<br/>pitch&nbsp;{result.pitch}</td>
@@ -49,7 +49,7 @@
             <td class="text-left points" style="width:15px">{awayScore(result)}</td>
             {/if}
             
-            <td on:click={() => {result.awayGoals += 1; $highlight = result.awayTeam}} class="text-left {$highlight == result.awayTeam ? 'team-highlight' : ''}">{result.awayTeam}</td>
+            <td on:click={() => { $highlight = ($highlight == result.awayTeam ? '' : result.awayTeam) }} class="text-left {$highlight == result.awayTeam ? 'team-highlight' : ''}">{result.awayTeam}</td>
         </tr>
         {/each}
     </tbody>

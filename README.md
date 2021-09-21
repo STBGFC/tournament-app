@@ -12,4 +12,3 @@ Notes.
 1. build for PWA / native
 
 ## FIXME
-1. team highlighting from leaguetable and ability to cancel it
