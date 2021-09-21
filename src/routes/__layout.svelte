@@ -24,7 +24,7 @@
 	<title>{$tournament.name}</title>
 </svelte:head>
 
-<MenuDrawer bind:open={drawerOpen} tournament={$tournament}, pages={$pages}/>
+<MenuDrawer bind:open={drawerOpen} tournament={$tournament} pages={$pages}/>
 
 <div class="flex-layout">
     <main>
