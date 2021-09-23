@@ -19,16 +19,12 @@
     </div>
 </div>
 
-<div class="section-body">
-    {@html marked(body)};
+<div class="section-body raw-content">
+    {@html marked(body)}
 </div>
 
 <style>
     * :global(.mdc-fab) {
         float: left;
-    }
-
-    .section-body {
-        padding: 10px;
     }
 </style>

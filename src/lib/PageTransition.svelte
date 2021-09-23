@@ -1,12 +1,12 @@
 <!-- PageTransition.svelte -->
 <script>
-    import { blur } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
 
     export let refresh = '';
 </script>
   
 {#key refresh}
-    <div transition:blur="{{amount: 30}}">
+    <div out:fade="{{duration: 150}}" in:fade="{{duration: 200, delay: 155}}">
         <slot />
     </div>
 {/key}
