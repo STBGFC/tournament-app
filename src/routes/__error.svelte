@@ -15,12 +15,14 @@
 
 <div class="section-head">
     <div class="content">
-	    <h4>{status}</h4>
+	    <h4>Oops.. an error ({status}) occurred</h4>
     </div>
 </div>
 
 <div class="section-body">
     {#if error.stack}
 	<pre>{error.stack}</pre>
+	{:else}
+	Not sure what else to tell you :( 
 	{/if}
 </div>

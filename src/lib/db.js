@@ -3,26 +3,16 @@ import { readable, writable } from 'svelte/store';
 let _tournament = {
     club : "STBGFC", 
     competitions : [
-        { name : "U8",  section : "All", groups : 4 }, 
-        { name : "U9",  section : "All", groups : 4 }, 
-        { name : "U10", section : "Boys A", groups : 2 }, 
-        { name : "U10", section : "Girls", groups : 2 }, 
         { name : "U11", section : "A", groups : 2 }, 
         { name : "U11", section : "B", groups : 2 }, 
         { name : "U12", section : "A", groups : 2 }, 
-        { name : "U12", section : "B", groups : 2 }, 
-        { name : "U13", section : "All", groups : 2 }, 
-        { name : "U14", section : "All", groups : 2 }, 
         { name : "U15", section : "Groups", groups : 4 }, 
         { name : "U15", section : "Champions League", groups : 2 }, 
-        { name : "U15", section : "Europa League",groups : 2 }, 
-        { name : "U17", section : "Groups", groups : 4 }, 
-        { name : "U17", section : "Champions League", groups : 2 }, 
-        { name : "U17", section : "Europa League", groups : 2 }
+        { name : "U15", section : "Europa League",groups : 2 }
     ], 
-    description : "Welcome to the 2021 Sandhurst Town Boys & Girls FC Summer Tournament. We hope you enjoy it and encourage you to provide feedback to help us improve!", 
-    name : "Sandhurst 2021", 
-    siteUrl : "https://www.stbgfc.co.uk" 
+    description : "Welcome to the STBGFC TESTING Tournament.", 
+    name : "Sandhurst TEST", 
+    siteUrl : "https://www.example.com" 
 };
 
 let _results = [
@@ -112,22 +102,49 @@ let _results = [
 ];
 
 let _news = [
-    { title: "Announcement", body: "Blah" },
-    { title: "Another Announcement", body: "Blah blah" }
+    { title: "TEST Announcement", body: "Test announcement one" },
+    { title: "Another TEST Announcement", body: "Test announcement two" }
 ]
 
 let _pages = [
-    { title: "Schedule", body: "Times in brackets is the registration start time (1 hour prior to the first game kicking off)\n\n### Saturday Morning\n\n- U9 Boys (07:30)\n- U11 Boys (07:30)\n- U13 Boys (07:30)\n- U14 Boys (07:30)\n\n### Saturday Afternoon\n\n- U10 Boys (12:00)\n- U15 Boys (12:00)\n\n### Sunday Morning\n\n- U12 Boys (07:30)\n- U10 Girls (07:30)\n- U12 Girls (07:30)\n\n### Sunday Afternoon\n\n- U8 (12:00)\n- U17/18 Boys (11:00)\n- U9 Girls (11:00)\n- U17/18 Girls (12:00)\n- U13 Girls (11:00)\n- U11 Girls (14:30)\n- U15 Girls (14:30)\n" },
-    { title: "Tournament Rules", body: "Blah blah" }
+    { title: "Info Test", body: "Test page one" },
+    { title: "Test Info", body: "Test page 2" }
 ]
+
 
 // --------------------------------------------------------------------------
 // EXPORTED STORE VARS
 // --------------------------------------------------------------------------
 
-// TODO: change to readable
 export const news = writable(_news);
 export const pages = writable(_pages);
 export const results = writable(_results);
-export const tournament = readable(_tournament);
+export const tournament = writable(_tournament);
 export const highlight = writable('');
+
+
+// fetch instead
+let env = 'prod';
+let baseUrl = 'http://192.168.21.100:4000/api';
+
+const initFromApi = async () => {
+    let res = await fetch(baseUrl + '/tournaments');
+    let data = await res.json();
+    tournament.set(data[0]);
+
+    res = await fetch(baseUrl + '/results');
+    data = await res.json();
+    results.set(data);
+
+    res = await fetch(baseUrl + '/news');
+    data = await res.json();
+    news.set(data);
+
+    res = await fetch(baseUrl + '/pages');
+    data = await res.json();
+    pages.set(data);
+};
+
+if (env == 'prod') {
+    initFromApi();
+}

@@ -45,7 +45,7 @@
 <style>
 	.section-head {
 		background-origin: content-box;
-		background-image: url("/images/badge-icon.png");
+		background-image: url("/icons/icon-512x512.png");
 		background-size: 7rem;
 		background-position: top right;
 		background-repeat: no-repeat;
