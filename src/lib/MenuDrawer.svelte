@@ -22,7 +22,7 @@
 
 <Drawer variant="modal" fixed={false} bind:open>
     <Header>
-        <Title><img style="float: left; width: 50px; padding: 9px 9px 0 0" src="/images/badge-icon.png" alt="{tournament.club}">{tournament.name}</Title>
+        <Title><img style="float: left; width: 50px; padding: 9px 9px 0 0" src="/icons/icon-512x512.png" alt="{tournament.club}">{tournament.name}</Title>
         <Subtitle>{tournament.club}</Subtitle>
     </Header>
     <Content>
