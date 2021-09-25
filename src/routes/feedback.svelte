@@ -1,14 +1,17 @@
 <script>
-  import Textfield from '@smui/textfield';
-  import Icon from '@smui/textfield/icon';
-  import HelperText from '@smui/textfield/helper-text/index';
-  import CharacterCounter from '@smui/textfield/character-counter/index';
+    import AgeFab from '$lib/AgeFab.svelte';
+    import Textfield from '@smui/textfield';
+    import Icon from '@smui/textfield/icon';
+    import HelperText from '@smui/textfield/helper-text/index';
+    import CharacterCounter from '@smui/textfield/character-counter/index';
+	import Button from '@smui/button';
 
-  let email = '';
-  let feedback = '';
+    let email = '';
+    let feedback = '';
 </script>
 
 <div class="section-head">
+    <AgeFab icon="send"/>
     <div class="content">
 	    <h4>Feedback Form</h4>
     </div>
@@ -21,7 +24,6 @@
             <HelperText slot="helper">The email address we can contact you back on</HelperText>
         </Textfield>
     </p>
-
     <p>
         <Textfield 
             textarea 
@@ -34,4 +36,13 @@
             <CharacterCounter slot="internalCounter">0 / 500</CharacterCounter>
         </Textfield>
     </p>
+    <p>
+        <Button variant="raised" type="submit">submit</Button>
+    </p>
 </div>
+
+<style>
+    * :global(.mdc-fab) {
+        float: left;
+    }
+</style>

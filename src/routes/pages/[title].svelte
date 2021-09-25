@@ -13,7 +13,7 @@
 </script>
 
 <div class="section-head">
-    <AgeFab name="info"/>
+    <AgeFab icon="info"/>
     <div class="content">
 	    <h4>{title}</h4>
     </div>
