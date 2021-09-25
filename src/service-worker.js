@@ -1,37 +1,43 @@
-import { build, timestamp, files } from "$service-worker";
+import { build, timestamp, files } from '$service-worker';
 
-const applicationCacheName = `applicationCache-v${timestamp}`;
-const staticCacheName = `staticCache-v${timestamp}`;
+const cacheName = `stbgfc-cache-v${timestamp}`;
+const offlinePage = '/offline.html';
 
-// Caches the svelte app (not the data)
-self.addEventListener("install", (event) => {
-    event.waitUntil((async () => {
-        const applicationCache = await caches.open(applicationCacheName);
-        await applicationCache.addAll(build);
-        const staticCache = await caches.open(staticCacheName);
-        await staticCache.addAll(files);
+
+self.addEventListener('install', (e) => {
+    e.waitUntil((async () => {
+        const cache = await caches.open(cacheName);
+        await cache.addAll(build);
+        await cache.addAll(files);
     })());
+    self.skipWaiting();
 });
 
-// Removes old caches
-self.addEventListener("activate", (event) => {
-    event.waitUntil((async () => {
-        const keys = await caches.keys();
-        keys
-            .filter( key => key !== applicationCacheName && key !== staticCacheName )
-            .map( key => caches.delete(key) );
-    })());
+self.addEventListener('activate', (e) => {
+    e.waitUntil(caches.keys().then((keyList) => {
+        return Promise.all(keyList.map((key) => {
+            if (key === cacheName) { return; }
+            return caches.delete(key);
+        }))
+    }));
+    self.clients.claim();
 });
 
-// When there's an incoming fetch request, try and respond with a precached resource, otherwise fall back to the network
-self.addEventListener('fetch', (event) => {
-    console.log('Fetch intercepted for:', event.request.url);
-    event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-            return fetch(event.request);
-        }),
-    );
+self.addEventListener('fetch', (e) => {
+    e.respondWith((async () => {
+        const r = await caches.match(e.request);
+        if (r) { return r; }
+        
+        try {
+            const response = await fetch(e.request);
+            return response;
+
+        } catch (error) {
+            // likely a network error due to offline
+            console.log(`Fetch failed; returning ${offlinePage}`);
+            const cache = await caches.open(cacheName);
+            const r = await cache.match(offlinePage);
+            return r;
+        }
+    })());
 });
