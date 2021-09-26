@@ -4,6 +4,7 @@
 
 @use '@material/typography/index' as typography;
 @use '@material/typography/mdc-typography';
+@import 'svelte-material-ui/bare.css';
 
 :root {
     --mdc-theme-primary: #a00;
