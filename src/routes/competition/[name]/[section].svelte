@@ -1,7 +1,7 @@
 <script>
     import ResultList from "$lib/ResultList.svelte";
     import LeagueTable from "$lib/LeagueTable.svelte";
-	import AgeFab from '$lib/AgeFab.svelte';
+    import Section from '$lib/Section.svelte';
     import { tournament, results } from '$lib/db';
     
     import { page } from "$app/stores";
@@ -55,11 +55,10 @@
 	<title>{name} : {section} Section</title>
 </svelte:head>
 
- 
-<div class="section-head">
-    <AgeFab {name}/>
-    <div class="content">
-        <h4>{section} Section</h4>
+
+<Section fab='{name}' container={false}>
+    <div slot="section-head">
+	    <h4>{section} Section</h4>
         <ul>
             <li>
                 {groups.length} Groups {#if koResults.length > 0} with knock out games{/if}
@@ -78,52 +77,59 @@
             Other sections for this age group:<br>
             
             {#each otherComps as {section}}
-            <Button href="/competition/{name}/{section}">{section}</Button>
+            <Button class="header-link" href="/competition/{name}/{section}">{section}</Button>
             {/each}
         </p>
         {/if}
     </div>
-</div>
-<div class="section-body">    
-    <TabBar tabs={groups} let:tab bind:active>
-        <Tab {tab} minWidth>
-            <Label>GRP {tab}</Label>
-        </Tab>
-    </TabBar>
-    
-    <LayoutGrid>
-        <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-            <LeagueTable bind:results={groupResults}/>
-        </Cell>
-        <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-            <ResultList bind:results={groupResults}/>
-        </Cell>
-    </LayoutGrid>
-</div>
+        
+    <div slot="section-body">  
+        <TabBar tabs={groups} let:tab bind:active>
+            <Tab {tab} minWidth>
+                <Label>GRP {tab}</Label>
+            </Tab>
+        </TabBar>
+        
+        <LayoutGrid>
+            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+                <LeagueTable bind:results={groupResults}/>
+            </Cell>
+            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+                <ResultList bind:results={groupResults}/>
+            </Cell>
+        </LayoutGrid>
+    </div>
+</Section>
 
 {#if koResults.length > 0}
-<div class="section-head">
-    <div class="content">
-        <h5>KO Matches</h5>        
+<Section container={false}>
+    <div slot="section-head">
+        <div class="content">
+            <h5>KO Matches</h5>        
+        </div>
+    </div> 
+
+    <div slot="section-body">     
+        <LayoutGrid>
+            <Cell span={12}>
+                <ResultList bind:results={koResults}/>
+            </Cell>
+        </LayoutGrid>
     </div>
-</div>
-<div class="section-body">        
-    <LayoutGrid>
-        <Cell span={12}>
-            <ResultList bind:results={koResults}/>
-        </Cell>
-    </LayoutGrid>
-</div>
+</Section>
 {/if}
 
 <style>
-    * :global(.mdc-fab) {
-        float: left;
-    }
-
     ul, li {
         list-style: none inside;
         padding: 0;
         margin: 0;
+    }
+
+    * :global(.header-link) {
+        color: inherit;    
+        border-bottom: 1px dotted var(--mdc-theme-on-primary, whitesmoke);
+        text-decoration: none;
+        text-transform: uppercase;
     }
 </style>

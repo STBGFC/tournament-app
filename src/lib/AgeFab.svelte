@@ -2,13 +2,12 @@
 	import Fab, { Label, Icon } from '@smui/fab';
 
     export let name = '';
-    export let icon = '';
 </script>
 
 <Fab style="font-size: larger; font-weight: bold; margin-right: 20px;" color="primary">
-    {#if name !== ''}
-    <Label>{name}</Label>
+    {#if name.startsWith('icon:')}
+    <Icon class="material-icons">{name.split(':')[1]}</Icon>
     {:else}
-    <Icon class="material-icons">{icon}</Icon>
+    <Label>{name}</Label>
     {/if}
 </Fab>

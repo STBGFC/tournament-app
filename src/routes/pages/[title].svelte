@@ -1,5 +1,5 @@
 <script>
-    import AgeFab from '$lib/AgeFab.svelte';
+    import Section from '$lib/Section.svelte';
     import { pages } from '$lib/db';
     import { page } from "$app/stores";
 
@@ -12,19 +12,12 @@
 
 </script>
 
-<div class="section-head">
-    <AgeFab icon="info"/>
-    <div class="content">
+<Section fab='icon:info' container={true}>
+    <div slot="section-head">
 	    <h4>{title}</h4>
     </div>
-</div>
-
-<div class="section-body raw-content">
-    {@html marked(body)}
-</div>
-
-<style>
-    * :global(.mdc-fab) {
-        float: left;
-    }
-</style>
+        
+    <div slot="section-body">
+        {@html marked(body)}
+    </div>
+</Section>
