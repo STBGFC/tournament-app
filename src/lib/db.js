@@ -148,7 +148,6 @@ const initFromApi = async () => {
 };
 
 const initSocket = async () => {
-    console.log('creating socket...');
     let socket = io(baseUrl, { 'connect timeout': 5000 });
 
     socket.on("connect", () => {
@@ -156,16 +155,15 @@ const initSocket = async () => {
     });
 
     socket.on('result', data => {
-        console.log('RESULT: ', data);
-        let copyResults = get(results);
-        
-        for (let i = 0; i < copyResults.length(); i++) {
-            if ( copyResults[i]._id == data._id ) {
-                copyResults[i] == data;
-                console.log('result to update', copyResults[i]);
-                results.update(copyResults);
+        results.update( r => {
+            for (let i = 0; i < r.length; i++) {
+                if ( r[i]._id == data._id ) {
+                    r[i] = data;
+                    break;
+                }
             }
-        }
+            return r;
+        });
     });
 
     socket.on("connect_error", (error) => {
@@ -175,7 +173,7 @@ const initSocket = async () => {
     socket.on("error", (error) => {
         console.error('Error on socket', error);
     });
-}
+};
 
 if (env == 'prod') {
     initFromApi();

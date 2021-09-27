@@ -3,7 +3,6 @@
 Notes.
 
 ## TODO
-1. websocket push results updates stores
 1. admin functions
 1. dark mode theme
 1. parameterise google map link (MenuDrawer.svelte), background image, icons and theme colors for external build
