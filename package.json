@@ -42,6 +42,8 @@
 		"leaguesort": "^1.1.1",
 		"marked": "^3.0.4",
 		"moment-timezone": "^0.5.33",
+		"socket.io": "^4.2.0",
+		"socket.io-client": "^4.2.0",
 		"svelte-material-ui": "^4.2.0"
 	}
 }

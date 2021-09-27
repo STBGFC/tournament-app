@@ -1,4 +1,6 @@
-import { readable, writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
+import { io } from "socket.io-client";
+import { browser } from '$app/env';
 
 let _tournament = {
     club : "STBGFC", 
@@ -125,26 +127,60 @@ export const highlight = writable('');
 
 // fetch instead
 let env = 'prod';
-let baseUrl = 'http://192.168.21.100:4000/api';
+let baseUrl = 'http://192.168.21.100:4000';
 
 const initFromApi = async () => {
-    let res = await fetch(baseUrl + '/tournaments');
+    let res = await fetch(baseUrl + '/api/tournaments');
     let data = await res.json();
     tournament.set(data[0]);
 
-    res = await fetch(baseUrl + '/results');
+    res = await fetch(baseUrl + '/api/results');
     data = await res.json();
     results.set(data);
 
-    res = await fetch(baseUrl + '/news');
+    res = await fetch(baseUrl + '/api/news');
     data = await res.json();
     news.set(data);
 
-    res = await fetch(baseUrl + '/pages');
+    res = await fetch(baseUrl + '/api/pages');
     data = await res.json();
     pages.set(data);
 };
 
+const initSocket = async () => {
+    console.log('creating socket...');
+    let socket = io(baseUrl, { 'connect timeout': 5000 });
+
+    socket.on("connect", () => {
+        console.log('socket created with ID:', socket.id); 
+    });
+
+    socket.on('result', data => {
+        console.log('RESULT: ', data);
+        let copyResults = get(results);
+        
+        for (let i = 0; i < copyResults.length(); i++) {
+            if ( copyResults[i]._id == data._id ) {
+                copyResults[i] == data;
+                console.log('result to update', copyResults[i]);
+                results.update(copyResults);
+            }
+        }
+    });
+
+    socket.on("connect_error", (error) => {
+        console.error('Failed to connect', error);
+    });
+
+    socket.on("error", (error) => {
+        console.error('Error on socket', error);
+    });
+}
+
 if (env == 'prod') {
     initFromApi();
+}
+
+if (browser) {
+    initSocket();
 }
