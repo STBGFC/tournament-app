@@ -1,3 +1,11 @@
+<script context="module">
+    export const load = async ({ page }) => ({
+        props: {
+            routeKey: page.path,
+        },
+    })
+</script>
+
 <script>
     import { tournament, pages } from '$lib/db';
     import '$lib/app.scss';
@@ -9,14 +17,6 @@
 
     let drawerOpen = false;
     export let routeKey;
-</script>
-
-<script context="module">
-    export const load = async ({ page }) => ({
-        props: {
-            routeKey: page.path,
-        },
-    })
 </script>
 
   
