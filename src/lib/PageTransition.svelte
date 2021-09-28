@@ -1,12 +1,12 @@
 <!-- PageTransition.svelte -->
 <script>
-    import { fade } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
 
     export let refresh = '';
 </script>
   
 {#key refresh}
-    <div out:fade="{{duration: 150}}" in:fade="{{duration: 200, delay: 155}}">
+    <div in:scale="{{duration: 450, delay: 0}}">
         <slot />
     </div>
 {/key}
