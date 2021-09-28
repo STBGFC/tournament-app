@@ -5,7 +5,7 @@
     "svelteAllowShorthand": true,
     "semi": true,
     "svelteSortOrder": "scripts-options-markup-styles",
-    "singleQuote": true,
+    "singleQuote": false,
     "trailingComma": "es5",
     "printWidth": 132
 }

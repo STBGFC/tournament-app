@@ -1,11 +1,11 @@
 <script>
-    import AgeFab from '$lib/AgeFab.svelte';
-    import Section from '$lib/Section.svelte';
-    import { tournament } from '$lib/db';
+    import AgeFab from "$lib/AgeFab.svelte";
+    import Section from "$lib/Section.svelte";
+    import { tournament } from "$lib/db";
 
-    import { goto } from '$app/navigation';
+    import { goto } from "$app/navigation";
 
-    import List, { Item, Meta, Text, PrimaryText, SecondaryText } from '@smui/list';
+    import List, { Item, Meta, Text, PrimaryText, SecondaryText } from "@smui/list";
 </script>
 
 <Section container={false}>
@@ -36,7 +36,7 @@
 <style>
     .index-head {
         background-origin: content-box;
-        background-image: url('/icons/icon-512x512.png');
+        background-image: url("/icons/icon-512x512.png");
         background-size: 7rem;
         background-position: top right;
         background-repeat: no-repeat;

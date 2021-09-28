@@ -1,9 +1,9 @@
-import { build, timestamp, files } from '$service-worker';
+import { build, timestamp, files } from "$service-worker";
 
 const cacheName = `stbgfc-cache-v${timestamp}`;
-const offlinePage = '/offline.html';
+const offlinePage = "/offline.html";
 
-self.addEventListener('install', (e) => {
+self.addEventListener("install", (e) => {
     e.waitUntil(
         (async () => {
             const cache = await caches.open(cacheName);
@@ -14,7 +14,7 @@ self.addEventListener('install', (e) => {
     self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
+self.addEventListener("activate", (e) => {
     e.waitUntil(
         caches.keys().then((keyList) => {
             return Promise.all(
@@ -30,7 +30,7 @@ self.addEventListener('activate', (e) => {
     self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
+self.addEventListener("fetch", (e) => {
     e.respondWith(
         (async () => {
             const r = await caches.match(e.request);

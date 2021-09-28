@@ -1,12 +1,12 @@
 <script>
-    import AgeFab from '$lib/AgeFab.svelte';
+    import AgeFab from "$lib/AgeFab.svelte";
 
-    export let fab = '';
+    export let fab = "";
     export let container = false;
 </script>
 
 <div class="section-head">
-    {#if fab !== ''}
+    {#if fab !== ""}
         <AgeFab name={fab} />
         <div class="content">
             <slot name="section-head" />

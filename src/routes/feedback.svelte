@@ -1,13 +1,13 @@
 <script>
-    import Section from '$lib/Section.svelte';
-    import Textfield from '@smui/textfield';
-    import Icon from '@smui/textfield/icon';
-    import HelperText from '@smui/textfield/helper-text/index';
-    import CharacterCounter from '@smui/textfield/character-counter/index';
-    import Button from '@smui/button';
+    import Section from "$lib/Section.svelte";
+    import Textfield from "@smui/textfield";
+    import Icon from "@smui/textfield/icon";
+    import HelperText from "@smui/textfield/helper-text/index";
+    import CharacterCounter from "@smui/textfield/character-counter/index";
+    import Button from "@smui/button";
 
-    let email = '';
-    let feedback = '';
+    let email = "";
+    let feedback = "";
 </script>
 
 <Section fab="icon:send" container={true}>

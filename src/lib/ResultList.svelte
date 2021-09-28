@@ -1,23 +1,23 @@
 <script>
-    import { highlight } from '$lib/db';
+    import { highlight } from "$lib/db";
 
-    import moment from 'moment-timezone';
+    import moment from "moment-timezone";
 
-    let time = (dateTime) => moment(dateTime).tz('Europe/London').format('HH:mm');
+    let time = (dateTime) => moment(dateTime).tz("Europe/London").format("HH:mm");
 
     let homeScore = (r) => {
-        if ('homeGoals' in r && r.homeGoals >= 0) {
-            return r.homeGoals + (r.awayPens || r.homePens ? '(' + r.homePens + ')' : '');
+        if ("homeGoals" in r && r.homeGoals >= 0) {
+            return r.homeGoals + (r.awayPens || r.homePens ? "(" + r.homePens + ")" : "");
         } else {
-            return '';
+            return "";
         }
     };
 
     let awayScore = (r) => {
-        if ('awayGoals' in r && r.awayGoals >= 0) {
-            return (r.awayPens || r.homePens ? '(' + r.awayPens + ')' : '') + r.awayGoals;
+        if ("awayGoals" in r && r.awayGoals >= 0) {
+            return (r.awayPens || r.homePens ? "(" + r.awayPens + ")" : "") + r.awayGoals;
         } else {
-            return '';
+            return "";
         }
     };
 
@@ -41,13 +41,13 @@
                     <td class="text-center text-muted info-col" style="width:20px">{result.tag}</td>
                     <td
                         on:click={() => {
-                            $highlight = $highlight == result.homeTeam ? '' : result.homeTeam;
+                            $highlight = $highlight == result.homeTeam ? "" : result.homeTeam;
                         }}
                         class="text-right"
                         class:team-highlight={$highlight == result.homeTeam}>{result.homeTeam}</td
                     >
 
-                    {#if homeScore(result) == ''}
+                    {#if homeScore(result) == ""}
                         <td colspan="2" class="text-center text-muted" style="width:40px"
                             >{time(result.dateTime)}<br />pitch&nbsp;{result.pitch}</td
                         >
@@ -58,7 +58,7 @@
 
                     <td
                         on:click={() => {
-                            $highlight = $highlight == result.awayTeam ? '' : result.awayTeam;
+                            $highlight = $highlight == result.awayTeam ? "" : result.awayTeam;
                         }}
                         class="text-left"
                         class:team-highlight={$highlight == result.awayTeam}>{result.awayTeam}</td

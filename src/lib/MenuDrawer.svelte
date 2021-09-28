@@ -1,13 +1,13 @@
 <script>
-    import { goto } from '$app/navigation';
+    import { goto } from "$app/navigation";
 
-    import Drawer, { Content, Header, Title, Subtitle, Scrim } from '@smui/drawer';
-    import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
+    import Drawer, { Content, Header, Title, Subtitle, Scrim } from "@smui/drawer";
+    import List, { Item, Text, Graphic, Separator, Subheader } from "@smui/list";
 
     export let tournament,
         pages,
         open = false;
-    let active = 'Inbox';
+    let active = "Inbox";
 
     function setActive(value, location) {
         active = value;
@@ -29,7 +29,7 @@
     </Header>
     <Content>
         <List>
-            <Item href="javascript:void(0)" on:click={() => setActive('Home', '/')} activated={active === 'Home'}>
+            <Item href="javascript:void(0)" on:click={() => setActive("Home", "/")} activated={active === "Home"}>
                 <Graphic class="material-icons" aria-hidden="true">home</Graphic>
                 <Text>Home</Text>
             </Item>
@@ -39,7 +39,7 @@
                 <Graphic class="material-icons" aria-hidden="true">fmd_good</Graphic>
                 <Text>Site Map</Text>
             </Item>
-            <Item href="javascript:void(0)" on:click={() => setActive('Feedback', '/feedback')} activated={active === 'Feedback'}>
+            <Item href="javascript:void(0)" on:click={() => setActive("Feedback", "/feedback")} activated={active === "Feedback"}>
                 <Graphic class="material-icons" aria-hidden="true">send</Graphic>
                 <Text>Feedback</Text>
             </Item>

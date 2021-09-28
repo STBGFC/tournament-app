@@ -7,13 +7,13 @@
 </script>
 
 <script>
-    import { tournament, pages } from '$lib/db';
-    import '$lib/app.scss';
-    import MenuDrawer from '$lib/MenuDrawer.svelte';
-    import PageTransition from '$lib/PageTransition.svelte';
+    import { tournament, pages } from "$lib/db";
+    import "$lib/app.scss";
+    import MenuDrawer from "$lib/MenuDrawer.svelte";
+    import PageTransition from "$lib/PageTransition.svelte";
 
-    import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
-    import IconButton from '@smui/icon-button';
+    import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
+    import IconButton from "@smui/icon-button";
 
     let drawerOpen = false;
     export let routeKey;

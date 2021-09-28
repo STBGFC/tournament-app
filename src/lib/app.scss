@@ -4,7 +4,7 @@
 
 @use '@material/typography/index' as typography;
 @use '@material/typography/mdc-typography';
-@import 'svelte-material-ui/bare.css';
+@import "svelte-material-ui/bare.css";
 
 :root {
     --mdc-theme-primary: #a00;
@@ -44,7 +44,7 @@
     --mdc-layout-grid-gutter-phone: 16px;
     --mdc-layout-grid-column-width-phone: 72px;
 
-    --mdc-typography-font-family: 'Roboto';
+    --mdc-typography-font-family: "Roboto";
 }
 
 /* shim for smui bare CSS items with h/coded colour */
@@ -58,7 +58,7 @@ html,
 body {
     height: 100%;
     margin: 0;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "Roboto", sans-serif !important;
     background: url(/images/background.jpg) no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -67,28 +67,28 @@ body {
 }
 
 h1 {
-    @include typography.typography('headline2');
-    font-family: 'Roboto Condensed';
+    @include typography.typography("headline2");
+    font-family: "Roboto Condensed";
     margin: 0;
 }
 h2 {
-    @include typography.typography('headline3');
-    font-family: 'Roboto Condensed';
+    @include typography.typography("headline3");
+    font-family: "Roboto Condensed";
     margin: 0;
 }
 h3 {
-    @include typography.typography('headline4');
-    font-family: 'Roboto Condensed';
+    @include typography.typography("headline4");
+    font-family: "Roboto Condensed";
     margin: 0;
 }
 h4 {
-    @include typography.typography('headline4');
-    font-family: 'Roboto Condensed';
+    @include typography.typography("headline4");
+    font-family: "Roboto Condensed";
     margin: 0;
 }
 h5 {
-    @include typography.typography('headline5');
-    font-family: 'Roboto Condensed';
+    @include typography.typography("headline5");
+    font-family: "Roboto Condensed";
     margin: 0;
 }
 

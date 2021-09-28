@@ -1,14 +1,14 @@
 <script>
-    import Section from '$lib/Section.svelte';
-    import Textfield from '@smui/textfield';
-    import Icon from '@smui/textfield/icon';
-    import HelperText from '@smui/textfield/helper-text/index';
-    import Button from '@smui/button';
+    import Section from "$lib/Section.svelte";
+    import Textfield from "@smui/textfield";
+    import Icon from "@smui/textfield/icon";
+    import HelperText from "@smui/textfield/helper-text/index";
+    import Button from "@smui/button";
 
-    let email = '';
-    let password = '';
+    let email = "";
+    let password = "";
 
-    export const title = 'Registration';
+    export const title = "Registration";
 </script>
 
 <Section fab="icon:how_to_reg" container={true}>

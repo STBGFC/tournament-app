@@ -1,7 +1,7 @@
 <script>
-    import { highlight } from '$lib/db';
+    import { highlight } from "$lib/db";
 
-    import leaguesort from 'leaguesort';
+    import leaguesort from "leaguesort";
 
     export let results = [];
 
@@ -27,7 +27,7 @@
                 <tr>
                     <td
                         on:click={() => {
-                            $highlight = $highlight == entry.name ? '' : entry.name;
+                            $highlight = $highlight == entry.name ? "" : entry.name;
                         }}
                         class="text-left"
                         class:team-highlight={$highlight == entry.name}>{entry.name}</td

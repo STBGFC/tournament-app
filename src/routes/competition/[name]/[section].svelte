@@ -1,17 +1,17 @@
 <script>
-    import ResultList from '$lib/ResultList.svelte';
-    import LeagueTable from '$lib/LeagueTable.svelte';
-    import Section from '$lib/Section.svelte';
-    import { tournament, results } from '$lib/db';
+    import ResultList from "$lib/ResultList.svelte";
+    import LeagueTable from "$lib/LeagueTable.svelte";
+    import Section from "$lib/Section.svelte";
+    import { tournament, results } from "$lib/db";
 
-    import { page } from '$app/stores';
+    import { page } from "$app/stores";
 
-    import Tab, { Label } from '@smui/tab';
-    import Button from '@smui/button';
-    import TabBar from '@smui/tab-bar';
-    import LayoutGrid, { Cell } from '@smui/layout-grid';
+    import Tab, { Label } from "@smui/tab";
+    import Button from "@smui/button";
+    import TabBar from "@smui/tab-bar";
+    import LayoutGrid, { Cell } from "@smui/layout-grid";
 
-    import moment from 'moment';
+    import moment from "moment";
 
     const { name, section } = $page.params;
 
@@ -20,13 +20,13 @@
 
     let groups = [];
     let i = 1;
-    while (i <= competition.groups) groups.push('' + i++);
-    let active = '1';
+    while (i <= competition.groups) groups.push("" + i++);
+    let active = "1";
 
     let groupResults = [];
     let koResults = [];
 
-    let time = (dateTime) => moment(dateTime).tz('Europe/London').format('HH:mm');
+    let time = (dateTime) => moment(dateTime).tz("Europe/London").format("HH:mm");
     let startTime, endTime;
 
     $: {
@@ -38,13 +38,13 @@
             (r) => r.competition.name == name && r.competition.section == section && r.competition.group == undefined
         );
 
-        startTime = groupResults.length > 0 ? time(groupResults[0].dateTime) : '';
+        startTime = groupResults.length > 0 ? time(groupResults[0].dateTime) : "";
         endTime =
             koResults.length > 0
                 ? time(koResults[koResults.length - 1].dateTime + 900000)
                 : groupResults.length > 0
                 ? time(groupResults[groupResults.length - 1].dateTime + 900000)
-                : '';
+                : "";
     }
 </script>
 
@@ -60,7 +60,7 @@
                 {groups.length} Groups {#if koResults.length > 0} with knock out games{/if}
             </li>
             <li>
-                {#if startTime !== ''}
+                {#if startTime !== ""}
                     Starts on day {groupResults[0].day} at {startTime}, ends appx. {endTime}
                 {:else}
                     No fixtures found for this section
