@@ -3,7 +3,7 @@
         props: {
             routeKey: page.path,
         },
-    })
+    });
 </script>
 
 <script>
@@ -19,12 +19,11 @@
     export let routeKey;
 </script>
 
-  
 <svelte:head>
-	<title>{$tournament.name}</title>
+    <title>{$tournament.name}</title>
 </svelte:head>
 
-<MenuDrawer bind:open={drawerOpen} tournament={$tournament} pages={$pages}/>
+<MenuDrawer bind:open={drawerOpen} tournament={$tournament} pages={$pages} />
 
 <div class="flex-layout">
     <main>
@@ -42,17 +41,16 @@
             </Row>
         </TopAppBar>
     </main>
-    
+
     <PageTransition refresh={routeKey}>
         <section id="slot">
-            <slot/>
+            <slot />
         </section>
     </PageTransition>
-        
+
     <section id="footer">
-        <p>&copy; Darren Davison &amp; <a href="{ $tournament.siteUrl }">{ $tournament.club }</a> 2021</p>
+        <p>&copy; Darren Davison &amp; <a href={$tournament.siteUrl}>{$tournament.club}</a> 2021</p>
     </section>
-    
 </div>
 
 <style>
@@ -74,7 +72,7 @@
         width: 100%;
         min-height: 81vh;
     }
-    
+
     #footer {
         padding: 2.9em 0;
         margin: 0;
@@ -82,7 +80,7 @@
         color: var(--mdc-theme-on-primary);
         font-size: smaller;
     }
-    
+
     #footer a {
         color: #f5f5f5;
         border-bottom: 1px dotted #f5f5f5;

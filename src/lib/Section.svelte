@@ -7,12 +7,12 @@
 
 <div class="section-head">
     {#if fab !== ''}
-    <AgeFab name="{fab}"/>
-    <div class="content">
-        <slot name="section-head" />
-    </div>
+        <AgeFab name={fab} />
+        <div class="content">
+            <slot name="section-head" />
+        </div>
     {:else}
-    <slot name="section-head" />
+        <slot name="section-head" />
     {/if}
 </div>
 
@@ -26,18 +26,18 @@
     }
 
     .section-head {
-        padding: 40px 15px;  
-        color: var(--mdc-theme-on-primary, whitesmoke);        
+        padding: 40px 15px;
+        color: var(--mdc-theme-on-primary, whitesmoke);
         background-color: #333;
         background-color: var(--mdc-theme-text-icon-on-light);
     }
-    
+
     .section-head .content {
         margin-left: 90px;
     }
 
     * :global(.section-head .content a) {
-        color: inherit;    
+        color: inherit;
         border-bottom: 1px dotted var(--mdc-theme-on-primary, whitesmoke);
         text-decoration: none;
         text-transform: uppercase;

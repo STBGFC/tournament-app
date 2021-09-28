@@ -1,20 +1,16 @@
 <script>
     import { goto } from '$app/navigation';
 
-    import Drawer, {
-        Content,
-        Header,
-        Title,
-        Subtitle,
-        Scrim,
-    } from '@smui/drawer';
+    import Drawer, { Content, Header, Title, Subtitle, Scrim } from '@smui/drawer';
     import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
 
-    export let tournament, pages, open = false;
+    export let tournament,
+        pages,
+        open = false;
     let active = 'Inbox';
 
     function setActive(value, location) {
-        active = value;        
+        active = value;
         open = false;
         if (location) goto(location);
     }
@@ -22,16 +18,18 @@
 
 <Drawer variant="modal" fixed={false} bind:open>
     <Header>
-        <Title><img style="float: left; width: 50px; padding: 9px 9px 0 0" src="/icons/icon-512x512.png" alt="{tournament.club}">{tournament.name}</Title>
+        <Title
+            ><img
+                style="float: left; width: 50px; padding: 9px 9px 0 0"
+                src="/icons/icon-512x512.png"
+                alt={tournament.club}
+            />{tournament.name}</Title
+        >
         <Subtitle>{tournament.club}</Subtitle>
     </Header>
     <Content>
         <List>
-            <Item
-                href="javascript:void(0)"
-                on:click={() => setActive('Home', '/')}
-                activated={active === 'Home'}
-            >
+            <Item href="javascript:void(0)" on:click={() => setActive('Home', '/')} activated={active === 'Home'}>
                 <Graphic class="material-icons" aria-hidden="true">home</Graphic>
                 <Text>Home</Text>
             </Item>
@@ -41,11 +39,7 @@
                 <Graphic class="material-icons" aria-hidden="true">fmd_good</Graphic>
                 <Text>Site Map</Text>
             </Item>
-            <Item
-                href="javascript:void(0)"
-                on:click={() => setActive('Feedback', '/feedback')}
-                activated={active === 'Feedback'}
-            >
+            <Item href="javascript:void(0)" on:click={() => setActive('Feedback', '/feedback')} activated={active === 'Feedback'}>
                 <Graphic class="material-icons" aria-hidden="true">send</Graphic>
                 <Text>Feedback</Text>
             </Item>
@@ -53,14 +47,14 @@
             <Separator />
             <Subheader>Tournament Information</Subheader>
             {#each pages as page}
-            <Item
-                href="javascript:void(0)"
-                on:click={() => setActive(page.title, `/pages/${page.title}`)}
-                activated={active === page.title}
-            >
-                <Graphic class="material-icons" aria-hidden="true">bookmark</Graphic>
-                <Text>{page.title}</Text>
-            </Item>
+                <Item
+                    href="javascript:void(0)"
+                    on:click={() => setActive(page.title, `/pages/${page.title}`)}
+                    activated={active === page.title}
+                >
+                    <Graphic class="material-icons" aria-hidden="true">bookmark</Graphic>
+                    <Text>{page.title}</Text>
+                </Item>
             {/each}
         </List>
     </Content>
