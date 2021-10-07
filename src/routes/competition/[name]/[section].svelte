@@ -11,7 +11,7 @@
     import TabBar from "@smui/tab-bar";
     import LayoutGrid, { Cell } from "@smui/layout-grid";
 
-    import moment from "moment";
+    import moment from "moment-timezone";
 
     const { name, section } = $page.params;
 
