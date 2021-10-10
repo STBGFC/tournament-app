@@ -1074,7 +1074,7 @@ export const highlight = writable("");
 
 // fetch instead
 let env = "prod";
-let baseUrl = "http://192.168.21.100:4000";
+let baseUrl = "http://192.168.21.100:4001";
 
 const initFromApi = async () => {
     let res = await fetch(baseUrl + "/api/tournaments");
@@ -1102,6 +1102,7 @@ const initSocket = async () => {
     });
 
     socket.on("result", (data) => {
+        console.debug("Received result", data);
         results.update((r) => {
             for (let i = 0; i < r.length; i++) {
                 if (r[i]._id == data._id) {
@@ -1111,6 +1112,16 @@ const initSocket = async () => {
             }
             return r;
         });
+    });
+
+    socket.on("remove", (data) => {
+        console.debug("Result deleted", data);
+        // TODO implement
+    });
+
+    socket.on("news", (data) => {
+        console.debug("Received news", data);
+        // TODO implement
     });
 
     socket.on("connect_error", (error) => {
