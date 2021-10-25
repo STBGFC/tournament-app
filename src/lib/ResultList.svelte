@@ -29,7 +29,8 @@
 
                     {#if result.homeScore == ""}
                         <td colspan="2" class="text-center text-muted" style="width:40px">
-                            {result.time}<br />pitch&nbsp;{result.pitch}</td>
+                            {result.time}<br />pitch&nbsp;{result.pitch}
+                        </td>
                     {:else}
                         <td class="text-right points" style="width:15px">{result.homeScore}</td>
                         <td class="text-left points" style="width:15px">{result.awayScore}</td>

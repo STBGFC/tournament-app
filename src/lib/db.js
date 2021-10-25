@@ -1,6 +1,7 @@
 import { get, writable } from "svelte/store";
 import { io } from "socket.io-client";
 import { browser } from "$app/env";
+import * as api from "$lib/api.js";
 
 let _tournament = {
     club: "STBGFC",
@@ -12,9 +13,9 @@ let _tournament = {
         { name: "U15", section: "Champions League", groups: 2 },
         { name: "U15", section: "Europa League", groups: 2 },
     ],
-    description: "Welcome to the STBGFC TESTING Tournament.",
-    name: "Sandhurst TEST",
-    siteUrl: "https://www.example.com",
+    description: "Welcome to the STBGFC DEMO Tournament.",
+    name: "Sandhurst DEMO",
+    siteUrl: "https://www.stbgfc.co.uk",
 };
 
 let _results = [
@@ -30,6 +31,8 @@ let _results = [
         awayTeam: "Liverpool",
         homeGoals: 2,
         awayGoals: 1,
+        homeScore: "2",
+        awayScore: "1",
     },
     {
         __v: 0,
@@ -43,6 +46,8 @@ let _results = [
         awayTeam: "Man. Utd.",
         homeGoals: 0,
         awayGoals: 1,
+        homeScore: "0",
+        awayScore: "1",
     },
     {
         __v: 0,
@@ -56,6 +61,8 @@ let _results = [
         awayTeam: "Arsenal",
         homeGoals: 1,
         awayGoals: 1,
+        homeScore: "1",
+        awayScore: "1",
     },
     {
         __v: 0,
@@ -69,6 +76,8 @@ let _results = [
         awayTeam: "Chelsea",
         homeGoals: 1,
         awayGoals: 3,
+        homeScore: "1",
+        awayScore: "3",
     },
     {
         __v: 0,
@@ -82,6 +91,8 @@ let _results = [
         awayTeam: "Newcastle",
         homeGoals: 2,
         awayGoals: 2,
+        homeScore: "2",
+        awayScore: "2",
     },
     {
         __v: 0,
@@ -95,6 +106,8 @@ let _results = [
         awayTeam: "Chelsea",
         homeGoals: 0,
         awayGoals: 0,
+        homeScore: "0",
+        awayScore: "0",
     },
     {
         __v: 0,
@@ -108,6 +121,8 @@ let _results = [
         awayTeam: "Man. Utd.",
         homeGoals: 2,
         awayGoals: 1,
+        homeScore: "2",
+        awayScore: "1",
     },
     {
         __v: 0,
@@ -121,6 +136,8 @@ let _results = [
         awayTeam: "Newcastle",
         homeGoals: 2,
         awayGoals: 3,
+        homeScore: "2",
+        awayScore: "3",
     },
     {
         __v: 0,
@@ -134,6 +151,8 @@ let _results = [
         awayTeam: "Arsenal",
         homeGoals: 2,
         awayGoals: 2,
+        homeScore: "2",
+        awayScore: "2",
     },
     {
         __v: 0,
@@ -147,6 +166,8 @@ let _results = [
         awayTeam: "Liverpool",
         homeGoals: 2,
         awayGoals: 0,
+        homeScore: "2",
+        awayScore: "0",
     },
     {
         __v: 0,
@@ -160,6 +181,8 @@ let _results = [
         awayTeam: "West Ham",
         homeGoals: 0,
         awayGoals: 2,
+        homeScore: "0",
+        awayScore: "2",
     },
     {
         __v: 0,
@@ -173,6 +196,8 @@ let _results = [
         awayTeam: "Everton",
         homeGoals: 4,
         awayGoals: 1,
+        homeScore: "4",
+        awayScore: "1",
     },
     {
         __v: 0,
@@ -197,6 +222,8 @@ let _results = [
         awayTeam: "Aston Villa",
         homeGoals: 4,
         awayGoals: 1,
+        homeScore: "4",
+        awayScore: "1",
     },
     {
         __v: 0,
@@ -208,6 +235,8 @@ let _results = [
         tag: "5",
         homeTeam: "Everton",
         awayTeam: "Spurs",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -219,6 +248,8 @@ let _results = [
         tag: "6",
         homeTeam: "Man. City",
         awayTeam: "Aston Villa",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -230,6 +261,8 @@ let _results = [
         tag: "7",
         homeTeam: "West Ham",
         awayTeam: "Everton",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -241,6 +274,8 @@ let _results = [
         tag: "8",
         homeTeam: "Aston Villa",
         awayTeam: "Spurs",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -252,6 +287,8 @@ let _results = [
         tag: "9",
         homeTeam: "Everton",
         awayTeam: "Man. City",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -263,6 +300,8 @@ let _results = [
         tag: "10",
         homeTeam: "Spurs",
         awayTeam: "West Ham",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -277,6 +316,8 @@ let _results = [
         homeTeamFrom: "U11_A_G1_P4",
         awayTeamFrom: "U11_A_G2_P5",
         stage2Tag: "U11_A_PO1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -291,6 +332,8 @@ let _results = [
         homeTeamFrom: "U11_A_G2_P4",
         awayTeamFrom: "U11_A_G1_P5",
         stage2Tag: "U11_A_PO2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -305,6 +348,8 @@ let _results = [
         homeTeamFrom: "U11_A_G1_P2",
         awayTeamFrom: "U11_A_G2_P3",
         stage2Tag: "U11_A_QF1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -319,6 +364,8 @@ let _results = [
         homeTeamFrom: "U11_A_G2_P2",
         awayTeamFrom: "U11_A_G1_P3",
         stage2Tag: "U11_A_QF2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -333,6 +380,8 @@ let _results = [
         homeTeamFrom: "U11_A_G1_P1",
         awayTeamFrom: "U11_A_PO1",
         stage2Tag: "U11_A_QF3",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -347,6 +396,8 @@ let _results = [
         homeTeamFrom: "U11_A_G2_P1",
         awayTeamFrom: "U11_A_PO2",
         stage2Tag: "U11_A_QF4",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -361,6 +412,8 @@ let _results = [
         homeTeamFrom: "U11_A_QF1",
         awayTeamFrom: "U11_A_QF4",
         stage2Tag: "U11_A_SF1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -375,6 +428,8 @@ let _results = [
         homeTeamFrom: "U11_A_QF2",
         awayTeamFrom: "U11_A_QF3",
         stage2Tag: "U11_A_SF2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -389,6 +444,8 @@ let _results = [
         homeTeamFrom: "U11_A_SF1",
         awayTeamFrom: "U11_A_SF2",
         stage2Tag: "U11_A_FNL",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -400,6 +457,8 @@ let _results = [
         tag: "1",
         homeTeam: "Sheffield Wednesday",
         awayTeam: "Brentford",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -411,6 +470,8 @@ let _results = [
         tag: "2",
         homeTeam: "Derby County",
         awayTeam: "Middlesbrough",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -422,6 +483,8 @@ let _results = [
         tag: "3",
         homeTeam: "Derby County",
         awayTeam: "Sheffield Wednesday",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -433,6 +496,8 @@ let _results = [
         tag: "4",
         homeTeam: "Brentford",
         awayTeam: "Middlesbrough",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -444,6 +509,8 @@ let _results = [
         tag: "5",
         homeTeam: "Middlesbrough",
         awayTeam: "Sheffield Wednesday",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -455,6 +522,8 @@ let _results = [
         tag: "6",
         homeTeam: "Brentford",
         awayTeam: "Derby County",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -466,6 +535,8 @@ let _results = [
         tag: "1",
         homeTeam: "Rotherham",
         awayTeam: "Cardiff",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -477,6 +548,8 @@ let _results = [
         tag: "2",
         homeTeam: "MK Dons",
         awayTeam: "Bristol City",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -488,6 +561,8 @@ let _results = [
         tag: "3",
         homeTeam: "MK Dons",
         awayTeam: "Rotherham",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -499,6 +574,8 @@ let _results = [
         tag: "4",
         homeTeam: "Cardiff",
         awayTeam: "Bristol City",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -510,6 +587,8 @@ let _results = [
         tag: "5",
         homeTeam: "Bristol City",
         awayTeam: "Rotherham",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -521,6 +600,8 @@ let _results = [
         tag: "6",
         homeTeam: "Cardiff",
         awayTeam: "MK Dons",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -532,6 +613,8 @@ let _results = [
         tag: "1",
         homeTeam: "Ipswich",
         awayTeam: "Preston North End",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -543,6 +626,8 @@ let _results = [
         tag: "2",
         homeTeam: "Hull City",
         awayTeam: "Reading",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -554,6 +639,8 @@ let _results = [
         tag: "3",
         homeTeam: "Hull City",
         awayTeam: "Ipswich",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -565,6 +652,8 @@ let _results = [
         tag: "4",
         homeTeam: "Preston North End",
         awayTeam: "Reading",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -576,6 +665,8 @@ let _results = [
         tag: "5",
         homeTeam: "Reading",
         awayTeam: "Ipswich",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -587,6 +678,8 @@ let _results = [
         tag: "6",
         homeTeam: "Preston North End",
         awayTeam: "Hull City",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -598,6 +691,8 @@ let _results = [
         tag: "1",
         homeTeam: "QPR",
         awayTeam: "Fulham FC",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -609,6 +704,8 @@ let _results = [
         tag: "2",
         homeTeam: "Birmingham",
         awayTeam: "Leeds",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -620,6 +717,8 @@ let _results = [
         tag: "3",
         homeTeam: "Birmingham",
         awayTeam: "QPR",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -631,6 +730,8 @@ let _results = [
         tag: "4",
         homeTeam: "Fulham FC",
         awayTeam: "Leeds",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -642,6 +743,8 @@ let _results = [
         tag: "5",
         homeTeam: "Leeds",
         awayTeam: "QPR",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -653,6 +756,8 @@ let _results = [
         tag: "6",
         homeTeam: "Fulham FC",
         awayTeam: "Birmingham",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -666,6 +771,8 @@ let _results = [
         awayTeam: "Winner Group 3",
         homeTeamFrom: "U15_Groups_G1_P1",
         awayTeamFrom: "U15_Groups_G3_P1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -679,6 +786,8 @@ let _results = [
         awayTeam: "2nd Group 4",
         homeTeamFrom: "U15_Groups_G2_P2",
         awayTeamFrom: "U15_Groups_G4_P2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -692,6 +801,8 @@ let _results = [
         awayTeam: "Winner Group 1",
         homeTeamFrom: "U15_Groups_G2_P2",
         awayTeamFrom: "U15_Groups_G1_P1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -705,6 +816,8 @@ let _results = [
         awayTeam: "2nd Group 4",
         homeTeamFrom: "U15_Groups_G3_P1",
         awayTeamFrom: "U15_Groups_G4_P2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -718,6 +831,8 @@ let _results = [
         awayTeam: "Winner Group 1",
         homeTeamFrom: "U15_Groups_G4_P2",
         awayTeamFrom: "U15_Groups_G1_P1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -731,6 +846,8 @@ let _results = [
         awayTeam: "2nd Group 2",
         homeTeamFrom: "U15_Groups_G3_P1",
         awayTeamFrom: "U15_Groups_G2_P2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -744,6 +861,8 @@ let _results = [
         awayTeam: "Winner Group 4",
         homeTeamFrom: "U15_Groups_G2_P1",
         awayTeamFrom: "U15_Groups_G4_P1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -757,6 +876,8 @@ let _results = [
         awayTeam: "2nd Group 1",
         homeTeamFrom: "U15_Groups_G3_P2",
         awayTeamFrom: "U15_Groups_G1_P2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -770,6 +891,8 @@ let _results = [
         awayTeam: "Winner Group 2",
         homeTeamFrom: "U15_Groups_G3_P2",
         awayTeamFrom: "U15_Groups_G2_P1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -783,6 +906,8 @@ let _results = [
         awayTeam: "2nd Group 1",
         homeTeamFrom: "U15_Groups_G4_P1",
         awayTeamFrom: "U15_Groups_G1_P2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -796,6 +921,8 @@ let _results = [
         awayTeam: "Winner Group 2",
         homeTeamFrom: "U15_Groups_G1_P2",
         awayTeamFrom: "U15_Groups_G2_P1",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -809,6 +936,8 @@ let _results = [
         awayTeam: "2nd Group 3",
         homeTeamFrom: "U15_Groups_G4_P1",
         awayTeamFrom: "U15_Groups_G3_P2",
+        homeScore: "",
+        awayScore: "",
     },
     {
         __v: 0,
@@ -1053,49 +1182,41 @@ let _results = [
 ];
 
 let _news = [
-    { title: "TEST Announcement", body: "Test announcement one" },
-    { title: "Another TEST Announcement", body: "Test announcement two" },
+    { title: "DEMO Announcement", body: "Demo announcement one" },
+    { title: "Another DEMO Announcement", body: "Demo announcement two" },
 ];
 
 let _pages = [
-    { title: "Info Test", body: "Test page one" },
-    { title: "Test Info", body: "Test page 2" },
+    { title: "Info DEMO", body: "DEMO page one" },
+    { title: "DEMO Info", body: "DEMO page 2" },
 ];
 
 // --------------------------------------------------------------------------
 // EXPORTED STORE VARS
 // --------------------------------------------------------------------------
 
-export const news = writable(_news);
-export const pages = writable(_pages);
-export const results = writable(_results);
-export const tournament = writable(_tournament);
+export const news = writable([]);
+export const pages = writable([]);
+export const results = writable([]);
+export const tournament = writable({});
 export const highlight = writable("");
 
-// fetch instead
-let env = "prod";
-let baseUrl = "http://192.168.21.100:4001";
-
 const initFromApi = async () => {
-    let res = await fetch(baseUrl + "/api/tournaments");
-    let data = await res.json();
-    tournament.set(data[0]);
+    tournament.set((await api.get("api/tournaments"))[0]);
+    results.set(await api.get("api/results"));
+    news.set(await api.get("api/news"));
+    pages.set(await api.get("api/pages"));
+};
 
-    res = await fetch(baseUrl + "/api/results");
-    data = await res.json();
-    results.set(data);
-
-    res = await fetch(baseUrl + "/api/news");
-    data = await res.json();
-    news.set(data);
-
-    res = await fetch(baseUrl + "/api/pages");
-    data = await res.json();
-    pages.set(data);
+const initFromDemo = () => {
+    tournament.set(_tournament);
+    results.set(_results);
+    news.set(_news);
+    pages.set(_pages);
 };
 
 const initSocket = async () => {
-    let socket = io(baseUrl, { "connect timeout": 5000 });
+    let socket = io(api.baseUrl, { "connect timeout": 5000 });
 
     socket.on("connect", () => {
         console.log("socket created with ID:", socket.id);
@@ -1133,8 +1254,13 @@ const initSocket = async () => {
     });
 };
 
-if (env == "prod") {
+// somehow pass this in as needed..
+let live = true;
+
+if (live) {
     initFromApi();
+} else {
+    initFromDemo();
 }
 
 if (browser) {
