@@ -1257,6 +1257,7 @@ const initSocket = async () => {
 // somehow pass this in as needed..
 let live = true;
 
+initFromDemo();
 if (live) {
     initFromApi();
 } else {

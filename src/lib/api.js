@@ -12,15 +12,9 @@ async function send({ method, path, data, token }) {
         opts.headers["Authorization"] = `Token ${token}`;
     }
 
-    return fetch(`${baseUrl}/${path}`, opts)
-        .then((r) => r.text())
-        .then((json) => {
-            try {
-                return JSON.parse(json);
-            } catch (err) {
-                return json;
-            }
-        });
+    let res = await fetch(`${baseUrl}/${path}`, opts);
+    let json = await res.json();
+    return json;
 }
 
 export function get(path, token) {
