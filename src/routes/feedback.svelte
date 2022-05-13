@@ -2,8 +2,8 @@
     import Section from "$lib/Section.svelte";
     import Textfield from "@smui/textfield";
     import Icon from "@smui/textfield/icon";
-    import HelperText from "@smui/textfield/helper-text/index";
-    import CharacterCounter from "@smui/textfield/character-counter/index";
+    import HelperText from "@smui/textfield/helper-text";
+    import CharacterCounter from "@smui/textfield/character-counter";
     import Button from "@smui/button";
 
     let email = "";

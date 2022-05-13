@@ -3,7 +3,7 @@
     import { pages } from "$lib/db";
     import { page } from "$app/stores";
 
-    import marked from "marked";
+    import { marked } from "marked";
 
     const { title } = $page.params;
     let body = "";
