@@ -13,23 +13,26 @@
 
     import moment from "moment-timezone";
 
-    const { name, section } = $page.params;
-
-    let otherComps = $tournament.competitions.filter((c) => c.name === name && c.section !== section);
-    let competition = $tournament.competitions.find((c) => c.name === name && c.section === section);
-
-    let groups = [];
-    let i = 1;
-    while (i <= competition.groups) groups.push("" + i++);
+    let name, section = "";
     let active = "1";
-
+    let otherComps = [];
+    let competition = [];
+    let groups = [];
     let groupResults = [];
     let koResults = [];
-
     let time = (dateTime) => moment(dateTime).tz("Europe/London").format("HH:mm");
     let startTime, endTime;
 
     $: {
+        name = $page.params.name;
+        section = $page.params.section;
+        
+        otherComps = $tournament.competitions.filter((c) => c.name === name && c.section !== section);
+        competition = $tournament.competitions.find((c) => c.name === name && c.section === section);
+
+        let i = 1;
+        while (i <= competition.groups) groups.push("" + i++);
+
         groupResults = $results.filter(
             (r) => r.competition.name == name && r.competition.section == section && r.competition.group == parseInt(active)
         );
