@@ -31,7 +31,9 @@
         competition = $tournament.competitions.find((c) => c.name === name && c.section === section);
 
         let i = 1;
+        groups = [];
         while (i <= competition.groups) groups.push("" + i++);
+        if (parseInt(active) > groups.length) active = "1";
 
         groupResults = $results.filter(
             (r) => r.competition.name == name && r.competition.section == section && r.competition.group == parseInt(active)

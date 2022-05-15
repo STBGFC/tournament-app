@@ -39,7 +39,7 @@
     },
     "type": "module",
     "dependencies": {
-        "leaguesort": "^1.1.1",
+        "leaguesort": "^1.2.0",
         "marked": "^4.0.14",
         "moment-timezone": "^0.5.33",
         "socket.io": "^4.2.0",

@@ -36,7 +36,7 @@
                     <td class="text-right">{entry.won}</td>
                     <td class="text-right">{entry.drawn}</td>
                     <td class="text-right">{entry.lost}</td>
-                    <td class="text-right">{entry.goalsFor}-{entry.goalsAgainst}</td>
+                    <td style="white-space: nowrap;" class="text-right">{entry.goalsFor}-{entry.goalsAgainst}</td>
                     <td class="text-right">{entry.goalsFor - entry.goalsAgainst}</td>
                     <td class="text-right points">{entry.points}</td>
                 </tr>
