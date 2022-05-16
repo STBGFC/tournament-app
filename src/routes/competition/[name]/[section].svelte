@@ -13,7 +13,8 @@
 
     import moment from "moment-timezone";
 
-    let name, section = "";
+    let name = "";
+    let section = "";
     let active = "1";
     let otherComps = [];
     let competition = [];
@@ -26,7 +27,7 @@
     $: {
         name = $page.params.name;
         section = $page.params.section;
-        
+
         otherComps = $tournament.competitions.filter((c) => c.name === name && c.section !== section);
         competition = $tournament.competitions.find((c) => c.name === name && c.section === section);
 

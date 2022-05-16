@@ -1,3 +1,7 @@
+<script context="module">
+    export const prerender = true;
+</script>
+
 <script>
     import Section from "$lib/Section.svelte";
     import Textfield from "@smui/textfield";
