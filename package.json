@@ -11,6 +11,7 @@
     "devDependencies": {
         "@material/theme": "^13.0.0",
         "@material/typography": "^13.0.0",
+        "@smui-extra/accordion": "^6.0.0-beta.16",
         "@smui/button": "^6.0.0-beta.16",
         "@smui/card": "^6.0.0-beta.16",
         "@smui/common": "^6.0.0-beta.16",
@@ -30,20 +31,19 @@
         "eslint": "^7.22.0",
         "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-svelte3": "^3.2.0",
+        "jwt-decode": "^3.1.2",
+        "leaguesort": "^1.2.0",
+        "marked": "^4.0.14",
+        "moment-timezone": "^0.5.33",
         "prettier": "~2.2.1",
         "prettier-plugin-svelte": "^2.2.0",
         "sass": "^1.35.1",
         "smui-theme": "^4.2.0",
-        "svelte": "^3.34.0",
-        "svelte-preprocess": "^4.9.4"
-    },
-    "type": "module",
-    "dependencies": {
-        "leaguesort": "^1.2.0",
-        "marked": "^4.0.14",
-        "moment-timezone": "^0.5.33",
         "socket.io": "^4.2.0",
         "socket.io-client": "^4.2.0",
-        "svelte-material-ui": "^6.0.0-beta.16"
-    }
+        "svelte": "^3.34.0",
+        "svelte-material-ui": "^6.0.0-beta.16",
+        "svelte-preprocess": "^4.9.4"
+    },
+    "type": "module"
 }

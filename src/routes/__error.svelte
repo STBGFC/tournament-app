@@ -7,22 +7,25 @@
 </script>
 
 <script>
+    import Section from "$lib/Section.svelte";
+
     export let status;
     export let error;
 </script>
 
-<!-- TODO figure out what to do with stacktraces in prod -->
-
-<div class="section-head">
-    <div class="content">
-        <h4>Oops.. an error ({status}) occurred</h4>
+<Section fab="icon:error" container={true}>
+    <div slot="section-head">
+        <h4>Error ({status})</h4>    
+        {error.message}
     </div>
-</div>
 
-<div class="section-body">
-    {#if error.stack}
-        <pre>{error.stack}</pre>
-    {:else}
-        Not sure what else to tell you :(
-    {/if}
-</div>
+    <div slot="section-body">
+        {#if status == 500}
+            There was a problem on the server, it might be temporary.
+        {:else if status == 404}
+            Not found.. please check any links you clicked, they may be out of date.
+        {:else}
+            Not sure what else to tell you :(
+        {/if}
+    </div>
+</Section>

@@ -2,12 +2,15 @@
     import { goto } from "$app/navigation";
 
     import Drawer, { Content, Header, Title, Subtitle, Scrim } from "@smui/drawer";
-    import List, { Item, Text, Graphic, Separator, Subheader } from "@smui/list";
+    import List, { Item, Text, Graphic, Separator, Subheader, PrimaryText, SecondaryText } from "@smui/list";
+    
+    export const api = import.meta.env.VITE_API_BASE_URL;
 
     export let tournament,
         pages,
+        user,
         open = false;
-    let active = "Inbox";
+    let active = "Home";
 
     function setActive(value, location) {
         active = value;
@@ -18,30 +21,48 @@
 
 <Drawer variant="modal" fixed={false} bind:open>
     <Header>
-        <Title
-            ><img
+        <Title>
+            <img
                 style="float: left; width: 50px; padding: 9px 9px 0 0"
-                src="/icons/icon-512x512.png"
+                src="/icons/icon-128x128.png"
                 alt={tournament.club}
-            />{tournament.name}</Title
-        >
+            />
+            {tournament.name}
+        </Title>
         <Subtitle>{tournament.club}</Subtitle>
     </Header>
     <Content>
+        {#if user && user.name}
+        <List twoLine avatarList>
+            <Item href="javascript:void(0)" on:click={() => goto(`${api}/auth/logout`)}>
+                <Graphic><img style="height: 40px;width: 40px" class="mdc-fab" src="{user.picture}" alt="{user.name}"/></Graphic>
+                <Text>
+                    <PrimaryText>{user.name}</PrimaryText>
+                    <SecondaryText>{user.email}</SecondaryText>
+                </Text>
+            </Item>
+        </List>
+        {/if}
         <List>
+            {#if user.name === undefined}
+            <Item href="javascript:void(0)" on:click={() => goto(`${api}/auth/login/google`)}>
+                <Graphic class="material-icons" aria-hidden="true">login</Graphic>
+                <Text>Login</Text>
+            </Item>
+            {/if}
             <Item href="javascript:void(0)" on:click={() => setActive("Home", "/")} activated={active === "Home"}>
                 <Graphic class="material-icons" aria-hidden="true">home</Graphic>
                 <Text>Home</Text>
             </Item>
-            <Item
-                href="https://www.google.com/maps/d/u/1/viewer?mid=1-tGr4K7TJqRdHiwVzt_1Mx3N2uWX0LOQ&amp;ll=51.344332631008605%2C-0.7904230626670583&z=19"
-            >
+            {#if tournament.siteMap}
+            <Item href="{tournament.siteMap}">
                 <Graphic class="material-icons" aria-hidden="true">fmd_good</Graphic>
                 <Text>Site Map</Text>
             </Item>
-            <Item href="javascript:void(0)" on:click={() => setActive("Feedback", "/feedback")} activated={active === "Feedback"}>
-                <Graphic class="material-icons" aria-hidden="true">send</Graphic>
-                <Text>Feedback</Text>
+            {/if}
+            <Item href="javascript:void(0)" on:click={() => setActive("News", "/news")} activated={active === "News"}>
+                <Graphic class="material-icons" aria-hidden="true">feed</Graphic>
+                <Text>News</Text>
             </Item>
 
             <Separator />
@@ -59,4 +80,4 @@
         </List>
     </Content>
 </Drawer>
-<Scrim fixed={false} />
+<Scrim/>

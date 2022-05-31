@@ -1,10 +1,27 @@
+<script context="module">
+    import * as api from "$lib/api.js";
+    import { results } from "$lib/stores";
+
+    export const load = async ({ params, stuff }) => {
+        // load results for current age group
+        const res = await api.get(`tournament/results?conditions={"competition.name":"${params.name}"}`);
+
+        results.set([...res]);
+
+        return {
+            props: {
+                tournament: stuff.tournament,
+                name: params.name,
+                section: params.section,
+            },
+        };
+    }
+</script>
+
 <script>
     import ResultList from "$lib/ResultList.svelte";
     import LeagueTable from "$lib/LeagueTable.svelte";
     import Section from "$lib/Section.svelte";
-    import { tournament, results } from "$lib/db";
-
-    import { page } from "$app/stores";
 
     import Tab, { Label } from "@smui/tab";
     import Button from "@smui/button";
@@ -13,23 +30,26 @@
 
     import moment from "moment-timezone";
 
-    let name = "";
-    let section = "";
+    export let tournament, name, section; //, results;
+
     let active = "1";
     let otherComps = [];
     let competition = [];
     let groups = [];
     let groupResults = [];
     let koResults = [];
-    let time = (dateTime) => moment(dateTime).tz("Europe/London").format("HH:mm");
     let startTime, endTime;
 
-    $: {
-        name = $page.params.name;
-        section = $page.params.section;
+    let time = (dateTime) => moment(dateTime).tz("Europe/London").format("HH:mm");
+    let fixtureSort = (a, b) => {
+        if (a.dateTime < b.dateTime) return -1;
+        if (a.dateTime > b.dateTime) return 1;
+        return (a.tag < b.tag) ? -1 : 1;
+    };
 
-        otherComps = $tournament.competitions.filter((c) => c.name === name && c.section !== section);
-        competition = $tournament.competitions.find((c) => c.name === name && c.section === section);
+    $: {
+        otherComps = tournament.competitions.filter((c) => c.name === name && c.section !== section);
+        competition = tournament.competitions.find((c) => c.name === name && c.section === section);
 
         let i = 1;
         groups = [];
@@ -39,10 +59,12 @@
         groupResults = $results.filter(
             (r) => r.competition.name == name && r.competition.section == section && r.competition.group == parseInt(active)
         );
+        groupResults.sort(fixtureSort);
 
         koResults = $results.filter(
             (r) => r.competition.name == name && r.competition.section == section && r.competition.group == undefined
         );
+        koResults.sort(fixtureSort);
 
         startTime = groupResults.length > 0 ? time(groupResults[0].dateTime) : "";
         endTime =

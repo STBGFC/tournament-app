@@ -1,6 +1,26 @@
-export const baseUrl = "http://192.168.21.100:4001";
+import { io } from "socket.io-client";
+import { browser } from "$app/env";
+import * as stores from "$lib/stores";
 
-async function send({ method, path, data, token }) {
+export const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+export const get = (path, token) => {
+    return send({ method: "GET", path, token });
+}
+
+export const del = (path, token) => {
+    return send({ method: "DELETE", path, token });
+}
+
+export const post = (path, data, token) => {
+    return send({ method: "POST", path, data, token });
+}
+
+export const put = (path, data, token) => {
+    return send({ method: "PUT", path, data, token });
+}
+
+const send = async ({ method, path, data, token }) => {
     const opts = { method, headers: {} };
 
     if (data) {
@@ -9,7 +29,7 @@ async function send({ method, path, data, token }) {
     }
 
     if (token) {
-        opts.headers["Authorization"] = `Token ${token}`;
+        opts.headers["Authorization"] = `Bearer ${token}`;
     }
 
     let res = await fetch(`${baseUrl}/${path}`, opts);
@@ -17,18 +37,45 @@ async function send({ method, path, data, token }) {
     return json;
 }
 
-export function get(path, token) {
-    return send({ method: "GET", path, token });
-}
+const initSocket = async () => {
+    let socket = io(baseUrl, { "connect timeout": 5000 });
 
-export function del(path, token) {
-    return send({ method: "DELETE", path, token });
-}
+    socket.on("connect", () => {
+        console.log("socket created with ID:", socket.id);
+    });
 
-export function post(path, data, token) {
-    return send({ method: "POST", path, data, token });
-}
+    socket.on("result", (data) => {
+        console.debug("Received result", data);
+        stores.results.update((r) => {
+            for (let i = 0; i < r.length; i++) {
+                if (r[i]._id == data._id) {
+                    r[i] = data;
+                    break;
+                }
+            }
+            return r;
+        });
+    });
 
-export function put(path, data, token) {
-    return send({ method: "PUT", path, data, token });
+    socket.on("remove", (data) => {
+        console.debug("Result deleted", data);
+        // TODO implement
+    });
+
+    socket.on("news", (data) => {
+        console.debug("Received news", data);
+        // TODO implement
+    });
+
+    socket.on("connect_error", (error) => {
+        console.error("Failed to connect", error);
+    });
+
+    socket.on("error", (error) => {
+        console.error("Error on socket", error);
+    });
+};
+
+if (browser) {
+    initSocket();
 }

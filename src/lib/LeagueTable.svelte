@@ -1,5 +1,5 @@
 <script>
-    import { highlight } from "$lib/db";
+    import { highlight } from "$lib/stores";
 
     import leaguesort from "leaguesort";
 

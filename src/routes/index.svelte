@@ -1,35 +1,80 @@
+<script context="module">
+    import * as api from "$lib/api.js";
+
+    export const load = async ({ stuff }) => {
+        return {
+            props: {
+                tournament: stuff.tournament,
+            },
+            cache: {
+                "maxage": 900,
+            }
+        };
+    };
+</script>
+
 <script>
     import AgeFab from "$lib/AgeFab.svelte";
     import Section from "$lib/Section.svelte";
-    import { tournament } from "$lib/db";
-
     import { goto } from "$app/navigation";
+    import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
+    import IconButton, { Icon } from '@smui/icon-button';
+    import List, { Item, Graphic, Text } from "@smui/list";
 
-    import List, { Item, Meta, Text, PrimaryText, SecondaryText } from "@smui/list";
+    export let tournament;
+
+    let isOpen = [];
+    let ageGroups = [];
+
+    $: {
+        ageGroups = tournament.competitions.reduce((comps, comp) => 
+            comps.find(x => x.name === comp.name) ? [...comps] : [...comps, comp], []
+        );
+    }
 </script>
+
+<svelte:head>
+    <title>{tournament.name}</title>
+</svelte:head>
 
 <Section container={false}>
     <div slot="section-head" class="index-head">
-        <h1>{$tournament.name}</h1>
+        <h1>{tournament.name}</h1>
         <blockquote>
-            <p>{$tournament.description}</p>
-            <p style="font-size: smaller"><em>Select a competition below to view results and fixtures</em></p>
+            <p>{tournament.description}</p>
+            <p style="font-size: smaller"><em>Select a competition below to view fixtures and results</em></p>
         </blockquote>
     </div>
 
     <div slot="section-body">
-        <List class="competition-list" twoLine avatarList singleSelection>
-            {#each $tournament.competitions as comp}
-                <Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
-                    <AgeFab name={comp.name} />
-                    <Text>
-                        <PrimaryText>{comp.name}</PrimaryText>
-                        <SecondaryText>{comp.section}</SecondaryText>
-                    </Text>
-                    <Meta class="material-icons">sports_soccer</Meta>
-                </Item>
-            {/each}
-        </List>
+        <div class="accordion-container">
+            <Accordion>
+                {#each ageGroups as ag, i}
+                <Panel bind:open={isOpen[i]}>
+                    <Header>
+                        <AgeFab name={ag.name} />
+                        All {ag.name} competitions<br><small>Saturday morning</small>
+                        <IconButton slot="icon" toggle pressed={isOpen[i]}>
+                          <Icon class="material-icons" on>expand_less</Icon>
+                          <Icon class="material-icons">expand_more</Icon>
+                        </IconButton>
+                    </Header>
+                    <Content>
+                        <List dense>
+                            {#each tournament.competitions as comp}
+                                {#if comp.name == ag.name}
+                                <Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
+                                    <Graphic class="material-icons">sports_soccer</Graphic>
+                                    <Text><strong>{comp.section} Section</strong> ({comp.groups} groups)</Text>
+                                </Item>
+                                {/if}
+                            {/each}
+                        </List>
+                    </Content>
+                </Panel>
+              {/each}
+            </Accordion>
+        </div>
     </div>
 </Section>
 
@@ -60,9 +105,5 @@
 
     h1 {
         max-width: 82%;
-    }
-
-    * :global(.competition-list) {
-        width: 100%;
     }
 </style>

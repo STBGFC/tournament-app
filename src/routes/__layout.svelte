@@ -1,29 +1,38 @@
 <script context="module">
-    export const load = async ({ url }) => ({
-        props: {
-            routeKey: url.path,
-        },
-    });
+    import * as api from "$lib/api.js";
+
+    export const load = async ({ url }) => {
+        const tournament = (await api.get("tournament/tournaments"))[0];
+
+        return {
+            props: {
+                routeKey: url.pathname.split("/")[0],
+                tournament: tournament,
+                pages: await api.get("tournament/pages"),
+            },
+            stuff: {
+                tournament: tournament,
+            },
+            cache: {
+                "maxage": 900,
+            },
+        };
+    };
 </script>
 
 <script>
-    import { tournament, pages } from "$lib/db";
     import "$lib/app.scss";
     import MenuDrawer from "$lib/MenuDrawer.svelte";
     import PageTransition from "$lib/PageTransition.svelte";
 
     import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
     import IconButton from "@smui/icon-button";
-
     let drawerOpen = false;
-    export let routeKey;
+
+    export let routeKey, tournament, pages, user;
 </script>
 
-<svelte:head>
-    <title>{$tournament.name}</title>
-</svelte:head>
-
-<MenuDrawer bind:open={drawerOpen} tournament={$tournament} pages={$pages} />
+<MenuDrawer bind:open={drawerOpen} tournament={tournament} pages={pages} user={user || {}} />
 
 <div class="flex-layout">
     <main>
@@ -31,12 +40,10 @@
             <Row>
                 <Section>
                     <IconButton class="material-icons" on:click={() => (drawerOpen = !drawerOpen)}>menu</IconButton>
-                    <Title>{$tournament.name}</Title>
+                    <Title>{tournament.name}</Title>
                 </Section>
                 <Section align="end" toolbar>
                     <a href="/"><IconButton class="material-icons" aria-label="Home">home</IconButton></a>
-                    <!-- <IconButton class="material-icons" aria-label="Print this page">print</IconButton> -->
-                    <IconButton class="material-icons" aria-label="Bookmark this page">login</IconButton>
                 </Section>
             </Row>
         </TopAppBar>
@@ -49,7 +56,7 @@
     </PageTransition>
 
     <section id="footer">
-        <p>&copy; Darren Davison &amp; <a href={$tournament.siteUrl}>{$tournament.club}</a> 2021</p>
+        <p>&copy; Darren Davison &amp; <a href={tournament.siteUrl}>{tournament.club}</a> 2022</p>
     </section>
 </div>
 
