@@ -1,6 +1,6 @@
 import { build, timestamp, files } from "$service-worker";
 
-const cacheName = `stbgfc-cache-v${timestamp}`;
+const cacheName = `tournament-app-cache-v${timestamp}`;
 const offlinePage = "/offline.html";
 
 self.addEventListener("install", (e) => {

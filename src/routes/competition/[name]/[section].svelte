@@ -30,7 +30,7 @@
 
     import moment from "moment-timezone";
 
-    export let tournament, name, section; //, results;
+    export let tournament, name, section;
 
     let active = "1";
     let otherComps = [];

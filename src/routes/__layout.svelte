@@ -3,10 +3,12 @@
 
     export const load = async ({ url }) => {
         const tournament = (await api.get("tournament/tournaments"))[0];
+        const pathComponents = url.pathname.split("/");
+        let idx = pathComponents.length > 1 ? 1 : 0;
 
         return {
             props: {
-                routeKey: url.pathname.split("/")[0],
+                routeKey: pathComponents[idx],
                 tournament: tournament,
                 pages: await api.get("tournament/pages"),
             },
