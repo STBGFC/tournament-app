@@ -14,7 +14,7 @@
                 tournament: tournament,
             },
             cache: {
-                "maxage": 900,
+                maxage: 900,
             },
         };
     };
@@ -32,7 +32,7 @@
     export let routeKey, tournament, pages, user;
 </script>
 
-<MenuDrawer bind:open={drawerOpen} tournament={tournament} pages={pages} user={user || {}} />
+<MenuDrawer bind:open={drawerOpen} {tournament} {pages} user={user || {}} />
 
 <div class="flex-layout">
     <main>

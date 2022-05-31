@@ -1,6 +1,16 @@
 {
     "name": "tournament-app",
-    "version": "22.05",
+    "version": "3.0.0",
+    "author": {
+        "name": "STBGFC Admin",
+        "email": "admin@stbgfc.co.uk",
+        "url": "https://github.com/STBGFC"
+    },
+    "bugs": {
+        "url": "https://github.com/STBGFC/tournament-app/issues"
+    },
+    "description": "Front end of an application used to distribute tournament results and updates live on site to attendees. Requires the back end API to be accessible in a separate deployment and a Mongo (or compatible) database for storage.",
+    "license": "MIT",
     "scripts": {
         "dev": "svelte-kit dev --host",
         "build": "svelte-kit build",

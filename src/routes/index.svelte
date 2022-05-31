@@ -7,8 +7,8 @@
                 tournament: stuff.tournament,
             },
             cache: {
-                "maxage": 900,
-            }
+                maxage: 900,
+            },
         };
     };
 </script>
@@ -17,8 +17,8 @@
     import AgeFab from "$lib/AgeFab.svelte";
     import Section from "$lib/Section.svelte";
     import { goto } from "$app/navigation";
-    import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
-    import IconButton, { Icon } from '@smui/icon-button';
+    import Accordion, { Panel, Header, Content } from "@smui-extra/accordion";
+    import IconButton, { Icon } from "@smui/icon-button";
     import List, { Item, Graphic, Text } from "@smui/list";
 
     export let tournament;
@@ -27,8 +27,9 @@
     let ageGroups = [];
 
     $: {
-        ageGroups = tournament.competitions.reduce((comps, comp) => 
-            comps.find(x => x.name === comp.name) ? [...comps] : [...comps, comp], []
+        ageGroups = tournament.competitions.reduce(
+            (comps, comp) => (comps.find((x) => x.name === comp.name) ? [...comps] : [...comps, comp]),
+            []
         );
     }
 </script>
@@ -50,29 +51,29 @@
         <div class="accordion-container">
             <Accordion>
                 {#each ageGroups as ag, i}
-                <Panel bind:open={isOpen[i]}>
-                    <Header>
-                        <AgeFab name={ag.name} />
-                        All {ag.name} competitions<br><small>Saturday morning</small>
-                        <IconButton slot="icon" toggle pressed={isOpen[i]}>
-                          <Icon class="material-icons" on>expand_less</Icon>
-                          <Icon class="material-icons">expand_more</Icon>
-                        </IconButton>
-                    </Header>
-                    <Content>
-                        <List dense>
-                            {#each tournament.competitions as comp}
-                                {#if comp.name == ag.name}
-                                <Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
-                                    <Graphic class="material-icons">sports_soccer</Graphic>
-                                    <Text><strong>{comp.section} Section</strong> ({comp.groups} groups)</Text>
-                                </Item>
-                                {/if}
-                            {/each}
-                        </List>
-                    </Content>
-                </Panel>
-              {/each}
+                    <Panel bind:open={isOpen[i]}>
+                        <Header>
+                            <AgeFab name={ag.name} />
+                            All {ag.name} competitions<br /><small>Saturday morning</small>
+                            <IconButton slot="icon" toggle pressed={isOpen[i]}>
+                                <Icon class="material-icons" on>expand_less</Icon>
+                                <Icon class="material-icons">expand_more</Icon>
+                            </IconButton>
+                        </Header>
+                        <Content>
+                            <List dense>
+                                {#each tournament.competitions as comp}
+                                    {#if comp.name == ag.name}
+                                        <Item on:SMUI:action={() => goto(`/competition/${comp.name}/${comp.section}`)}>
+                                            <Graphic class="material-icons">sports_soccer</Graphic>
+                                            <Text><strong>{comp.section} Section</strong> ({comp.groups} groups)</Text>
+                                        </Item>
+                                    {/if}
+                                {/each}
+                            </List>
+                        </Content>
+                    </Panel>
+                {/each}
             </Accordion>
         </div>
     </div>

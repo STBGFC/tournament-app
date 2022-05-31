@@ -6,19 +6,19 @@ export const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const get = (path, token) => {
     return send({ method: "GET", path, token });
-}
+};
 
 export const del = (path, token) => {
     return send({ method: "DELETE", path, token });
-}
+};
 
 export const post = (path, data, token) => {
     return send({ method: "POST", path, data, token });
-}
+};
 
 export const put = (path, data, token) => {
     return send({ method: "PUT", path, data, token });
-}
+};
 
 const send = async ({ method, path, data, token }) => {
     const opts = { method, headers: {} };
@@ -35,7 +35,7 @@ const send = async ({ method, path, data, token }) => {
     let res = await fetch(`${baseUrl}/${path}`, opts);
     let json = await res.json();
     return json;
-}
+};
 
 const initSocket = async () => {
     let socket = io(baseUrl, { "connect timeout": 5000 });

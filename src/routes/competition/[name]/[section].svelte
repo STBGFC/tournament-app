@@ -15,7 +15,7 @@
                 section: params.section,
             },
         };
-    }
+    };
 </script>
 
 <script>
@@ -44,7 +44,7 @@
     let fixtureSort = (a, b) => {
         if (a.dateTime < b.dateTime) return -1;
         if (a.dateTime > b.dateTime) return 1;
-        return (a.tag < b.tag) ? -1 : 1;
+        return a.tag < b.tag ? -1 : 1;
     };
 
     $: {

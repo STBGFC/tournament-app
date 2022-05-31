@@ -15,7 +15,7 @@
 
 <Section fab="icon:error" container={true}>
     <div slot="section-head">
-        <h4>Error ({status})</h4>    
+        <h4>Error ({status})</h4>
         {error.message}
     </div>
 
