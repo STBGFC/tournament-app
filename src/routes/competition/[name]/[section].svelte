@@ -114,14 +114,24 @@
             </Tab>
         </TabBar>
 
-        <LayoutGrid>
-            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-                <LeagueTable bind:results={groupResults} />
-            </Cell>
-            <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
-                <ResultList bind:results={groupResults} />
-            </Cell>
-        </LayoutGrid>
+        {#if groupResults.length > 0}
+            <LayoutGrid>
+                <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+                    <LeagueTable bind:results={groupResults} />
+                </Cell>
+                <Cell spanDevices={{ desktop: 6, tablet: 12, phone: 12 }}>
+                    <ResultList bind:results={groupResults} />
+                </Cell>
+            </LayoutGrid>
+        {/if}
+
+        {#if groupResults.length == 0 && koResults.length == 0}
+            <LayoutGrid>
+                <Cell span={12}>
+                    No games have been created in this group.
+                </Cell>
+            </LayoutGrid>
+        {/if}
     </div>
 </Section>
 

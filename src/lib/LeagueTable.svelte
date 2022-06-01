@@ -22,30 +22,24 @@
         </tr>
     </thead>
     <tbody>
-        {#if tableEntries?.length > 0}
-            {#each tableEntries as entry}
-                <tr>
-                    <td
-                        on:click={() => {
-                            $highlight = $highlight == entry.name ? "" : entry.name;
-                        }}
-                        class="text-left"
-                        class:team-highlight={$highlight == entry.name}>{entry.name}</td
-                    >
-                    <td class="text-right">{entry.played}</td>
-                    <td class="text-right">{entry.won}</td>
-                    <td class="text-right">{entry.drawn}</td>
-                    <td class="text-right">{entry.lost}</td>
-                    <td style="white-space: nowrap;" class="text-right">{entry.goalsFor}-{entry.goalsAgainst}</td>
-                    <td class="text-right">{entry.goalsFor - entry.goalsAgainst}</td>
-                    <td class="text-right points">{entry.points}</td>
-                </tr>
-            {/each}
-        {:else}
+        {#each tableEntries as entry}
             <tr>
-                <td colspan="8">League table will appear as results become known</td>
+                <td
+                    on:click={() => {
+                        $highlight = $highlight == entry.name ? "" : entry.name;
+                    }}
+                    class="text-left"
+                    class:team-highlight={$highlight == entry.name}>{entry.name}</td
+                >
+                <td class="text-right">{entry.played}</td>
+                <td class="text-right">{entry.won}</td>
+                <td class="text-right">{entry.drawn}</td>
+                <td class="text-right">{entry.lost}</td>
+                <td style="white-space: nowrap;" class="text-right">{entry.goalsFor}-{entry.goalsAgainst}</td>
+                <td class="text-right">{entry.goalsFor - entry.goalsAgainst}</td>
+                <td class="text-right points">{entry.points}</td>
             </tr>
-        {/if}
+        {/each}
     </tbody>
 </table>
 
